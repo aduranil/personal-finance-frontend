@@ -6,8 +6,7 @@ import {
   Header,
   Segment,
 } from 'semantic-ui-react'
-import { Link, Switch, Route } from "react-router-dom";
-import Login from './Login'
+import { Link } from "react-router-dom";
 
 export default class HomepageLayout extends Component {
 

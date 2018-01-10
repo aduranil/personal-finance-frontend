@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Switch, Route} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 import { connect } from 'react-redux'
 import HomepageLayout from './containers/loggedOut'
 import * as actions from './actions'
@@ -8,6 +8,7 @@ import Login from './containers/Login'
 class App extends Component {
 
   render() {
+    console.log(this.props)
     return (
       <div>
       <Switch>

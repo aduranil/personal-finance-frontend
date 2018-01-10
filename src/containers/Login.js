@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import * as actions from '../actions'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
+      error: false,
       fields: {
         username: '',
         password: ''
@@ -17,12 +18,13 @@ class Login extends React.Component {
 
   handleChange = e => {
     const newFields = {...this.state.fields, [e.target.name]: e.target.value}
-    this.setState({fields: newFields})
+    this.setState( { fields: newFields } )
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    const {fields: {username, password}} = this.setState
+    const { fields: { username, password } } = this.state;
+    this.props.loginUser(username, password, this.props.history)
   }
 
   render(){
@@ -70,7 +72,7 @@ class Login extends React.Component {
               </Segment>
             </Form>
             <Message>
-              New to us? <a href='#'>Sign Up</a>
+              New to us? <a>Sign Up</a>
             </Message>
           </Grid.Column>
         </Grid>
