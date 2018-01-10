@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import HomepageLayout from './containers/loggedOut'
 import * as actions from './actions'
+import Login from './containers/Login'
 
 class App extends Component {
 
   render() {
     console.log(this.props)
     return (
-      <div className="App">
-      {this.props.loggedIn ? (
-        <li> you are logged in </li>
-      ) : (
-        <HomepageLayout/>
-      )}
+      <div>
       <Switch>
-        <Route path="/login"/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/' component={HomepageLayout}/>
       </Switch>
       </div>
     );
@@ -28,4 +24,4 @@ const mapStateToProps = state => ({
   loggedIn: !!state.auth.currentUser.id
 })
 
-export default connect(mapStateToProps, actions)(App)
+export default withRouter(connect(mapStateToProps, actions)(App))

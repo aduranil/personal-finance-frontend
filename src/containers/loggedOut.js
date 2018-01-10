@@ -6,6 +6,8 @@ import {
   Header,
   Segment,
 } from 'semantic-ui-react'
+import { Link, Switch, Route } from "react-router-dom";
+import Login from './Login'
 
 export default class HomepageLayout extends Component {
 
@@ -27,7 +29,7 @@ export default class HomepageLayout extends Component {
             content='track all of your expenses in one place'
             style={{ fontSize: '1.7em', fontWeight: 'normal' }}
           />
-          <Button color='olive' size='huge'>
+          <Button as={Link} to='/login' color='olive' size='huge'>
             Login
           </Button>
           <Button color='olive' size='huge'>
