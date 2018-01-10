@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import * as actions from '../actions'
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class Login extends React.Component {
   constructor() {
@@ -15,7 +16,7 @@ class Login extends React.Component {
   }
 
   handleChange = e => {
-    const newFields = {...this.state.fields, [e.target.name]:e.target.value}
+    const newFields = {...this.state.fields, [e.target.name]: e.target.value}
     this.setState({fields: newFields})
   }
 
@@ -25,9 +26,56 @@ class Login extends React.Component {
   }
 
   render(){
+    const { fields } = this.state
     return (
-      <div>hi</div>
+      <div className='login-form'>
+        <style>{`
+          body > div,
+          body > div > div,
+          body > div > div > div.login-form {
+            height: 100%;
+          }
+        `}</style>
+        <Grid
+          textAlign='center'
+          style={{ height: '100%' }}
+          verticalAlign='middle'
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='olive' textAlign='center'>
+              {' '}Log-in to your account
+            </Header>
+            <Form onSubmit={this.handleSubmit} size='large'>
+              <Segment stacked>
+                <Form.Input
+                  fluid
+                  icon='user'
+                  iconPosition='left'
+                  placeholder='username'
+                  value={fields.username}
+                  onChange={this.handleChange}
+                  name="username"
+                />
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                  name="password"
+                  value={fields.password}
+                  onChange={this.handleChange}
+                />
+                <Button type='submit' color='olive' fluid size='large'>Login</Button>
+              </Segment>
+            </Form>
+            <Message>
+              New to us? <a href='#'>Sign Up</a>
+            </Message>
+          </Grid.Column>
+        </Grid>
+      </div>
     )
   }
 }
-export default Login
+export default withRouter(connect(null, actions)(Login))
