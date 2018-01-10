@@ -1,5 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Raleway"
+}
+
+div.header,
+button.ui,
+a.ui,
+h1.ui.header,
+h2.ui.header,
+h3.ui.header,
+div.ui {
+  font-family: "Raleway" !important;
 }
