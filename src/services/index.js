@@ -17,7 +17,6 @@ const getCurrentUser = () => {
 }
 
 const login = data => {
-
   return fetch(`${API_ROOT}/login`, {
     method: 'POST',
     headers,
@@ -25,9 +24,16 @@ const login = data => {
   }).then(res => res.json())
 }
 
+const getAccounts = () => {
+  return fetch(`${API_ROOT}/accounts`, {
+    headers: headers
+  }).then(res => res.json())
+}
+
 export const adapter = {
   auth: {
     login,
-    getCurrentUser
+    getCurrentUser,
+    getAccounts
   }
 }

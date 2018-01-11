@@ -11,8 +11,20 @@ export const fetchUser = () => dispatch => {
     dispatch({type: SET_CURRENT_USER, user})
   })
 }
+
+export const selectAccount = (id) =>  {
+  return {type: 'SELECT_ACCOUNT', account: id}
+}
+
+export const fetchAccounts = (user_id) => dispatch => {
+  adapter.auth.getAccounts().then(accounts => {
+    let filteredAccounts = accounts.filter(account => account.user_id === user_id)
+    dispatch({type: 'GET_ACCOUNTS', filteredAccounts})
+  })
+}
+
 export const loginUser = (username, password, history) => dispatch => {
-  dispatch({type: ASYNC_START})
+  dispatch({type: "ASYNC_START"})
   adapter.auth.login({username, password}).then(user => {
     if (user.error){
       alert(user.error)

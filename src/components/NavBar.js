@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
+import withAuth from '../hocs/withAuth'
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   state = {}
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -46,3 +47,5 @@ export default class NavBar extends Component {
     )
   }
 }
+
+export default withAuth(NavBar);

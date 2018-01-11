@@ -5,9 +5,9 @@ import HomepageLayout from './containers/LoggedOut'
 import * as actions from './actions'
 import Login from './containers/Login'
 import NavBar from './components/NavBar'
+import Dashboard from './containers/Dashboard'
 
 class App extends Component {
-
 
   render() {
     return (
@@ -15,7 +15,8 @@ class App extends Component {
         <NavBar/>
         <Switch>
           <Route exact path='/login' component={Login}/>
-          <Route exact path='/' component={HomepageLayout}/>
+          <Route exact path='/placeholder' component={HomepageLayout}/>
+          <Route exact path='/' component={Dashboard}/>
         </Switch>
       </div>
     );
