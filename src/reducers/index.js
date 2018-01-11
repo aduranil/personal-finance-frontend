@@ -6,8 +6,8 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username} = action.user
-      return {...state, currentUser: {id, username}, isLoading: false}
+      const {id, username, accounts} = action.user
+      return {...state, currentUser: {id, username, accounts}, isLoading: false}
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}
     default:
@@ -15,13 +15,11 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-const accountsReducer = (state = {accounts: [], active_account: null}, action) => {
+const accountsReducer = (state = {accounts: [], active_account: 1}, action) => {
   // console.log('IN THE ACCOUNTS REDUCER action', action)
   switch(action.type){
-    case 'GET_ACCOUNTS':
-      return {...state, accounts: action.filteredAccounts}
     case 'SELECT_ACCOUNT':
-      return {...state, active_account: action.account}
+      return {...state, active_account: Number(action.account)}
     default:
       return state
   }

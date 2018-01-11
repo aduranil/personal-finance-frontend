@@ -1,9 +1,14 @@
 import React from 'react'
-import {Container, Button, Table, Menu,Divider, Dropdown} from 'semantic-ui-react'
+import {Container,Table} from 'semantic-ui-react'
+import Transaction from './Transaction'
 
 class TransactionsTable extends React.Component {
 
+  transactionData = () => {
+    let item = this.props.active_account
+  }
   render(){
+    let data = this.transactionData()
     return (
       <Container>
         <Table>
@@ -14,6 +19,9 @@ class TransactionsTable extends React.Component {
               <Table.HeaderCell> Amount </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
+          <Table.Body>
+            {data}
+          </Table.Body>
         </Table>
       </Container>
     )

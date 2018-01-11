@@ -15,7 +15,11 @@ class Dashboard extends React.Component {
             <SideBar/>
           </Grid.Column>
           <Grid.Column width={8}>
-            <TransactionsTable/>
+            <TransactionsTable
+              active_account={this.props.active_account}
+              user={this.props.user}
+              loggedIn={this.props.loggedIn}
+            />
           </Grid.Column>
         </Grid>
       </div>
@@ -27,8 +31,7 @@ class Dashboard extends React.Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: !!state.auth.currentUser.id,
-    user_id: state.auth.currentUser.id,
-    accounts: state.accounts.accounts,
+    user: state.auth.currentUser,
     active_account: state.accounts.active_account
   }
 }

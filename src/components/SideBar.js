@@ -11,21 +11,19 @@ class SideBar extends React.Component {
     this.props.selectAccount(e.target.id)
   }
 
-
-  componentDidMount() {
-    this.props.fetchAccounts()
-  }
-
   renderAccounts = () => {
     const { activeItem } = this.state
-    const accounts = this.props.accounts.filter(account => account.user_id === this.props.user_id)
-    return accounts.map(account => {
-      return <Menu.Item name={account.name} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} key={account.id}/>
-    })
+    if (this.props.user.accounts) {
+      return this.props.user.accounts.map(account => {
+        return <Menu.Item name={account.name} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} key={account.id}/>
+      })
+    } else {
+      return <div/>
+    }
   }
 
   render() {
-    console.log(this.props)
+
     return (
       <Menu pointing secondary vertical>
         <Menu.Item as='h4'>Your Accounts</Menu.Item>
@@ -36,10 +34,10 @@ class SideBar extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     loggedIn: !!state.auth.currentUser.id,
-    user_id: state.auth.currentUser.id,
+    user: state.auth.currentUser,
     accounts: state.accounts.accounts,
     loading: state.auth.isLoading,
     active_account: state.accounts.active_account
