@@ -62,7 +62,7 @@ class Login extends React.Component {
                   fluid
                   icon='lock'
                   iconPosition='left'
-                  placeholder='Password'
+                  placeholder='password'
                   type='password'
                   name="password"
                   value={fields.password}

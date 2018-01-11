@@ -17,11 +17,12 @@ const getCurrentUser = () => {
 }
 
 const login = data => {
+
   return fetch(`${API_ROOT}/login`, {
     method: 'POST',
     headers,
     body: JSON.stringify(data)
-  }).then(res => res.json)
+  }).then(res => res.json())
 }
 
 export const adapter = {
