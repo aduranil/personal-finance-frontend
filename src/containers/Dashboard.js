@@ -7,6 +7,10 @@ import * as actions from '../actions'
 
 class Dashboard extends React.Component {
 
+  componentDidMount(){
+    this.props.fetchAccounts()
+  }
+
   render(){
     return (
       <div>
@@ -16,9 +20,7 @@ class Dashboard extends React.Component {
           </Grid.Column>
           <Grid.Column width={8}>
             <TransactionsTable
-              active_account={this.props.active_account}
-              user={this.props.user}
-              loggedIn={this.props.loggedIn}
+              account={this.props.account}
             />
           </Grid.Column>
         </Grid>
@@ -32,7 +34,9 @@ const mapStateToProps = (state) => {
   return {
     loggedIn: !!state.auth.currentUser.id,
     user: state.auth.currentUser,
-    active_account: state.accounts.active_account
+    active_account: state.accounts.active_account,
+    accounts: state.accounts.accounts,
+    account: state.accounts.account
   }
 }
 

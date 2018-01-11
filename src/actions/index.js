@@ -16,10 +16,9 @@ export const selectAccount = (id) =>  {
   return {type: 'SELECT_ACCOUNT', account: id}
 }
 
-export const fetchAccounts = (user_id) => dispatch => {
+export const fetchAccounts = () => dispatch => {
   adapter.auth.getAccounts().then(accounts => {
-    let filteredAccounts = accounts.filter(account => account.user_id === user_id)
-    dispatch({type: 'GET_ACCOUNTS', filteredAccounts})
+    dispatch({type: 'GET_ACCOUNTS', accounts})
   })
 }
 

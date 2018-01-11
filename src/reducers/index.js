@@ -15,11 +15,14 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-const accountsReducer = (state = {accounts: [], active_account: 1}, action) => {
+const accountsReducer = (state = {accounts: [], active_account: 1, account: []}, action) => {
   // console.log('IN THE ACCOUNTS REDUCER action', action)
   switch(action.type){
     case 'SELECT_ACCOUNT':
-      return {...state, active_account: Number(action.account)}
+      let firstAccount = state.accounts.filter(account=>account.id === Number(action.account))
+      return {...state, account: firstAccount}
+    case 'GET_ACCOUNTS':
+      return {...state, accounts: action.accounts}
     default:
       return state
   }

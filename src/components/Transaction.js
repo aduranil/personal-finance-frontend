@@ -1,17 +1,17 @@
 import React from 'react'
 import {Table} from 'semantic-ui-react'
 
-const Transaction = ({account}) => {
+const Transaction = props => {
   return (
     <tr>
       <Table.Cell>
-        {account.date}
+        {props.transaction.date}
       </Table.Cell>
       <Table.Cell>
-        {account.description}
+        {props.transaction.category_name}
       </Table.Cell>
       <Table.Cell>
-        {account.amount}
+        {props.transaction.amount}
       </Table.Cell>
     </tr>
   )

@@ -24,10 +24,16 @@ const login = data => {
   }).then(res => res.json())
 }
 
+const getAccounts = () => {
+  return fetch(`${API_ROOT}/accounts`, {
+    headers: headers
+  }).then(res => res.json())
+}
 
 export const adapter = {
   auth: {
     login,
-    getCurrentUser
+    getCurrentUser,
+    getAccounts
   }
 }
