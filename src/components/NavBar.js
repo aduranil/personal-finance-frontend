@@ -10,30 +10,38 @@ export default class NavBar extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu>
+      <Menu color='olive' inverted secondary>
         <Menu.Item
-          name='editorials'
-          active={activeItem === 'editorials'}
+          name='money'
+          active={activeItem === 'money'}
           onClick={this.handleItemClick}
         >
-          <Icon name='mail'/>
+          <Icon name='money'/>
         </Menu.Item>
 
         <Menu.Item
-          name='reviews'
-          active={activeItem === 'reviews'}
+          name='dashboard'
+          active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}
         >
-          Reviews
+          Dashboard
         </Menu.Item>
 
         <Menu.Item
-          name='upcomingEvents'
-          active={activeItem === 'upcomingEvents'}
+          name='Trends'
+          active={activeItem === 'Trends'}
           onClick={this.handleItemClick}
         >
-          Upcoming Events
+          Trends
         </Menu.Item>
+
+        <Menu.Menu position='right'>
+          <Menu.Item
+            name='logout'
+            active={activeItem === 'logout'}
+            onClick={this.handleItemClick}
+          />
+        </Menu.Menu>
       </Menu>
     )
   }
