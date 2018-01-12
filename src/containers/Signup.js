@@ -5,7 +5,7 @@ import * as actions from '../actions'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 
-class Login extends React.Component {
+class Signup extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -46,7 +46,7 @@ class Login extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='olive' textAlign='center'>
-              {' '}Log-in to your account
+              {' '}Sign up
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
               <Segment stacked>
@@ -73,7 +73,7 @@ class Login extends React.Component {
               </Segment>
             </Form>
             <Message>
-              New to us? <Link to='/signup'>Sign Up</Link>
+              Already a member? <Link to='/login'>Log in</Link>
             </Message>
           </Grid.Column>
         </Grid>
@@ -81,4 +81,4 @@ class Login extends React.Component {
     )
   }
 }
-export default withRouter(connect(null, actions)(Login))
+export default withRouter(connect(null, actions)(Signup))

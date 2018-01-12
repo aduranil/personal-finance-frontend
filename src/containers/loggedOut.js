@@ -31,7 +31,7 @@ export default class HomepageLayout extends Component {
           <Button as={Link} to='/login' color='olive' size='huge'>
             Login
           </Button>
-          <Button color='olive' size='huge'>
+          <Button as={Link} to='/signup' color='olive' size='huge'>
             Sign Up
           </Button>
         </Container>
