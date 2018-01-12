@@ -7,6 +7,7 @@ class SideBar extends React.Component {
   state = { activeItem: 'home'}
 
   handleItemClick = (e, { name }) => {
+    e.preventDefault()
     this.setState({activeItem: name})
     this.props.selectAccount(e.target.id)
   }

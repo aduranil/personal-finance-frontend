@@ -10,7 +10,6 @@ class Dashboard extends React.Component {
 
   componentDidMount(){
     this.props.fetchAccounts()
-    this.props.fetchTransactions()
   }
 
   render(){

@@ -44,15 +44,19 @@ class TransactionsTable extends React.Component {
         )
       })
     } else {
-      item = this.props.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
-      accountName = 'All accounts'
-      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
-      transactionsLength = this.props.transactions.length
-      return item.map((transaction,index) => {
-        return (
-          <Transaction key={index} transaction={transaction}/>
-        )
-      })
+      if (this.props.user.transactions) {
+        item = this.props.user.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
+        accountName = 'All accounts'
+        accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
+        transactionsLength = this.props.user.transactions.length
+        return item.map((transaction,index) => {
+          return (
+            <Transaction key={index} transaction={transaction}/>
+          )
+        })
+      } else {
+        <div/>
+      }
     }
   }
   render(){
