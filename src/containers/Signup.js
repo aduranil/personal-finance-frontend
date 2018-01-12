@@ -25,7 +25,7 @@ class Signup extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     const { fields: { username, password } } = this.state;
-    this.props.loginUser(username, password, this.props.history)
+    this.props.createUser(username, password, this.props.history)
   }
 
   render(){
@@ -69,7 +69,7 @@ class Signup extends React.Component {
                   value={fields.password}
                   onChange={this.handleChange}
                 />
-                <Button type='submit' color='olive' fluid size='large'>Login</Button>
+                <Button type='submit' color='olive' fluid size='large'>Sign Up</Button>
               </Segment>
             </Form>
             <Message>

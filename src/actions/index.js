@@ -41,6 +41,18 @@ export const loginUser = (username, password, history) => dispatch => {
   })
 }
 
+export const createUser = (username, password, history) => dispatch => {
+  adapter.auth.createUser({username,password}).then(user => {
+    if (user.error){
+      alert(user.error)
+    } else {
+      localStorage.setItem('token', user.token)
+      dispatch({type: SET_CURRENT_USER, user})
+      history.push('/')
+    }
+  })
+}
+
 export const logoutUser = () => {
   localStorage.removeItem('token')
   return {type: LOGOUT_USER}

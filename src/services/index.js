@@ -36,11 +36,20 @@ const getTransactions = () => {
   }).then(res => res.json())
 }
 
+const createUser = data => {
+  return fetch(`${API_ROOT}/users`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+}
+
 export const adapter = {
   auth: {
     login,
     getCurrentUser,
     getAccounts,
-    getTransactions
+    getTransactions,
+    createUser
   }
 }
