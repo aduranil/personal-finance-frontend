@@ -1,8 +1,14 @@
 import React from 'react'
-import {Container,Table, Menu,Pagination} from 'semantic-ui-react'
+import {Container, Table, Menu, Pagination, Header} from 'semantic-ui-react'
 import Transaction from './Transaction'
 let item
 let transactionsLength
+let accountName
+let accountBalance
+
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 class TransactionsTable extends React.Component {
   constructor(){
@@ -13,8 +19,8 @@ class TransactionsTable extends React.Component {
       boundaryRange: 1,
       siblingRange: 1,
       showEllipsis: true,
-      showFirstAndLastNav: true,
-      showPreviousAndNextNav: true,
+      showFirstAndLastNav: false,
+      showPreviousAndNextNav: false,
     }
   }
 
@@ -28,6 +34,8 @@ class TransactionsTable extends React.Component {
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
 
     if (this.props.account.length > 0) {
+      accountName = this.props.account[0].name
+      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.account[0].balance * 100)/100).toFixed(2))
       item = this.props.account[0].transactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
       transactionsLength = this.props.account[0].transactions.length
       return item.map((transaction, index) => {
@@ -37,6 +45,8 @@ class TransactionsTable extends React.Component {
       })
     } else {
       item = this.props.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
+      accountName = 'All accounts'
+      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
       transactionsLength = this.props.transactions.length
       return item.map((transaction,index) => {
         return (
@@ -52,27 +62,16 @@ class TransactionsTable extends React.Component {
     for (let i = 1; i <=Math.ceil(transactionsLength/transactionsPerPage); i++) {
       pageNumbers.push(i)
     }
-    const renderPageNumbers = pageNumbers.map(number => {
-      return (
-        <Menu.Item
-        id={number}
-        key={number}
-        active={currentPage === number}
-        onClick={this.handlePageChange}
-        >
-          {number}
-        </Menu.Item>
-      )
-    })
 
     return (
       <Container>
-        <Table>
+        <Header as='h1'>{accountName} : {accountBalance}</Header>
+        <Table color='olive' compact='very'>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell> Date </Table.HeaderCell>
               <Table.HeaderCell> Description </Table.HeaderCell>
-              <Table.HeaderCell> Amount </Table.HeaderCell>
+              <Table.HeaderCell> Amount $</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -86,7 +85,7 @@ class TransactionsTable extends React.Component {
                   boundaryRange={boundaryRange}
                   onPageChange={this.handlePageChange}
                   size='mini'
-                  totalPages={transactionsLength}
+                  totalPages={Math.ceil(transactionsLength/transactionsPerPage)}
                   ellipsisItem={showEllipsis ? undefined : null}
                   firstItem={showFirstAndLastNav ? undefined : null}
                   lastItem={showFirstAndLastNav ? undefined : null}

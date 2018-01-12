@@ -24,6 +24,7 @@ class Dashboard extends React.Component {
             <TransactionsTable
               account={this.props.account}
               transactions={this.props.transactions}
+              user={this.props.user}
             />
           </Grid.Column>
         </Grid>
