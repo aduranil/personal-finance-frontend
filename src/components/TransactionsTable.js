@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Table, Menu} from 'semantic-ui-react'
+import {Container,Table, Menu,Pagination} from 'semantic-ui-react'
 import Transaction from './Transaction'
 let item
 let transactionsLength
@@ -10,21 +10,25 @@ class TransactionsTable extends React.Component {
     this.state = {
       currentPage: 1,
       transactionsPerPage: 25,
-      activeItem: 1
+      boundaryRange: 1,
+      siblingRange: 1,
+      showEllipsis: true,
+      showFirstAndLastNav: true,
+      showPreviousAndNextNav: true,
     }
   }
 
   handlePageChange = (event) => {
-    this.setState({currentPage: Number(event.target.id), activeItem: Number(event.target.id)})
+    this.setState({currentPage: Number(event.currentTarget.innerHTML)})
   }
 
   transactionData = () => {
     const {currentPage, transactionsPerPage} = this.state
     const indexOfLastTransaction = currentPage * transactionsPerPage
-    const indexofFirstTransaction = indexOfLastTransaction-transactionsPerPage
+    const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
 
     if (this.props.account.length > 0) {
-      item = this.props.account[0].transactions.slice(indexofFirstTransaction,indexOfLastTransaction)
+      item = this.props.account[0].transactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
       transactionsLength = this.props.account[0].transactions.length
       return item.map((transaction, index) => {
         return (
@@ -32,7 +36,7 @@ class TransactionsTable extends React.Component {
         )
       })
     } else {
-      item = this.props.transactions.slice(indexofFirstTransaction, indexOfLastTransaction)
+      item = this.props.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
       transactionsLength = this.props.transactions.length
       return item.map((transaction,index) => {
         return (
@@ -42,7 +46,7 @@ class TransactionsTable extends React.Component {
     }
   }
   render(){
-    const {activeItem, transactionsPerPage} = this.state
+    const {currentPage, transactionsPerPage, boundaryRange,siblingRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []
     for (let i = 1; i <=Math.ceil(transactionsLength/transactionsPerPage); i++) {
@@ -53,7 +57,7 @@ class TransactionsTable extends React.Component {
         <Menu.Item
         id={number}
         key={number}
-        active={activeItem === number}
+        active={currentPage === number}
         onClick={this.handlePageChange}
         >
           {number}
@@ -77,9 +81,18 @@ class TransactionsTable extends React.Component {
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan='7'>
-                <Menu floated='right' pagination>
-                  {renderPageNumbers}
-                </Menu>
+                <Pagination
+                  activePage={currentPage}
+                  boundaryRange={boundaryRange}
+                  onPageChange={this.handlePageChange}
+                  size='mini'
+                  totalPages={transactionsLength}
+                  ellipsisItem={showEllipsis ? undefined : null}
+                  firstItem={showFirstAndLastNav ? undefined : null}
+                  lastItem={showFirstAndLastNav ? undefined : null}
+                  prevItem={showPreviousAndNextNav ? undefined : null}
+                  nextItem={showPreviousAndNextNav ? undefined : null}
+                />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
