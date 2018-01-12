@@ -22,6 +22,12 @@ export const fetchAccounts = () => dispatch => {
   })
 }
 
+export const fetchTransactions = () => dispatch => {
+  adapter.auth.getTransactions().then(transactions => {
+    dispatch({type: 'GET_TRANSACTIONS', transactions})
+  })
+}
+
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: "ASYNC_START"})
   adapter.auth.login({username, password}).then(user => {

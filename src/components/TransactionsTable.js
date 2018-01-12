@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Table, Loader} from 'semantic-ui-react'
+import {Container,Table} from 'semantic-ui-react'
 import Transaction from './Transaction'
 
 class TransactionsTable extends React.Component {
@@ -13,10 +13,15 @@ class TransactionsTable extends React.Component {
         )
       })
     } else {
-      <div/>
+      return this.props.transactions.map((transaction,index) => {
+        return (
+          <Transaction key={index} transaction={transaction}/>
+        )
+      })
     }
   }
   render(){
+    console.log(this.props)
     let data = this.transactionData()
     return (
       <Container>

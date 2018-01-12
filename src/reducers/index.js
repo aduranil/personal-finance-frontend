@@ -28,9 +28,19 @@ const accountsReducer = (state = {accounts: [], active_account: 1, account: []},
   }
 }
 
+const transactionsReducer = (state = [], action) => {
+  switch(action.type){
+    case 'GET_TRANSACTIONS':
+      return action.transactions
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   auth: authReducer,
-  accounts: accountsReducer
+  accounts: accountsReducer,
+  transactions: transactionsReducer
 })
 
 export default rootReducer;

@@ -9,9 +9,11 @@ class Dashboard extends React.Component {
 
   componentDidMount(){
     this.props.fetchAccounts()
+    this.props.fetchTransactions()
   }
 
   render(){
+    console.log(this.props)
     return (
       <div>
         <Grid columns={2}>
@@ -21,6 +23,7 @@ class Dashboard extends React.Component {
           <Grid.Column width={8}>
             <TransactionsTable
               account={this.props.account}
+              transactions={this.props.transactions}
             />
           </Grid.Column>
         </Grid>
@@ -36,7 +39,8 @@ const mapStateToProps = (state) => {
     user: state.auth.currentUser,
     active_account: state.accounts.active_account,
     accounts: state.accounts.accounts,
-    account: state.accounts.account
+    account: state.accounts.account,
+    transactions: state.transactions
   }
 }
 

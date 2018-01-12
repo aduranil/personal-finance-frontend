@@ -30,10 +30,17 @@ const getAccounts = () => {
   }).then(res => res.json())
 }
 
+const getTransactions = () => {
+  return fetch(`${API_ROOT}/transactions`, {
+    headers: headers
+  }).then(res => res.json())
+}
+
 export const adapter = {
   auth: {
     login,
     getCurrentUser,
-    getAccounts
+    getAccounts,
+    getTransactions
   }
 }

@@ -5,10 +5,10 @@ const Transaction = props => {
   return (
     <tr>
       <Table.Cell>
-        {props.transaction.date}
+        {props.transaction.period_name}
       </Table.Cell>
       <Table.Cell>
-        {props.transaction.category_name}
+        {props.transaction.merchant_name}
       </Table.Cell>
       <Table.Cell>
         {props.transaction.amount}
