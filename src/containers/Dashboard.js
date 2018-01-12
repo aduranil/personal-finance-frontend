@@ -4,6 +4,7 @@ import TransactionsTable from '../components/TransactionsTable'
 import {Grid} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import withAuth from '../hocs/withAuth'
 
 class Dashboard extends React.Component {
 
@@ -45,4 +46,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(Dashboard)
+export default withAuth(connect(mapStateToProps, actions)(Dashboard))
