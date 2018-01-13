@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Modal, Form, Input, TextArea} from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Form, Input, TextArea, Dropdown} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { adapter } from '../services'
 
 class AddTransaction extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       error: false,
       fields: {
@@ -14,6 +14,7 @@ class AddTransaction extends Component {
         category_name: '',
         merchant_name: '',
         account_name: '',
+        account_id: '',
         period_name: '',
         debit_or_credit: 'debit'
       }
@@ -25,6 +26,10 @@ class AddTransaction extends Component {
     this.setState( { fields: newFields } )
   }
 
+  handleAccountChange = event => {
+    const newFields = {...this.state.fields, [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)}
+    this.setState( { fields: newFields } )
+  }
   handleSubmit = event => {
     event.preventDefault()
     const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit } } = this.state;
@@ -37,13 +42,13 @@ class AddTransaction extends Component {
 
   render() {
     const { fields } = this.state
-    console.log(this.props)
+    console.log(fields)
     let options = []
       this.props.user.accounts.map((account,index) =>
-        options.push({key: index, text: account.name, name: account.name, id: account.id, value: account.id}))
+        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.name}))
     let categories = []
     this.props.categories.map((category,index) =>
-      categories.push({key:index, text: category.name, name: category.name, id:category.id, value:category.id}))
+      categories.push({key:index, text: category.name, name: 'category_name', id:category.id, value:category.name}))
 
     return (
       <Modal
@@ -83,10 +88,10 @@ class AddTransaction extends Component {
               onChange={this.handleChange}
             />
             <Form.Select
-              fluid
+              search
               label='categories'
               options={categories}
-              placeholder='categories'
+              placeholder='category'
               name='category_name'
               value={fields.category_name}
               onChange={this.handleChange}
@@ -107,14 +112,15 @@ class AddTransaction extends Component {
               placeholder='account'
               name='account_name'
               value={fields.account_name}
-              onChange={this.handleChange}
+              onChange={this.handleAccountChange}
             />
+            <Button type='submit' color='green' inverted>
+              Submit
+            </Button>
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button type='submit' color='green' inverted>
-            Submit
-          </Button>
+
         </Modal.Actions>
       </Modal>
     )

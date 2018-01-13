@@ -50,12 +50,12 @@ const createUser = data => {
   }).then(res => res.json())
 }
 
-const createTransaction = data => {
+const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit) => {
   debugger;
   return fetch(`${API_ROOT}/transactions`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify(amount, category_name, merchant_name, account_name, period_name, debit_or_credit)
   }).then(res => res.json())
 }
 
