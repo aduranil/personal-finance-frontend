@@ -85,7 +85,8 @@ class TransactionsTable extends React.Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell> Date </Table.HeaderCell>
-              <Table.HeaderCell> Description </Table.HeaderCell>
+              <Table.HeaderCell> Merchant </Table.HeaderCell>
+              <Table.HeaderCell> Category </Table.HeaderCell>
               <Table.HeaderCell> Amount $</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

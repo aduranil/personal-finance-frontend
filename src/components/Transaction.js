@@ -17,6 +17,9 @@ const Transaction = props => {
         {props.transaction.merchant_name}
       </Table.Cell>
       <Table.Cell>
+        {props.transaction.category_name}
+      </Table.Cell>
+      <Table.Cell>
         {numberWithCommas(parseFloat(Math.round(props.transaction.amount * 100)/100).toFixed(2))}
       </Table.Cell>
     </tr>
