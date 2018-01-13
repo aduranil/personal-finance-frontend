@@ -51,11 +51,19 @@ const createUser = data => {
 }
 
 const createTransaction = (data) => {
-  debugger;
   return fetch(`${API_ROOT}/transactions`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(data)
+  }).then(res => res.json())
+}
+
+const createAccount = (name, user_id) => {
+  debugger;
+  return fetch(`${API_ROOT}/accounts`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({name: name, user_id: user_id})
   }).then(res => res.json())
 }
 
@@ -67,6 +75,7 @@ export const adapter = {
     getTransactions,
     createUser,
     getCategories,
-    createTransaction
+    createTransaction,
+    createAccount
   }
 }

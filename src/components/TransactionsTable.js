@@ -23,7 +23,7 @@ class TransactionsTable extends React.Component {
       boundaryRange: 1,
       showEllipsis: true,
       showFirstAndLastNav: false,
-      showPreviousAndNextNav: false,
+      showPreviousAndNextNav: false
     }
   }
 
