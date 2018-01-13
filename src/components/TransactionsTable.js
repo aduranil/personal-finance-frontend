@@ -4,6 +4,7 @@ import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import AddTransaction from './AddTransaction'
+
 let item
 let transactionsLength
 let accountName

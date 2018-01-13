@@ -26,6 +26,12 @@ export const fetchAccounts = () => dispatch => {
   })
 }
 
+export const getCategories = () => dispatch => {
+  adapter.auth.getCategories().then(categories => {
+    dispatch({type: 'GET_CATEGORIES', categories})
+  })
+}
+
 // export const fetchTransactions = () => dispatch => {
 //   adapter.auth.getTransactions().then(transactions => {
 //     dispatch({type: 'GET_TRANSACTIONS', transactions})

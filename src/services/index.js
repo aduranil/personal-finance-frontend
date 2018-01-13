@@ -30,6 +30,12 @@ const getAccounts = () => {
   }).then(res => res.json())
 }
 
+const getCategories = () => {
+  return fetch(`${API_ROOT}/categories`, {
+    headers: headers
+  }).then(res => res.json())
+}
+
 const getTransactions = () => {
   return fetch(`${API_ROOT}/transactions`, {
     headers: headers
@@ -44,12 +50,23 @@ const createUser = data => {
   }).then(res => res.json())
 }
 
+const createTransaction = data => {
+  debugger;
+  return fetch(`${API_ROOT}/transactions`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+}
+
 export const adapter = {
   auth: {
     login,
     getCurrentUser,
     getAccounts,
     getTransactions,
-    createUser
+    createUser,
+    getCategories,
+    createTransaction
   }
 }
