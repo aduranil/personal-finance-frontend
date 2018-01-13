@@ -16,7 +16,6 @@ class NavBar extends Component {
   }
   render() {
     const { activeItem } = this.state
-    console.log(this.props)
     return (
       <Menu color='olive' inverted secondary>
         <Menu.Item

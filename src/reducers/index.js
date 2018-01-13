@@ -15,6 +15,14 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
+const modalReducer = (state = {modalOpen: false}, action) =>  {
+  switch (action.type){
+    case 'TOGGLE_MODAL':
+      return {...state, modalOpen: !state.modalOpen}
+    default:
+      return state;
+  }
+}
 const accountsReducer = (state = {accounts: [], active_account: 1, account: []}, action) => {
   // console.log('IN THE ACCOUNTS REDUCER action', action)
   switch(action.type){
@@ -28,19 +36,20 @@ const accountsReducer = (state = {accounts: [], active_account: 1, account: []},
   }
 }
 
-const transactionsReducer = (state = [], action) => {
-  switch(action.type){
-    case 'GET_TRANSACTIONS':
-      return action.transactions
-    default:
-      return state
-  }
-}
+// const transactionsReducer = (state = [], action) => {
+//   switch(action.type){
+//     case 'GET_TRANSACTIONS':
+//       return action.transactions
+//     default:
+//       return state
+//   }
+// }
 
 const rootReducer = combineReducers({
   auth: authReducer,
   accounts: accountsReducer,
-  transactions: transactionsReducer
+  // transactions: transactionsReducer,
+  modal: modalReducer
 })
 
 export default rootReducer;

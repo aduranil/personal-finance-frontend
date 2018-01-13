@@ -1,6 +1,9 @@
 import React from 'react'
-import {Container, Table, Menu, Pagination, Header} from 'semantic-ui-react'
+import {Container, Table, Pagination, Header, Grid, Button} from 'semantic-ui-react'
 import Transaction from './Transaction'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import AddTransaction from './AddTransaction'
 let item
 let transactionsLength
 let accountName
@@ -17,7 +20,6 @@ class TransactionsTable extends React.Component {
       currentPage: 1,
       transactionsPerPage: 25,
       boundaryRange: 1,
-      siblingRange: 1,
       showEllipsis: true,
       showFirstAndLastNav: false,
       showPreviousAndNextNav: false,
@@ -60,6 +62,7 @@ class TransactionsTable extends React.Component {
     }
   }
   render(){
+    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,siblingRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []
@@ -69,7 +72,15 @@ class TransactionsTable extends React.Component {
 
     return (
       <Container>
-        <Header as='h1'>{accountName} : {accountBalance}</Header>
+        <AddTransaction/>
+        <Grid columns={2}>
+          <Grid.Column>
+            <Header as='h1'>{accountName}: {accountBalance}</Header>
+          </Grid.Column>
+          <Grid.Column>
+            <Button onClick={()=>this.props.modal(!this.props.modalBoolean)} floated='right' color='olive'>Add Transaction</Button>
+          </Grid.Column>
+        </Grid>
         <Table color='olive' compact='very'>
           <Table.Header>
             <Table.Row>
@@ -106,4 +117,9 @@ class TransactionsTable extends React.Component {
 
 }
 
-export default TransactionsTable
+const mapStateToProps = state => {
+  return {
+    modalBoolean: state.modal.modalOpen
+  }
+}
+export default connect(mapStateToProps, actions)(TransactionsTable)

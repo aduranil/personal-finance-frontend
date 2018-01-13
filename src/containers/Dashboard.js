@@ -13,7 +13,6 @@ class Dashboard extends React.Component {
   }
 
   render(){
-    console.log(this.props)
     return (
       <div>
         <Grid columns={2}>
@@ -23,7 +22,6 @@ class Dashboard extends React.Component {
           <Grid.Column width={8}>
             <TransactionsTable
               account={this.props.account}
-              transactions={this.props.transactions}
               user={this.props.user}
             />
           </Grid.Column>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
@@ -28,8 +28,9 @@ class SideBar extends React.Component {
     return (
       <Menu pointing secondary vertical>
         <Menu.Item as='h4'>Your Accounts</Menu.Item>
-        <Menu.Item name='All' onClick={this.handleItemClick} active={this.state.activeItem === 'All'}/>
+        {this.props.user.accounts !== undefined && this.props.user.accounts.length > 0 ?  <Menu.Item name='All' onClick={this.handleItemClick}  active={this.state.activeItem === 'All'}/> : null}
         {this.renderAccounts()}
+        <Menu.Item><Button color='olive'>Add Account</Button></Menu.Item>
       </Menu>
     )
   }
@@ -40,7 +41,6 @@ const mapStateToProps = (state) => {
     loggedIn: !!state.auth.currentUser.id,
     user: state.auth.currentUser,
     loading: state.auth.isLoading,
-    active_account: state.accounts.active_account
   }
 }
 
