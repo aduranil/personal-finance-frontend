@@ -63,6 +63,17 @@ export const createUser = (username, password, history) => dispatch => {
   })
 }
 
+export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id) => dispatch => {
+  adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id}).then(transaction => {
+    if (transaction.error){
+      alert(transaction.error)
+    } else {
+      dispatch({type: 'SET_TRANSACTION', transaction})
+    }
+  })
+}
+
+
 export const logoutUser = () => {
   localStorage.removeItem('token')
   return {type: LOGOUT_USER}

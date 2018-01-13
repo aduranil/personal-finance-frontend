@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Modal, Form, Input, TextArea, Dropdown} from 'semantic-ui-react'
+import { Button, Label, Header, Icon, Modal, Form, Input, TextArea, Dropdown, Search} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { adapter } from '../services'
+import _ from 'lodash'
 
 class AddTransaction extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class AddTransaction extends Component {
         merchant_name: '',
         account_name: '',
         account_id: '',
+        category_id: '',
         period_name: '',
         debit_or_credit: 'debit'
       }
@@ -26,14 +28,51 @@ class AddTransaction extends Component {
     this.setState( { fields: newFields } )
   }
 
+  handleDateChange = event => {
+    const newFields = {...this.state.fields, [event.target.name]: event.target.value}
+    this.setState( { fields: newFields } )
+  }
+
+  componentWillMount() {
+    this.resetComponent()
+  }
+
+  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+
+  handleResultSelect = (e, { result }) => {
+    const newFields = {...this.state.fields, [result.text]: result.name, [result.id]: result.name2 }
+    this.setState({fields:newFields,value: result.name, showResults:true, id: result.id })
+  }
+
+  handleSearchChange = (e, { value }) => {
+    const newFields = {...this.state.fields, 'category_name': value}
+    this.setState({ isLoading: true, value, fields: newFields})
+    let categories = []
+    this.props.categories.map((category,index) =>
+      categories.push({key:index, text: 'category_name', name: category.name, id:'category_id', name2: category.id, value:category.name}))
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent()
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const isMatch = result => re.test(result.name)
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(categories, isMatch),
+      })
+    }, 500)
+  }
+
+
   handleAccountChange = event => {
     const newFields = {...this.state.fields, [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)}
     this.setState( { fields: newFields } )
   }
   handleSubmit = event => {
     event.preventDefault()
-    const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit } } = this.state;
-    adapter.auth.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit)
+    const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id } } = this.state;
+    this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id)
   }
 
   componentDidMount(){
@@ -41,14 +80,16 @@ class AddTransaction extends Component {
   }
 
   render() {
-    const { fields } = this.state
+    const { fields, isLoading, value,results } = this.state
     console.log(fields)
     let options = []
+    if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>
         options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.name}))
-    let categories = []
-    this.props.categories.map((category,index) =>
-      categories.push({key:index, text: category.name, name: 'category_name', id:category.id, value:category.name}))
+    } else {
+      <div/>
+    }
+    const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
 
     return (
       <Modal
@@ -67,7 +108,7 @@ class AddTransaction extends Component {
               type='date'
               name='period_name'
               value={fields.period_name}
-              onChange={this.handleChange}
+              onChange={this.handleDateChange}
             />
             <Form.Input
               fluid
@@ -78,24 +119,20 @@ class AddTransaction extends Component {
               value={fields.merchant_name}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <Form.Field>
+              <label>Categories</label>
+            <Search
               fluid
-              id='category'
-              label='category'
-              placeholder='category'
-              name='category_name'
-              value={fields.category_name}
-              onChange={this.handleChange}
+              input={{ fluid: true }}
+              placeholder='Search for categories or add your own'
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={this.handleSearchChange}
+              results={results}
+              resultRenderer={resultRenderer}
+              value={value}
             />
-            <Form.Select
-              search
-              label='categories'
-              options={categories}
-              placeholder='category'
-              name='category_name'
-              value={fields.category_name}
-              onChange={this.handleChange}
-            />
+            </Form.Field>
             <Form.Input
               fluid
               id='amount'

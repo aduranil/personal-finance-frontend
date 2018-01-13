@@ -15,6 +15,16 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
+const transactionsReducer = (state = {transaction:{}}, action) => {
+  switch (action.type) {
+    case 'SET_TRANSACTION':
+      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id} = action.transaction
+      return {...state, transaction: {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id}}
+    default:
+      return state;
+  }
+}
+
 const modalReducer = (state = {modalOpen: false}, action) =>  {
   switch (action.type){
     case 'TOGGLE_MODAL':
@@ -48,7 +58,7 @@ const categoriesReducer = (state = {categories:[]}, action) => {
 const rootReducer = combineReducers({
   auth: authReducer,
   accounts: accountsReducer,
-  // transactions: transactionsReducer,
+  transactions: transactionsReducer,
   modal: modalReducer,
   categories: categoriesReducer
 })
