@@ -63,7 +63,6 @@ class TransactionsTable extends React.Component {
     }
   }
   render(){
-    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,siblingRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []
@@ -82,7 +81,7 @@ class TransactionsTable extends React.Component {
             <Button onClick={()=>this.props.modal(!this.props.modalBoolean)} floated='right' color='olive'>Add Transaction</Button>
           </Grid.Column>
         </Grid>
-        <Table color='olive' compact='very'>
+        <Table color='olive' compact='very' selectable sortable stackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell> Date </Table.HeaderCell>

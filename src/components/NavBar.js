@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import withAuth from '../hocs/withAuth'
-import { connect } from "react-redux";
-import * as actions from "../actions";
+import { Link } from "react-router-dom";
+
 class NavBar extends Component {
   state = {}
 
@@ -28,6 +28,8 @@ class NavBar extends Component {
 
         <Menu.Item
           name='dashboard'
+          as={Link}
+          to='/'
           active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}
         >
@@ -36,6 +38,8 @@ class NavBar extends Component {
 
         <Menu.Item
           name='Trends'
+          as={Link}
+          to='/trends'
           active={activeItem === 'Trends'}
           onClick={this.handleItemClick}
         >
@@ -60,15 +64,4 @@ class NavBar extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: !!state.auth.currentUser.id,
-    user: state.auth.currentUser,
-    active_account: state.accounts.active_account,
-    accounts: state.accounts.accounts,
-    account: state.accounts.account,
-    transactions: state.transactions
-  }
-}
-
-export default withAuth(connect(mapStateToProps, actions)(NavBar));
+export default withAuth(NavBar);

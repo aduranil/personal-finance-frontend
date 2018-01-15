@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Label, Header, Icon, Modal, Form, Input, TextArea, Dropdown, Search} from 'semantic-ui-react'
+import { Button, Header, Modal, Form, Search} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { adapter } from '../services'
 import _ from 'lodash'
 
 class AddTransaction extends Component {
@@ -81,7 +80,6 @@ class AddTransaction extends Component {
 
   render() {
     const { fields, isLoading, value,results } = this.state
-    console.log(fields)
     let options = []
     if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>

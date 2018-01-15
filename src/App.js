@@ -7,6 +7,7 @@ import Login from './containers/Login'
 import Signup from './containers/Signup'
 import NavBar from './components/NavBar'
 import Dashboard from './containers/Dashboard'
+import Trends from './containers/Trends'
 
 class App extends Component {
 
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path='/login' component={Login}/>
           <Route exact path='/' component={Dashboard}/>
           <Route exact path='/signup' component={Signup}/>
+          <Route exact path='/trends' component={Trends}/>
         </Switch>
       </div>
     );

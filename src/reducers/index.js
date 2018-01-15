@@ -6,8 +6,10 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username, accounts, account_balance, transactions} = action.user
-      return {...state, currentUser: {id, username, accounts, account_balance, transactions}, isLoading: false}
+      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data} = action.user
+      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data}, isLoading: false}
+    case 'DELETE_TRANSACTION':
+      return {...state, isLoading: true}
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}
     default:
@@ -33,7 +35,7 @@ const modalReducer = (state = {modalOpen: false}, action) =>  {
       return state;
   }
 }
-const accountsReducer = (state = {accounts: [], active_account: 1, account: []}, action) => {
+const accountsReducer = (state = {accounts: [], account: []}, action) => {
   // console.log('IN THE ACCOUNTS REDUCER action', action)
   switch(action.type){
     case 'SELECT_ACCOUNT':

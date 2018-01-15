@@ -58,13 +58,22 @@ const createTransaction = (data) => {
   }).then(res => res.json())
 }
 
+const deleteTransaction = (id) => {
+  return fetch(`${API_ROOT}/transactions/${id}`, {
+    method: 'DELETE',
+    headers: headers
+  })
+}
+
 const createAccount = (name, user_id) => {
-  debugger;
   return fetch(`${API_ROOT}/accounts`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({name: name, user_id: user_id})
-  }).then(res => res.json())
+  }).then(res => res.json()).then(something=>
+      window.location = '/'
+  )
+
 }
 
 export const adapter = {
@@ -76,6 +85,8 @@ export const adapter = {
     createUser,
     getCategories,
     createTransaction,
-    createAccount
+    createAccount,
+    deleteTransaction
+
   }
 }

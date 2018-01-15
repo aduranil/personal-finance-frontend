@@ -36,7 +36,6 @@ const mapStateToProps = (state) => {
   return {
     loggedIn: !!state.auth.currentUser.id,
     user: state.auth.currentUser,
-    active_account: state.accounts.active_account,
     accounts: state.accounts.accounts,
     account: state.accounts.account,
     transactions: state.transactions

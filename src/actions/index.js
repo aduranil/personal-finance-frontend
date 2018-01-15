@@ -20,6 +20,10 @@ export const modal = () => {
   return {type: 'TOGGLE_MODAL'}
 }
 
+export const transactionModal = (id) => {
+  return {type: 'TOGGLE_TRANSACTION', accountOpen: id}
+}
+
 export const fetchAccounts = () => dispatch => {
   adapter.auth.getAccounts().then(accounts => {
     dispatch({type: 'GET_ACCOUNTS', accounts})
@@ -31,12 +35,6 @@ export const getCategories = () => dispatch => {
     dispatch({type: 'GET_CATEGORIES', categories})
   })
 }
-
-// export const fetchTransactions = () => dispatch => {
-//   adapter.auth.getTransactions().then(transactions => {
-//     dispatch({type: 'GET_TRANSACTIONS', transactions})
-//   })
-// }
 
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: "ASYNC_START"})
@@ -73,7 +71,11 @@ export const createTransaction = (amount, category_name, merchant_name, account_
   })
 }
 
-
+export const deleteTransaction = (id) => dispatch => {
+  adapter.auth.deleteTransaction(id).then(something => {
+    window.location = '/'
+  })
+}
 export const logoutUser = () => {
   localStorage.removeItem('token')
   return {type: LOGOUT_USER}
