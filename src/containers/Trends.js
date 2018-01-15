@@ -1,20 +1,20 @@
 import React from 'react'
-import { render } from 'react-dom';
 import WordCloud from 'react-d3-cloud';
 import {Menu, Grid, Header, Segment,Statistic} from 'semantic-ui-react'
 import { connect } from 'react-redux'
-
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 class Trends extends React.Component {
   state = {
     activeItem: 'home',
-    isPassed: "",
+    isPassed: '',
     frequency: 'merchant_frequency'
   }
 
   renderComponent(isPassed) {
-    const data =  []
-    if (this.props.user) {
-      let frequency = this.props.user[this.state.frequency]
+    let data =  []
+    const user = this.props.user
+    if (user) {
+      let frequency = user[this.state.frequency]
       for (const key in frequency) {
         if (frequency.hasOwnProperty(key)) {
           data.push({text: key, value: frequency[key]})
@@ -24,16 +24,26 @@ class Trends extends React.Component {
     const fontSizeMapper = word => Math.log2(word.value) * 5;
     const rotate = word => word.value % 360;
     switch(isPassed) {
-     case 0:
-      return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
-     case 1:
-      return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
-     default:
-      return     <Statistic>
-      <Statistic.Value>${this.props.user.average_spend}</Statistic.Value>
-      <Statistic.Label>Spend per transaction</Statistic.Label>
-    </Statistic>
-
+      case 0:
+        return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
+      case 1:
+        data = data.slice(0,10)
+        return <BarChart width={730} height={250} data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="text" angle={-45} textAnchor="end" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#8884d8" />
+                </BarChart>
+      default: return (
+        <div>
+        <Statistic>
+          <Statistic.Value>${user.average_spend}</Statistic.Value>
+          <Statistic.Label>Spend per transaction</Statistic.Label>
+        </Statistic>
+        <Header> Your spent the most on </Header>
+        </div>
+      )
     }
   }
 
@@ -45,9 +55,38 @@ class Trends extends React.Component {
         <Grid columns={2}>
           <Grid.Column width={4}>
             <Menu pointing secondary vertical>
-              <Menu.Item name='Home' active={activeItem === 'home'} onClick={()=>this.setState({isPassed: ""})} /><br/>
-              <Menu.Item name='Merchant Frequency' active={activeItem === 'Merchant Frequency'} onClick={()=>this.setState({isPassed: 0, frequency:'merchant_frequency', activeItem: 'Merchant Frequency'})} />
-              <Menu.Item name='Category Frequency' active={activeItem === 'Category Frequency'} onClick={()=>this.setState({isPassed: 1, frequency: 'category_frequency', activeItem: 'Category Frequency'})} />
+              <Menu.Item as='h4'>Word Clouds</Menu.Item>
+                <Menu.Item
+                  name='Home'
+                  active={activeItem === 'home'}
+                  onClick={()=>this.setState({isPassed: ""})}
+                />
+                <Menu.Item
+                  name='Merchant Frequency'
+                  active={activeItem === 'Merchant Frequency'}
+                  onClick={()=>this.setState({isPassed: 0, frequency:'merchant_frequency', activeItem: 'Merchant Frequency'})}
+                />
+                <Menu.Item
+                  name='Category Frequency'
+                  active={activeItem === 'Category Frequency'}
+                  onClick={()=>this.setState({isPassed: 0, frequency: 'category_frequency', activeItem: 'Category Frequency'})}
+                />
+                <Menu.Item
+                  name='Category Expense Data'
+                  active={activeItem === 'Category Expense Data'}
+                  onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Category Expense Data'})}
+                />
+                <Menu.Item
+                  name='Merchant Expense Data'
+                  active={activeItem === 'Merchant Expense Data'}
+                  onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Merchant Expense Data'})}
+                />
+              <Menu.Item as='h4'>Expense Graphs</Menu.Item>
+                <Menu.Item
+                  name='Category Expenses'
+                  active={activeItem === 'Category Expenses'}
+                  onClick={()=>this.setState({isPassed: 1, frequency: 'category_expense_data', activeItem: 'Category Expenses'})}
+                />
             </Menu>
           </Grid.Column>
           <Grid.Column width={8}>
