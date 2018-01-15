@@ -6,8 +6,8 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data} = action.user
-      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data}, isLoading: false}
+      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency} = action.user
+      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency}, isLoading: false}
     case 'DELETE_TRANSACTION':
       return {...state, isLoading: true}
     case 'LOGOUT_USER':
