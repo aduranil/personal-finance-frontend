@@ -6,8 +6,8 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency} = action.user
-      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data}, isLoading: false}
+      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency, merchants,categories} = action.user
+      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data, merchants, categories}, isLoading: false}
     case 'DELETE_TRANSACTION':
       return {...state, isLoading: true}
     case 'LOGOUT_USER':
@@ -20,8 +20,8 @@ const authReducer = (state = initialState, action) => {
 const transactionsReducer = (state = {transaction:{}}, action) => {
   switch (action.type) {
     case 'SET_TRANSACTION':
-      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id} = action.transaction
-      return {...state, transaction: {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id}}
+      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, spend_by_month, account_id} = action.transaction
+      return {...state, transaction: {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}}
     default:
       return state;
   }

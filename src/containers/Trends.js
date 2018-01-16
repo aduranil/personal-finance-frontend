@@ -7,12 +7,14 @@ class Trends extends React.Component {
   state = {
     activeItem: 'home',
     isPassed: '',
-    frequency: 'merchant_frequency'
+    frequency: 'merchant_frequency',
+    time: 10
   }
 
   renderComponent(isPassed) {
     let data =  []
     const user = this.props.user
+    const time = this.state.time
     if (user) {
       let frequency = user[this.state.frequency]
       for (const key in frequency) {
@@ -27,14 +29,16 @@ class Trends extends React.Component {
       case 0:
         return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
       case 1:
-        data = data.slice(0,10)
-        return <BarChart width={730} height={250} data={data}>
+        data = data.slice(0,time)
+        return (
+        <BarChart margin={{bottom: 200}} width={730} height={550} data={data}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="text" angle={-45} textAnchor="end" />
+                  <XAxis angle={-45} textAnchor="end" dataKey="text" interval={0}/>
                   <YAxis />
                   <Tooltip />
                   <Bar dataKey="value" fill="#8884d8" />
                 </BarChart>
+              )
       default: return (
         <div>
         <Statistic>
@@ -55,12 +59,12 @@ class Trends extends React.Component {
         <Grid columns={2}>
           <Grid.Column width={4}>
             <Menu pointing secondary vertical>
+              <Menu.Item
+                name='Home'
+                active={activeItem === 'home'}
+                onClick={()=>this.setState({isPassed: ""})}
+              />
               <Menu.Item as='h4'>Word Clouds</Menu.Item>
-                <Menu.Item
-                  name='Home'
-                  active={activeItem === 'home'}
-                  onClick={()=>this.setState({isPassed: ""})}
-                />
                 <Menu.Item
                   name='Merchant Frequency'
                   active={activeItem === 'Merchant Frequency'}
@@ -86,6 +90,16 @@ class Trends extends React.Component {
                   name='Category Expenses'
                   active={activeItem === 'Category Expenses'}
                   onClick={()=>this.setState({isPassed: 1, frequency: 'category_expense_data', activeItem: 'Category Expenses'})}
+                />
+                <Menu.Item
+                  name='Merchant Expenses'
+                  active={activeItem === 'Merchant Expenses'}
+                  onClick={()=>this.setState({isPassed: 1, frequency: 'merchant_expense_data', activeItem: 'Merchant Expenses'})}
+                />
+                <Menu.Item
+                  name='Spend Per Month'
+                  active={activeItem === 'Spend Per Month'}
+                  onClick={()=>this.setState({isPassed: 1, frequency: 'spend_by_month', activeItem: 'Spend Per Month', time:12})}
                 />
             </Menu>
           </Grid.Column>

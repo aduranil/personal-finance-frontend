@@ -61,8 +61,8 @@ export const createUser = (username, password, history) => dispatch => {
   })
 }
 
-export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id) => dispatch => {
-  adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id}).then(transaction => {
+export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id) => dispatch => {
+  adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}).then(transaction => {
     if (transaction.error){
       alert(transaction.error)
     } else {

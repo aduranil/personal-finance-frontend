@@ -15,7 +15,6 @@ class AddTransaction extends Component {
         merchant_name: '',
         account_name: '',
         account_id: '',
-        category_id: '',
         period_name: '',
         debit_or_credit: 'debit'
       }
@@ -27,11 +26,6 @@ class AddTransaction extends Component {
     this.setState( { fields: newFields } )
   }
 
-  handleDateChange = event => {
-    const newFields = {...this.state.fields, [event.target.name]: event.target.value}
-    this.setState( { fields: newFields } )
-  }
-
   componentWillMount() {
     this.resetComponent()
   }
@@ -39,7 +33,7 @@ class AddTransaction extends Component {
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
   handleResultSelect = (e, { result }) => {
-    const newFields = {...this.state.fields, [result.text]: result.name, [result.id]: result.name2 }
+    const newFields = {...this.state.fields, [result.text]: result.name}
     this.setState({fields:newFields,value: result.name, showResults:true, id: result.id })
   }
 
@@ -47,8 +41,8 @@ class AddTransaction extends Component {
     const newFields = {...this.state.fields, 'category_name': value}
     this.setState({ isLoading: true, value, fields: newFields})
     let categories = []
-    this.props.categories.map((category,index) =>
-      categories.push({key:index, text: 'category_name', name: category.name, id:'category_id', name2: category.id, value:category.name}))
+    this.props.user.categories.map((category,index) =>
+      categories.push({key:index, text: 'category_name', name: category, value:category}))
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
@@ -70,8 +64,8 @@ class AddTransaction extends Component {
   }
   handleSubmit = event => {
     event.preventDefault()
-    const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id } } = this.state;
-    this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, category_id)
+    const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} } = this.state;
+    this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id)
   }
 
   componentDidMount(){
@@ -106,7 +100,7 @@ class AddTransaction extends Component {
               type='date'
               name='period_name'
               value={fields.period_name}
-              onChange={this.handleDateChange}
+              onChange={this.handleChange}
             />
             <Form.Input
               fluid
