@@ -45,6 +45,15 @@ class NavBar extends Component {
         >
           Trends
         </Menu.Item>
+        <Menu.Item
+          name='Plaid'
+          as={Link}
+          to='/link'
+          active={activeItem === 'Plaid'}
+          onClick={this.handleItemClick}
+        >
+          Plaid
+        </Menu.Item>
 
         <Menu.Menu position='right'>
         {this.props.loggedIn?

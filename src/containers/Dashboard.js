@@ -15,11 +15,11 @@ class Dashboard extends React.Component {
   render(){
     return (
       <div>
-        <Grid columns={2}>
-          <Grid.Column width={4}>
+        <Grid columns={2} stackable>
+          <Grid.Column width={3}>
             <SideBar/>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={12}>
             <TransactionsTable
               account={this.props.account}
               user={this.props.user}

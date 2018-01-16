@@ -57,8 +57,7 @@ class AddTransaction extends Component {
   }
 
   handleAccountChange = event => {
-    const newFields = { [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)}
-    this.setState( { newFields } )
+    this.setState( { [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue) } )
   }
   handleSubmit = event => {
     event.preventDefault()
@@ -68,6 +67,7 @@ class AddTransaction extends Component {
 
   render() {
     console.log(this.state)
+    console.log(this.props)
     const {isLoading,results, amount, period_name, merchant_name, category_name, account_name } = this.state
     let options = []
     if (this.props.user.accounts) {

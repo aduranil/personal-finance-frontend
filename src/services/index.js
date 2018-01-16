@@ -36,6 +36,13 @@ const getTransactions = () => {
   }).then(res => res.json())
 }
 
+const createAccountsFromPlaid = (token, metadata) => {
+  return fetch(`${API_ROOT}/authenticators`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({token, metadata})
+  }).then(res => res.json())
+}
 const createUser = data => {
   return fetch(`${API_ROOT}/users`, {
     method: 'POST',
@@ -54,6 +61,13 @@ const createTransaction = (data) => {
 
 const deleteTransaction = (id) => {
   return fetch(`${API_ROOT}/transactions/${id}`, {
+    method: 'DELETE',
+    headers: headers
+  })
+}
+
+const deleteAccount = (id) => {
+  return fetch(`${API_ROOT}/accounts/${id}`, {
     method: 'DELETE',
     headers: headers
   })
@@ -79,7 +93,8 @@ export const adapter = {
     createUser,
     createTransaction,
     createAccount,
-    deleteTransaction
-
+    deleteTransaction,
+    deleteAccount,
+    createAccountsFromPlaid
   }
 }

@@ -57,7 +57,7 @@ class Trends extends React.Component {
     return (
       <div>
         <Grid columns={2}>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Menu pointing secondary vertical>
               <Menu.Item
                 name='Home'
@@ -103,7 +103,7 @@ class Trends extends React.Component {
                 />
             </Menu>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={13}>
             {this.renderComponent(this.state.isPassed)}
           </Grid.Column>
         </Grid>

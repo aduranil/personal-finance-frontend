@@ -5,6 +5,13 @@ import {
   SET_CURRENT_USER
 } from "./types";
 
+const headers = {
+  'Content-Type': 'application/json',
+  Accepts: 'application/json'
+}
+
+const API_ROOT = `http://localhost:3000`
+
 export const fetchUser = () => dispatch => {
   dispatch({type: ASYNC_START})
   adapter.auth.getCurrentUser().then(user => {
@@ -60,13 +67,19 @@ export const createTransaction = (amount, category_name, merchant_name, account_
     if (transaction.error){
       alert(transaction.error)
     } else {
-      dispatch({type: 'SET_TRANSACTION', transaction})
+      window.location= '/'
     }
   })
 }
 
 export const deleteTransaction = (id) => dispatch => {
   adapter.auth.deleteTransaction(id).then(something => {
+    dispatch({type: 'DELETE_TRANSACTION', id})
+  })
+}
+
+export const deleteAccount = (id) => dispatch => {
+  adapter.auth.deleteAccount(id).then(something => {
     window.location = '/'
   })
 }

@@ -9,7 +9,9 @@ const authReducer = (state = initialState, action) => {
       const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency, category_name, merchant_name} = action.user
       return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data, merchant_name, category_name}, isLoading: false}
     case 'DELETE_TRANSACTION':
-      return {...state, isLoading: true}
+      let newCurrentUser = Object.assign({}, state.currentUser, {})
+      newCurrentUser.transactions = state.currentUser.transactions.filter(transaction => transaction.id !== action.id)
+      return {...state, currentUser: newCurrentUser}
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}
     default:
