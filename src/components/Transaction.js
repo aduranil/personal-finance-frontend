@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table,Modal,Button} from 'semantic-ui-react'
+import {Table,Modal,Button,Header, Grid} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
@@ -34,13 +34,26 @@ const Transaction = props => {
       >
       <Modal.Header content='Transaction Details' />
       <Modal.Content>
+        <Grid columns={2}>
+          <Grid.Column width={5}>
+            <b>Date:<br/>
+            Amount:<br/>
+            Merchant:<br/>
+            Detailed Description:<br/>
+            Category:<br/>
+            Account:<br/>
+            Debit or Credit:</b><br/>
+            </Grid.Column>
+          <Grid.Column width={11}>
         {props.transaction.period_name}<br/>
-        {props.transaction.amount}<br/>
-        {props.transaction.merchant_name}<br/>
-        {props.transaction.category_name}<br/>
-        {props.transaction.account_name}<br/>
-        {props.transaction.description}<br/>
-        {props.transaction.debit_or_credit}<br/>
+         {props.transaction.amount}<br/>
+         {props.transaction.merchant_name}<br/>
+         {props.transaction.description}<br/>
+         {props.transaction.category_name}<br/>
+         {props.transaction.account_name}<br/>
+         {props.transaction.debit_or_credit}<br/>
+        </Grid.Column>
+        </Grid>
         <Button color='red' onClick={()=>props.deleteTransaction(props.transaction.id)} inverted> Delete </Button>
       </Modal.Content>
     </Modal>
