@@ -30,12 +30,6 @@ export const fetchAccounts = () => dispatch => {
   })
 }
 
-export const getCategories = () => dispatch => {
-  adapter.auth.getCategories().then(categories => {
-    dispatch({type: 'GET_CATEGORIES', categories})
-  })
-}
-
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: "ASYNC_START"})
   adapter.auth.login({username, password}).then(user => {

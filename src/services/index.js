@@ -30,12 +30,6 @@ const getAccounts = () => {
   }).then(res => res.json())
 }
 
-const getCategories = () => {
-  return fetch(`${API_ROOT}/categories`, {
-    headers: headers
-  }).then(res => res.json())
-}
-
 const getTransactions = () => {
   return fetch(`${API_ROOT}/transactions`, {
     headers: headers
@@ -83,7 +77,6 @@ export const adapter = {
     getAccounts,
     getTransactions,
     createUser,
-    getCategories,
     createTransaction,
     createAccount,
     deleteTransaction

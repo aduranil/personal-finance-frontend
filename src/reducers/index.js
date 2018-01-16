@@ -6,8 +6,8 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency, merchants,categories} = action.user
-      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data, merchants, categories}, isLoading: false}
+      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency, category_name, merchant_name} = action.user
+      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data, merchant_name, category_name}, isLoading: false}
     case 'DELETE_TRANSACTION':
       return {...state, isLoading: true}
     case 'LOGOUT_USER':
@@ -36,7 +36,6 @@ const modalReducer = (state = {modalOpen: false}, action) =>  {
   }
 }
 const accountsReducer = (state = {accounts: [], account: []}, action) => {
-  // console.log('IN THE ACCOUNTS REDUCER action', action)
   switch(action.type){
     case 'SELECT_ACCOUNT':
       let firstAccount = state.accounts.filter(account=>account.id === Number(action.account))
@@ -48,21 +47,11 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
   }
 }
 
-const categoriesReducer = (state = {categories:[]}, action) => {
-  switch(action.type){
-    case 'GET_CATEGORIES':
-      return {...state, categories: action.categories}
-    default:
-      return state
-  }
-}
-
 const rootReducer = combineReducers({
   auth: authReducer,
   accounts: accountsReducer,
   transactions: transactionsReducer,
-  modal: modalReducer,
-  categories: categoriesReducer
+  modal: modalReducer
 })
 
 export default rootReducer;

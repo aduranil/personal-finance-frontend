@@ -9,71 +9,66 @@ class AddTransaction extends Component {
     super(props);
     this.state = {
       error: false,
-      fields: {
-        amount: '',
-        category_name: '',
-        merchant_name: '',
-        account_name: '',
-        account_id: '',
-        period_name: '',
-        debit_or_credit: 'debit'
-      }
+      amount: '',
+      category_name: '',
+      merchant_name: '',
+      account_name: '',
+      account_id: '',
+      period_name: '',
+      debit_or_credit: 'debit'
+
     }
   }
 
   handleChange = event => {
-    const newFields = {...this.state.fields, [event.target.name]: event.target.value}
-    this.setState( { fields: newFields } )
+    this.setState( { [event.target.name]: event.target.value } )
   }
 
   componentWillMount() {
     this.resetComponent()
   }
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+  resetComponent = () => {
+    this.setState({ isLoading: false, results: []})
+  }
 
   handleResultSelect = (e, { result }) => {
-    const newFields = {...this.state.fields, [result.text]: result.name}
-    this.setState({fields:newFields,value: result.name, showResults:true, id: result.id })
+    this.setState({[result.text]: result.name, showResults:true, id: result.id })
   }
 
   handleSearchChange = (e, { value }) => {
-    const newFields = {...this.state.fields, 'category_name': value}
-    this.setState({ isLoading: true, value, fields: newFields})
-    let categories = []
-    this.props.user.categories.map((category,index) =>
-      categories.push({key:index, text: 'category_name', name: category, value:category}))
+    let item = e.currentTarget.id
+    this.setState({ isLoading: true, [e.currentTarget.id]: value})
+    let data = []
+    this.props.user[item].map((category,index) =>
+      data.push({key:index, text: item, name: category, value:category}))
 
     setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
+      if (this.state[item].length < 1) return this.resetComponent()
 
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
+      const re = new RegExp(_.escapeRegExp(this.state[item]), 'i')
       const isMatch = result => re.test(result.name)
 
       this.setState({
         isLoading: false,
-        results: _.filter(categories, isMatch),
+        results: _.filter(data, isMatch),
       })
     }, 500)
   }
 
-
   handleAccountChange = event => {
-    const newFields = {...this.state.fields, [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)}
-    this.setState( { fields: newFields } )
+    const newFields = { [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)}
+    this.setState( { newFields } )
   }
   handleSubmit = event => {
     event.preventDefault()
-    const { fields: { amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} } = this.state;
+    const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} = this.state;
     this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id)
   }
 
-  componentDidMount(){
-    this.props.getCategories()
-  }
-
   render() {
-    const { fields, isLoading, value,results } = this.state
+    console.log(this.state)
+    const {isLoading,results, amount, period_name, merchant_name, category_name, account_name } = this.state
     let options = []
     if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>
@@ -96,33 +91,40 @@ class AddTransaction extends Component {
               fluid
               id='date'
               label='date'
-              placeholder='Date'
+              placeholder='date'
               type='date'
               name='period_name'
-              value={fields.period_name}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              fluid
-              id='merchant'
-              label='merchant'
-              placeholder='Merchant'
-              name='merchant_name'
-              value={fields.merchant_name}
+              value={period_name}
               onChange={this.handleChange}
             />
             <Form.Field>
-              <label>Categories</label>
+              <label>merchant</label>
             <Search
               fluid
-              input={{ fluid: true }}
+              id={'merchant_name'}
+              input={{ fluid: true}}
+              placeholder='Search for merchants or add your own'
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={this.handleSearchChange}
+              results={results}
+              resultRenderer={resultRenderer}
+              value={merchant_name}
+            />
+            </Form.Field>
+            <Form.Field>
+              <label>category</label>
+            <Search
+              fluid
+              id={'category_name'}
+              input={{ fluid: true}}
               placeholder='Search for categories or add your own'
               loading={isLoading}
               onResultSelect={this.handleResultSelect}
               onSearchChange={this.handleSearchChange}
               results={results}
               resultRenderer={resultRenderer}
-              value={value}
+              value={category_name}
             />
             </Form.Field>
             <Form.Input
@@ -131,7 +133,7 @@ class AddTransaction extends Component {
               label='amount'
               placeholder='amount'
               name='amount'
-              value={fields.amount}
+              value={amount}
               onChange={this.handleChange}
             />
              <Form.Select
@@ -140,7 +142,7 @@ class AddTransaction extends Component {
               options={options}
               placeholder='account'
               name='account_name'
-              value={fields.account_name}
+              value={account_name}
               onChange={this.handleAccountChange}
             />
             <Button type='submit' color='green' inverted>
@@ -159,8 +161,7 @@ class AddTransaction extends Component {
 const mapStateToProps = state => {
   return {
     modalBoolean: state.modal.modalOpen,
-    user: state.auth.currentUser,
-    categories: state.categories.categories
+    user: state.auth.currentUser
   }
 }
 
