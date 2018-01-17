@@ -9,7 +9,6 @@ const numberWithCommas = (x) => {
 
 
 const Transaction = props => {
-  console.log(props)
   return (
     <Modal
       trigger={

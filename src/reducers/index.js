@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false}
+const initialState = { currentUser: {}, isLoading: false, transaction: {}}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
@@ -12,18 +12,17 @@ const authReducer = (state = initialState, action) => {
       let newCurrentUser = Object.assign({}, state.currentUser, {})
       newCurrentUser.transactions = state.currentUser.transactions.filter(transaction => transaction.id !== action.id)
       return {...state, currentUser: newCurrentUser}
+    case 'ADD_TRANSACTION':
+      let thisCurrentUser = Object.assign({}, state.currentUser, {})
+      thisCurrentUser.transactions = state.currentUser.transactions.concat(action.transaction)
+      thisCurrentUser.account_balance = thisCurrentUser.account_balance - action.transaction.amount
+      return {...state, currentUser: thisCurrentUser}
+    case 'ADD_ACCOUNT':
+      newCurrentUser = Object.assign({}, state.currentUser, {})
+      newCurrentUser.accounts = state.currentUser.accounts.concat(action.account)
+      return {...state, currentUser: newCurrentUser}
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}
-    default:
-      return state;
-  }
-}
-
-const transactionsReducer = (state = {transaction:{}}, action) => {
-  switch (action.type) {
-    case 'SET_TRANSACTION':
-      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} = action.transaction
-      return {...state, transaction: {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}}
     default:
       return state;
   }
@@ -52,7 +51,6 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
 const rootReducer = combineReducers({
   auth: authReducer,
   accounts: accountsReducer,
-  transactions: transactionsReducer,
   modal: modalReducer
 })
 

@@ -2,7 +2,14 @@ import { adapter } from '../services'
 import {
   ASYNC_START,
   LOGOUT_USER,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  SELECT_ACCOUNT,
+  TOGGLE_MODAL,
+  GET_ACCOUNTS,
+  DELETE_TRANSACTION,
+  SET_TRANSACTION,
+  ADD_TRANSACTION,
+  ADD_ACCOUNT
 } from "./types";
 
 
@@ -14,25 +21,21 @@ export const fetchUser = () => dispatch => {
 }
 
 export const selectAccount = (id) =>  {
-  return {type: 'SELECT_ACCOUNT', account: id}
+  return {type: SELECT_ACCOUNT, account: id}
 }
 
 export const modal = () => {
-  return {type: 'TOGGLE_MODAL'}
-}
-
-export const transactionModal = (id) => {
-  return {type: 'TOGGLE_TRANSACTION', accountOpen: id}
+  return {type: TOGGLE_MODAL}
 }
 
 export const fetchAccounts = () => dispatch => {
   adapter.auth.getAccounts().then(accounts => {
-    dispatch({type: 'GET_ACCOUNTS', accounts})
+    dispatch({type: GET_ACCOUNTS, accounts})
   })
 }
 
 export const loginUser = (username, password, history) => dispatch => {
-  dispatch({type: "ASYNC_START"})
+  dispatch({type: ASYNC_START})
   adapter.auth.login({username, password}).then(user => {
     if (user.error){
       alert(user.error)
@@ -40,6 +43,17 @@ export const loginUser = (username, password, history) => dispatch => {
       localStorage.setItem('token', user.token)
       dispatch({type: SET_CURRENT_USER, user})
       history.push('/')
+    }
+  })
+}
+
+export const addAccount = (name, user_id) => dispatch => {
+  adapter.auth.createAccount(name, user_id)
+  .then(account => {
+    if (account.error) {
+      alert(account.error)
+    } else {
+      dispatch({type: ADD_ACCOUNT, account})
     }
   })
 }
@@ -61,14 +75,14 @@ export const createTransaction = (amount, category_name, merchant_name, account_
     if (transaction.error){
       alert(transaction.error)
     } else {
-      window.location= '/'
+      dispatch({type: ADD_TRANSACTION, transaction})
     }
   })
 }
 
 export const deleteTransaction = (id) => dispatch => {
   adapter.auth.deleteTransaction(id).then(something => {
-    dispatch({type: 'DELETE_TRANSACTION', id})
+    dispatch({type: DELETE_TRANSACTION, id})
   })
 }
 

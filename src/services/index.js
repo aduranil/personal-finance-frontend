@@ -70,7 +70,7 @@ const deleteAccount = (id) => {
   return fetch(`${API_ROOT}/accounts/${id}`, {
     method: 'DELETE',
     headers: headers
-  })
+  }).then(reload => window.location = '/')
 }
 
 const createAccount = (name, user_id) => {
@@ -78,10 +78,7 @@ const createAccount = (name, user_id) => {
     method: 'POST',
     headers: headers,
     body: JSON.stringify({name: name, user_id: user_id})
-  }).then(res => res.json()).then(something=>
-      window.location = '/'
-  )
-
+  }).then(res => res.json())
 }
 
 export const adapter = {

@@ -32,8 +32,8 @@ class DashboardNavbar extends React.Component {
   handleSubmit = () => {
     let name = this.state.account_name
     let user_id = this.state.user_id
-    this.setState({ modalOpen: false })
-    adapter.auth.createAccount(name, user_id)
+    this.setState({modalOpen: false })
+    this.props.addAccount(name, user_id)
   }
 
   handleOpen = () => this.setState({modalOpen: true})
@@ -41,13 +41,15 @@ class DashboardNavbar extends React.Component {
   handleClose = () => this.setState({modalOpen: false})
 
   handleAccountSubmit = () => {
+    this.setState({deleteAccountModal: false})
     adapter.auth.deleteAccount(this.state.account_id)
   }
 
   handleClick = event => {
     this.setState({
       account_name: event.currentTarget.innerText,
-      account_id: event.currentTarget.attributes[0].nodeValue})
+      account_id: event.currentTarget.attributes[0].nodeValue
+    })
   }
 
   handleOnSuccess = (user_id, token, metadata) => {
