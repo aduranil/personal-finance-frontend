@@ -21,13 +21,7 @@ class SideBar extends React.Component {
     const { activeItem } = this.state
     if (this.props.user.accounts) {
       return this.props.user.accounts.map(account => {
-        return <Menu.Item
-                  name={account.name}
-                  onClick={this.handleItemClick}
-                  active={activeItem === account.name}
-                  id={account.id}
-                  key={account.id}
-                />
+        return <Menu.Item name={account.name} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} key={account.id}/>
       })
     }
   }

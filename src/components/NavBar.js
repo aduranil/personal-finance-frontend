@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 class NavBar extends Component {
   state = {}
 
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name })
+  handleItemClick = (e, {name}) => {
+    this.setState({activeItem: name})
   }
 
   handleLogout = (event) => {
-    this.setState({ activeItem: event.target.name })
+    this.setState({activeItem: event.target.name})
     this.props.logoutUser()
   }
   render() {
@@ -25,7 +25,6 @@ class NavBar extends Component {
         >
           <Icon name='money'/>
         </Menu.Item>
-
         <Menu.Item
           name='dashboard'
           as={Link}
@@ -35,7 +34,6 @@ class NavBar extends Component {
         >
           Dashboard
         </Menu.Item>
-
         <Menu.Item
           name='Trends'
           as={Link}

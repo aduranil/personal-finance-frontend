@@ -19,17 +19,17 @@ class Signup extends React.Component {
 
   handleChange = event => {
     const newFields = {...this.state.fields, [event.target.name]: event.target.value}
-    this.setState( { fields: newFields } )
+    this.setState({fields: newFields})
   }
 
   handleSubmit = event => {
     event.preventDefault()
-    const { fields: { username, password } } = this.state;
+    const {fields: {username, password}} = this.state;
     this.props.createUser(username, password, this.props.history)
   }
 
   render(){
-    const { fields } = this.state
+    const {fields} = this.state
     return (
       <div className='login-form'>
         <style>{`

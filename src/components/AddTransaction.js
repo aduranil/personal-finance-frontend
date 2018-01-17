@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 class AddTransaction extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       error: false,
       amount: '',
@@ -16,12 +16,11 @@ class AddTransaction extends Component {
       account_id: '',
       period_name: '',
       debit_or_credit: 'debit'
-
     }
   }
 
   handleChange = event => {
-    this.setState( { [event.target.name]: event.target.value } )
+    this.setState({[event.target.name]: event.target.value})
   }
 
   componentWillMount() {
@@ -29,26 +28,25 @@ class AddTransaction extends Component {
   }
 
   resetComponent = () => {
-    this.setState({ isLoading: false, results: []})
+    this.setState({isLoading: false, results: []})
   }
 
   handleResultSelect = (e, { result }) => {
-    this.setState({[result.text]: result.name, showResults:true, id: result.id })
+    this.setState({[result.text]: result.name, showResults:true, id: result.id})
   }
 
   handleSearchChange = (e, { value }) => {
     let item = e.currentTarget.id
-    this.setState({ isLoading: true, [e.currentTarget.id]: value})
     let data = []
+    this.setState({ isLoading: true, [e.currentTarget.id]: value})
     this.props.user[item].map((category,index) =>
-      data.push({key:index, text: item, name: category, value:category}))
+      data.push({key:index, text: item, name: category, value:category})
+    )
 
     setTimeout(() => {
       if (this.state[item].length < 1) return this.resetComponent()
-
       const re = new RegExp(_.escapeRegExp(this.state[item]), 'i')
       const isMatch = result => re.test(result.name)
-
       this.setState({
         isLoading: false,
         results: _.filter(data, isMatch),
@@ -57,8 +55,11 @@ class AddTransaction extends Component {
   }
 
   handleAccountChange = event => {
-    this.setState( { [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue) } )
+    this.setState({
+      [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)
+    })
   }
+
   handleSubmit = event => {
     event.preventDefault()
     const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} = this.state;
@@ -66,16 +67,14 @@ class AddTransaction extends Component {
   }
 
   render() {
-    console.log(this.state)
-    console.log(this.props)
-    const {isLoading,results, amount, period_name, merchant_name, category_name, account_name } = this.state
+    const {isLoading,results, amount, period_name, merchant_name, category_name, account_name} = this.state
+    const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
     let options = []
     if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>
-        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.account_name}))
+        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.account_name})
+      )
     }
-    const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
-
     return (
       <Modal
         open={this.props.modalBoolean}
@@ -143,14 +142,9 @@ class AddTransaction extends Component {
               value={account_name}
               onChange={this.handleAccountChange}
             />
-            <Button type='submit' color='green' inverted>
-              Submit
-            </Button>
+            <Button type='submit' color='green' inverted>Submit</Button>
           </Form>
         </Modal.Content>
-        <Modal.Actions>
-
-        </Modal.Actions>
       </Modal>
     )
   }

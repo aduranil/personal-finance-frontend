@@ -110,7 +110,6 @@ class TransactionsTable extends React.Component {
       </Container>
     )
   }
-
 }
 
 export default connect(null, actions)(TransactionsTable)
