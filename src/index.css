@@ -14,3 +14,18 @@ h3.ui.header,
 div.ui {
   font-family: "Raleway", sans-serif !important;
 }
+
+button.buttonChange {
+  background: #8884d8 !important;
+  outline: none !important;
+  border: none !important;
+}
+
+font#buttonText {
+  font-family: "Raleway", sans-serif !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.ui.menu.blue {
+  background: #8884d8 !important
+}

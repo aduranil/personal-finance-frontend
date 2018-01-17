@@ -5,12 +5,6 @@ import {
   SET_CURRENT_USER
 } from "./types";
 
-const headers = {
-  'Content-Type': 'application/json',
-  Accepts: 'application/json'
-}
-
-const API_ROOT = `http://localhost:3000`
 
 export const fetchUser = () => dispatch => {
   dispatch({type: ASYNC_START})

@@ -72,9 +72,7 @@ class AddTransaction extends Component {
     let options = []
     if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>
-        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.name}))
-    } else {
-      <div/>
+        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.account_name}))
     }
     const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
 

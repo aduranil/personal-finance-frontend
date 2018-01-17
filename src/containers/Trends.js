@@ -1,8 +1,10 @@
 import React from 'react'
 import WordCloud from 'react-d3-cloud';
-import {Menu, Grid, Header, Segment,Statistic} from 'semantic-ui-react'
+import {Menu, Grid, Header,Statistic, Divider} from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip,Bar } from 'recharts';
+import _ from 'lodash'
+
 class Trends extends React.Component {
   state = {
     activeItem: 'home',
@@ -24,7 +26,6 @@ class Trends extends React.Component {
       }
     }
     const fontSizeMapper = word => Math.log2(word.value) * 5;
-    const rotate = word => word.value % 360;
     switch(isPassed) {
       case 0:
         return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
@@ -39,13 +40,24 @@ class Trends extends React.Component {
                   <Bar dataKey="value" fill="#8884d8" />
                 </BarChart>
               )
-      default: return (
+      default:
+        let merchantExpenses = _.keys(user.merchant_expense_data).slice(0,3)
+        let merchantValues = _.values(user.merchant_expense_data).slice(0,3)
+        let merchantFreq = _.keys(user.merchant_frequency).slice(0,3)
+        let merchantUnits = _.values(user.merchant_frequency).slice(0,3)
+      return (
         <div>
+        <Statistic.Group>
         <Statistic>
           <Statistic.Value>${user.average_spend}</Statistic.Value>
           <Statistic.Label>Spend per transaction</Statistic.Label>
+
+          <Statistic.Value>{user.transactions ? user.transactions.length : null}</Statistic.Value>
+          <Statistic.Label>Transactions</Statistic.Label>
         </Statistic>
-        <Header> Your spent the most on </Header>
+        </Statistic.Group>
+        <Header> Your spent the most with {merchantExpenses[0]} (${merchantValues[0]}), {merchantExpenses[1]} (${merchantValues[1]}), and {merchantExpenses[2]} (${merchantValues[2]}). </Header>
+        <Header> Your most frequent transactions were with {merchantFreq[0]} ({merchantUnits[0]} times), {merchantFreq[1]} ({merchantUnits[1]} times), and {merchantFreq[2]} ({merchantUnits[2]} times). </Header>
         </div>
       )
     }
@@ -56,15 +68,16 @@ class Trends extends React.Component {
     const { activeItem } = this.state
     return (
       <div>
+      <Divider hidden/>
         <Grid columns={2}>
           <Grid.Column width={3}>
-            <Menu pointing secondary vertical>
+            <Menu secondary vertical>
               <Menu.Item
                 name='Home'
                 active={activeItem === 'home'}
                 onClick={()=>this.setState({isPassed: ""})}
               />
-              <Menu.Item as='h4'>Word Clouds</Menu.Item>
+              <Menu.Item style={{fontSize: '1.1em'}}><b>Word Clouds</b></Menu.Item>
                 <Menu.Item
                   name='Merchant Frequency'
                   active={activeItem === 'Merchant Frequency'}
@@ -85,7 +98,7 @@ class Trends extends React.Component {
                   active={activeItem === 'Merchant Expense Data'}
                   onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Merchant Expense Data'})}
                 />
-              <Menu.Item as='h4'>Expense Graphs</Menu.Item>
+              <Menu.Item style={{fontSize: '1.1em'}}><b>Expense Graphs</b></Menu.Item>
                 <Menu.Item
                   name='Category Expenses'
                   active={activeItem === 'Category Expenses'}

@@ -22,7 +22,7 @@ const authReducer = (state = initialState, action) => {
 const transactionsReducer = (state = {transaction:{}}, action) => {
   switch (action.type) {
     case 'SET_TRANSACTION':
-      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, spend_by_month, account_id} = action.transaction
+      const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} = action.transaction
       return {...state, transaction: {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}}
     default:
       return state;

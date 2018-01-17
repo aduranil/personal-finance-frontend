@@ -36,11 +36,11 @@ const getTransactions = () => {
   }).then(res => res.json())
 }
 
-const createAccountsFromPlaid = (token, metadata) => {
+const createAccountsFromPlaid = (user_id, token, metadata) => {
   return fetch(`${API_ROOT}/authenticators`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify({token, metadata})
+    body: JSON.stringify({user_id, token, metadata})
   }).then(res => res.json())
 }
 const createUser = data => {

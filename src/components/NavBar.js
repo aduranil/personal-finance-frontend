@@ -17,7 +17,7 @@ class NavBar extends Component {
   render() {
     const { activeItem } = this.state
     return (
-      <Menu color='olive' inverted secondary>
+      <Menu color='olive' inverted secondary style={{marginBottom: 0}}>
         <Menu.Item
           name='money'
           active={activeItem === 'money'}
@@ -45,16 +45,6 @@ class NavBar extends Component {
         >
           Trends
         </Menu.Item>
-        <Menu.Item
-          name='Plaid'
-          as={Link}
-          to='/link'
-          active={activeItem === 'Plaid'}
-          onClick={this.handleItemClick}
-        >
-          Plaid
-        </Menu.Item>
-
         <Menu.Menu position='right'>
         {this.props.loggedIn?
           <Menu.Item

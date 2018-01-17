@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table,Modal,Button,Header, Grid} from 'semantic-ui-react'
+import {Table,Modal,Button, Grid} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 

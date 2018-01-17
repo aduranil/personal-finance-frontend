@@ -1,5 +1,6 @@
 import React from 'react'
 import SideBar from '../components/SideBar'
+import DashboardNavbar from '../components/DashboardNavbar'
 import TransactionsTable from '../components/TransactionsTable'
 import {Grid} from 'semantic-ui-react'
 import { connect } from 'react-redux'
@@ -15,6 +16,7 @@ class Dashboard extends React.Component {
   render(){
     return (
       <div>
+        <DashboardNavbar/>
         <Grid columns={2} stackable>
           <Grid.Column width={3}>
             <SideBar/>
