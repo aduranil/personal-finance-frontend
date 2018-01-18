@@ -63,6 +63,10 @@ export const addAccount = (name, user_id) => dispatch => {
   })
 }
 
+export const updateAccount = (transactions) => {
+  return {type: 'UPDATE_ACCOUNT', transactions}
+}
+
 export const createUser = (username, password, history) => dispatch => {
   adapter.auth.createUser({username,password}).then(user => {
     if (user.error){

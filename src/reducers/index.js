@@ -42,8 +42,11 @@ const modalReducer = (state = {modalOpen: false}, action) =>  {
 const accountsReducer = (state = {accounts: [], account: []}, action) => {
   switch(action.type){
     case 'SELECT_ACCOUNT':
-      let firstAccount = state.accounts.filter(account=>account.id === Number(action.account))
+      let firstAccount = state.accounts.find(account=>account.id === Number(action.account))
       return {...state, account: firstAccount}
+    case 'UPDATE_ACCOUNT':
+      let updatedAccount = Object.assign({}, state.account, {transactions: action.transactions})
+      return {...state, account: updatedAccount}
     case 'GET_ACCOUNTS':
       return {...state, accounts: action.accounts}
     default:
