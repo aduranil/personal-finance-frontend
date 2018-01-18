@@ -23,7 +23,8 @@ class TransactionsTable extends React.Component {
       boundaryRange: 1,
       showEllipsis: true,
       showFirstAndLastNav: false,
-      showPreviousAndNextNav: false
+      showPreviousAndNextNav: false,
+      ascending : true
     }
   }
 
@@ -32,15 +33,25 @@ class TransactionsTable extends React.Component {
   }
 
   sortTransactions = (event) => {
+    event.preventDefault()
     let value = event.target.id
     let sortedTransactions = this.props.transactions.slice()
-    if (this.state.showEllipsis === true) {
+    this.setState({ascending: !this.state.ascending})
+    if (this.state.ascending) {
       sortedTransactions = sortedTransactions.sort((a,b) => {
-        if (a[value] < b[value]) {
+        if (a[value].toLowerCase() < b[value].toLowerCase()) {
           return -1
-        } else {
+        } else if (a[value].toLowerCase() > b[value].toLowerCase()) {
           return 1
-        } return 0
+        }
+      })
+    } else {
+      sortedTransactions = sortedTransactions.sort((a,b) => {
+        if (a[value].toLowerCase() > b[value].toLowerCase()) {
+          return -1
+        } else if (a[value].toLowerCase() < b[value].toLowerCase())  {
+          return 1
+        }
       })
     }
     this.props.sortTransactions(sortedTransactions)
@@ -94,9 +105,9 @@ class TransactionsTable extends React.Component {
         <Table color='olive' compact='very' selectable sortable stackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell id='period_name'> Date </Table.HeaderCell>
+              <Table.HeaderCell id='period_name' onClick={this.sortTransactions}> Date </Table.HeaderCell>
               <Table.HeaderCell id='merchant_name' onClick={this.sortTransactions}> Merchant </Table.HeaderCell>
-              <Table.HeaderCell> Category </Table.HeaderCell>
+              <Table.HeaderCell id='category_name' onClick={this.sortTransactions}> Category </Table.HeaderCell>
               <Table.HeaderCell> Amount $</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
