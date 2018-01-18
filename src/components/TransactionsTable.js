@@ -43,21 +43,41 @@ class TransactionsTable extends React.Component {
       sortedTransactions = this.props.user.transactions.slice()
     }
     if (this.state.ascending) {
-      sortedTransactions = sortedTransactions.sort((a,b) => {
-        if (a[value] < b[value]) {
-          return -1
-        } else if (a[value] > b[value]) {
-          return 1
-        }
-      })
+      if (isNaN(sortedTransactions[0][value])) {
+        sortedTransactions = sortedTransactions.sort((a,b) => {
+          if (a[value].toLowerCase() < b[value].toLowerCase() ) {
+            return -1
+          } else if (a[value].toLowerCase() > b[value].toLowerCase() ) {
+            return 1
+          }
+        })
+      } else {
+        sortedTransactions = sortedTransactions.sort((a,b) => {
+          if (a[value] < b[value]) {
+            return -1
+          } else if (a[value] > b[value]) {
+            return 1
+          }
+        })
+      }
     } else {
-      sortedTransactions = sortedTransactions.sort((a,b) => {
-        if (a[value] > b[value]) {
-          return -1
-        } else if (a[value] < b[value])  {
-          return 1
-        }
-      })
+      if (isNaN(sortedTransactions[0][value])) {
+        sortedTransactions = sortedTransactions.sort((a,b) => {
+          if (a[value].toLowerCase() > b[value].toLowerCase()) {
+            return -1
+          } else if (a[value].toLowerCase() < b[value].toLowerCase())  {
+            return 1
+          }
+        })
+      } else {
+        sortedTransactions = sortedTransactions.sort((a,b) => {
+          if (a[value] > b[value]) {
+            return -1
+          } else if (a[value] < b[value])  {
+            return 1
+          }
+        })
+      }
     }
     if (this.props.account && this.props.account.id) {
       this.props.updateAccount(sortedTransactions)
