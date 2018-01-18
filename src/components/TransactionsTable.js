@@ -104,7 +104,12 @@ class TransactionsTable extends React.Component {
         )
       })
     } else {
-      renderedTransactions = this.props.user.transactions
+
+      if (this.props.filtered.length > 0) {
+        renderedTransactions = this.props.filtered
+      } else {
+        renderedTransactions = this.props.user.transactions
+      }
       accountName = 'All accounts'
       accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
       item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
@@ -117,7 +122,7 @@ class TransactionsTable extends React.Component {
     }
   }
   render(){
-    console.log(this.props)
+    console.log('from transactions table',this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []
@@ -179,7 +184,8 @@ class TransactionsTable extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
-    account: state.accounts.account
+    account: state.accounts.account,
+    filtered: state.auth.filtered
   }
 }
 export default connect(mapStateToProps, actions)(TransactionsTable)

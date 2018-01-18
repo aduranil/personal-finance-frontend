@@ -103,7 +103,6 @@ class DashboardNavbar extends React.Component {
           trigger={<Menu.Item name='Delete Account' active={activeItem === 'Delete Account'} onClick={this.handleDeleteOpen}>Delete Account </Menu.Item>}
           open={this.state.deleteAccountModal}
           onClose={this.handleDeleteClose}
-          wrapped
           size='tiny'
         >
           <Modal.Header content='Delete Account' />

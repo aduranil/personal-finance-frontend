@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false, categories: []}
+const initialState = { currentUser: {}, isLoading: false, categories: [], filtered: []}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
@@ -18,6 +18,8 @@ const authReducer = (state = initialState, action) => {
       let newUser = Object.assign({}, state.currentUser, {transactions: action.transactions})
       // let newUser = {...state.currentUser, transcations: action.transactions}
       return {...state, currentUser: newUser}
+    case 'FILTER_TRANSACTIONS':
+      return {...state, filtered: action.transactions}
     case 'DELETE_ACCOUNT':
       return {...state, currentUser: action.payload}
     case 'ADD_ACCOUNT':
@@ -65,12 +67,12 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
       let accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
       return {...state, account: accountFinal}
     case 'DELETE_TRANSACTION':
-      // state.accounts.findIndex(account => account.id ===action.account_id)
-      // account = action.payload.accounts.find(account => account.id === action.account_id)
-      // balance = account.balance
-      // transactionsHere = action.payload.transactions
-      // accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
-      return {...state}
+      account = action.payload.accounts.find(account => account.id === action.account_id)
+      balance = account.balance
+      transactionsHere = action.payload.transactions.filter(transaction=> transaction.account_id === account.id)
+      account.transactions = transactionsHere
+      accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
+      return {...state, account: accountFinal}
     default:
       return state
   }

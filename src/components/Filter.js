@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, Button } from 'semantic-ui-react'
+let transactions
 
 class Filter extends React.Component {
   state = {
@@ -18,22 +19,37 @@ class Filter extends React.Component {
   }
 
   categoryFilters = (event) => {
-    this.setState({category_name: this.state.category_name.concat(event.currentTarget.innerText) })
+    // outertext when clicking delete event.currentTarget.parentElement.outerText
+    // event.currentTarget.className = 'delete icon'
+    if (event.currentTarget.className === 'delete icon') {
+      this.setState({category_name: this.state.category_name.filter(name => name !== event.currentTarget.parentElement.outerText)})
+    } else {
+      this.setState({category_name: this.state.category_name.concat([event.currentTarget.innerText]) })
+    }
   }
 
-  filterTransactions = () => {
-    let transactions = this.state.user.transactions
+  filterTransactions = (event) => {
+    transactions = []
     let state = this.state
-    let filter
-
+    state.category_name.forEach(category => {
+      this.props.user.transactions.forEach(transaction => {
+        if (transaction.category_name === category) {
+          transactions.push(transaction)
+        }
+      })
+    })
+    this.props.filterTransactions(transactions)
   }
+
 
   render(){
-    console.log(this.props)
-    console.log(this.state)
     let data = this.filterData()
+    console.log(this.state)
     return (
-      <Dropdown placeholder='Category' onChange={this.categoryFilters} fluid multiple search selection options={data} />
+      <div>
+        <Dropdown placeholder='Category' onChange={this.categoryFilters} value={this.state.category_name} fluid multiple search selection options={data} />
+        <Button onClick={this.filterTransactions}> Filter</Button>
+      </div>
     )
   }
 }
