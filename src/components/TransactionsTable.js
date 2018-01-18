@@ -31,6 +31,21 @@ class TransactionsTable extends React.Component {
     this.setState({currentPage: Number(event.currentTarget.innerHTML)})
   }
 
+  sortTransactions = (event) => {
+    let value = event.target.id
+    let sortedTransactions = this.props.transactions.slice()
+    if (this.state.showEllipsis === true) {
+      sortedTransactions = sortedTransactions.sort((a,b) => {
+        if (a[value] < b[value]) {
+          return -1
+        } else {
+          return 1
+        } return 0
+      })
+    }
+    this.props.sortTransactions(sortedTransactions)
+  }
+
   transactionData = () => {
     const {currentPage, transactionsPerPage} = this.state
     const indexOfLastTransaction = currentPage * transactionsPerPage
@@ -79,8 +94,8 @@ class TransactionsTable extends React.Component {
         <Table color='olive' compact='very' selectable sortable stackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell> Date </Table.HeaderCell>
-              <Table.HeaderCell> Merchant </Table.HeaderCell>
+              <Table.HeaderCell id='period_name'> Date </Table.HeaderCell>
+              <Table.HeaderCell id='merchant_name' onClick={this.sortTransactions}> Merchant </Table.HeaderCell>
               <Table.HeaderCell> Category </Table.HeaderCell>
               <Table.HeaderCell> Amount $</Table.HeaderCell>
             </Table.Row>
@@ -112,4 +127,14 @@ class TransactionsTable extends React.Component {
   }
 }
 
-export default connect(null, actions)(TransactionsTable)
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: !!state.auth.currentUser.id,
+    user: state.auth.currentUser,
+    accounts: state.accounts.accounts,
+    account: state.accounts.account,
+    transactions: state.auth.currentUser.transactions
+  }
+}
+export default connect(mapStateToProps, actions)(TransactionsTable)

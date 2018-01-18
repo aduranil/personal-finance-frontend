@@ -9,7 +9,8 @@ import {
   DELETE_TRANSACTION,
   SET_TRANSACTION,
   ADD_TRANSACTION,
-  ADD_ACCOUNT
+  ADD_ACCOUNT,
+  SORT_TRANSACTIONS
 } from "./types";
 
 
@@ -28,11 +29,15 @@ export const modal = () => {
   return {type: TOGGLE_MODAL}
 }
 
+export const sortTransactions = (transactions) => {
+  return {type: SORT_TRANSACTIONS, transactions }
+}
 export const fetchAccounts = () => dispatch => {
   adapter.auth.getAccounts().then(accounts => {
     dispatch({type: GET_ACCOUNTS, accounts})
   })
 }
+
 
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: ASYNC_START})

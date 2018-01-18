@@ -17,6 +17,9 @@ const authReducer = (state = initialState, action) => {
       thisCurrentUser.transactions = state.currentUser.transactions.concat(action.transaction)
       thisCurrentUser.account_balance = thisCurrentUser.account_balance - action.transaction.amount
       return {...state, currentUser: thisCurrentUser}
+    case 'SORT_TRANSACTIONS':
+      let newUser = Object.assign({}, state.currentUser, {transactions: action.transactions})
+      return {...state, currentUser: newUser}
     case 'ADD_ACCOUNT':
       newCurrentUser = Object.assign({}, state.currentUser, {})
       newCurrentUser.accounts = state.currentUser.accounts.concat(action.account)
