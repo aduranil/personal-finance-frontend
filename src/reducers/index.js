@@ -11,9 +11,7 @@ const authReducer = (state = initialState, action) => {
       // })
       return {...state, currentUser: action.user}
     case 'DELETE_TRANSACTION':
-      let newCurrentUser = Object.assign({}, state.currentUser, {})
-      newCurrentUser.transactions = state.currentUser.transactions.filter(transaction => transaction.id !== action.id)
-      return {...state, currentUser: newCurrentUser}
+      return {...state, currentUser: action.payload}
     case 'ADD_TRANSACTION':
       return {...state, currentUser: action.payload}
     case 'SORT_TRANSACTIONS':
@@ -23,7 +21,7 @@ const authReducer = (state = initialState, action) => {
     case 'DELETE_ACCOUNT':
       return {...state, currentUser: action.payload}
     case 'ADD_ACCOUNT':
-      newCurrentUser = Object.assign({}, state.currentUser, {})
+      let newCurrentUser = Object.assign({}, state.currentUser, {})
       newCurrentUser.accounts = state.currentUser.accounts.concat(action.account)
       return {...state, currentUser: newCurrentUser}
     case 'LOGOUT_USER':
@@ -59,6 +57,20 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
       } else {
         return state
       }
+    case 'ADD_TRANSACTION':
+      let account = action.payload.accounts.find(account => account.id === action.id)
+      let balance = account.balance
+      let transactionsHere = action.payload.transactions.filter(transaction=> transaction.account_id === account.id)
+      account.transactions = transactionsHere
+      let accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
+      return {...state, account: accountFinal}
+    case 'DELETE_TRANSACTION':
+      // state.accounts.findIndex(account => account.id ===action.account_id)
+      // account = action.payload.accounts.find(account => account.id === action.account_id)
+      // balance = account.balance
+      // transactionsHere = action.payload.transactions
+      // accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
+      return {...state}
     default:
       return state
   }

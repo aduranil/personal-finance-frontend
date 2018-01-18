@@ -92,21 +92,26 @@ class TransactionsTable extends React.Component {
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
 
     let renderedTransactions = []
-    if (this.props.account && this.props.account.id) {
+    if (this.props.account && this.props.account.transactions) {
       renderedTransactions = this.props.account.transactions
       accountName = this.props.account.name
       accountBalance = numberWithCommas(parseFloat(Math.round(this.props.account.balance * 100)/100).toFixed(2))
-    } else {
-      renderedTransactions = this.props.user.transactions
-      accountName = 'All accounts'
-      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
-    }
-    if (this.props.user.transactions) {
       item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
       transactionsLength = renderedTransactions.length
       return item.map((transaction, index) => {
         return (
           <Transaction key={index} transaction={transaction}/>
+        )
+      })
+    } else {
+      renderedTransactions = this.props.user.transactions
+      accountName = 'All accounts'
+      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
+      item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
+      transactionsLength = renderedTransactions.length
+      return item.map((transaction, index) => {
+        return (
+          <Transaction key={index} history={this.props.history} transaction={transaction}/>
         )
       })
     }

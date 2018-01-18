@@ -8,57 +8,71 @@ const numberWithCommas = (x) => {
 }
 
 
-const Transaction = props => {
-  return (
-    <Modal
-      trigger={
-        <tr>
-          <Table.Cell>
-            {props.transaction.period_name}
-          </Table.Cell>
-          <Table.Cell>
-            {props.transaction.merchant_name}
-          </Table.Cell>
-          <Table.Cell>
-            {props.transaction.category_name}
-          </Table.Cell>
-          <Table.Cell>
-            {numberWithCommas(parseFloat(Math.round(props.transaction.amount * 100)/100).toFixed(2))}
-          </Table.Cell>
-        </tr>
-      }
-      size='tiny'
-      id={props.transaction.id}
-    >
-      <Modal.Header content='Transaction Details' />
-        <Modal.Content>
-          <Grid columns={2}>
-            <Grid.Column width={5}>
-              <b>Date:<br/>
-              Amount:<br/>
-              Merchant:<br/>
-              Detailed Description:<br/>
-              Category:<br/>
-              Account:<br/>
-              Debit or Credit:</b><br/>
-            </Grid.Column>
-            <Grid.Column width={11}>
-              {props.transaction.period_name}<br/>
-              {numberWithCommas(parseFloat(Math.round(props.transaction.amount* 100)/100).toFixed(2))}<br/>
-              {props.transaction.merchant_name}<br/>
-              {props.transaction.description}<br/>
-              {props.transaction.category_name}<br/>
-              {props.transaction.account_name}<br/>
-              {props.transaction.debit_or_credit}<br/>
-            </Grid.Column>
-          </Grid>
-          <Button
-            color='red'
-            onClick={()=>props.deleteTransaction(props.transaction.id)}
-            inverted> Delete </Button>
-        </Modal.Content>
-    </Modal>
-  )
+class Transaction extends React.Component {
+  state = {
+    booleanTransaction: false
+  }
+
+  openModal = () => {
+    this.setState({booleanTransaction: !this.state.booleanTransaction})
+  }
+  submitTransaction = () => {
+    this.props.deleteTransaction(this.props.transaction.id, this.props.history, this.props.transaction.account_id)
+    this.setState({booleanTransaction: !this.state.booleanTransaction})
+  }
+  render(){
+    return (
+      <Modal
+        trigger={
+          <tr onClick={this.openModal}>
+            <Table.Cell>
+              {this.props.transaction.period_name}
+            </Table.Cell>
+            <Table.Cell>
+              {this.props.transaction.merchant_name}
+            </Table.Cell>
+            <Table.Cell>
+              {this.props.transaction.category_name}
+            </Table.Cell>
+            <Table.Cell>
+              {numberWithCommas(parseFloat(Math.round(this.props.transaction.amount * 100)/100).toFixed(2))}
+            </Table.Cell>
+          </tr>
+        }
+        size='tiny'
+        id={this.props.transaction.id}
+        open={this.state.booleanTransaction}
+        onClose={this.openModal}
+      >
+        <Modal.Header content='Transaction Details' />
+          <Modal.Content>
+            <Grid columns={2}>
+              <Grid.Column width={5}>
+                <b>Date:<br/>
+                Amount:<br/>
+                Merchant:<br/>
+                Detailed Description:<br/>
+                Category:<br/>
+                Account:<br/>
+                Debit or Credit:</b><br/>
+              </Grid.Column>
+              <Grid.Column width={11}>
+                {this.props.transaction.period_name}<br/>
+                {numberWithCommas(parseFloat(Math.round(this.props.transaction.amount* 100)/100).toFixed(2))}<br/>
+                {this.props.transaction.merchant_name}<br/>
+                {this.props.transaction.description}<br/>
+                {this.props.transaction.category_name}<br/>
+                {this.props.transaction.account_name}<br/>
+                {this.props.transaction.debit_or_credit}<br/>
+              </Grid.Column>
+            </Grid>
+            <Button
+              color='red'
+              onClick={this.submitTransaction}>Delete </Button>
+          </Modal.Content>
+      </Modal>
+    )
+  }
 }
 
 export default connect(null, actions)(Transaction);

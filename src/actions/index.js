@@ -32,6 +32,7 @@ export const modal = () => {
 export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions }
 }
+
 export const fetchAccounts = () => dispatch => {
   adapter.auth.getAccounts().then(accounts => {
     dispatch({type: GET_ACCOUNTS, accounts})
@@ -84,14 +85,14 @@ export const createTransaction = (amount, category_name, merchant_name, account_
     if (user.error){
       alert(user.error)
     } else {
-      dispatch({type: ADD_TRANSACTION, payload: user})
+      dispatch({type: ADD_TRANSACTION, payload: user, id:account_id})
     }
   })
 }
 
-export const deleteTransaction = (id) => dispatch => {
-  adapter.auth.deleteTransaction(id).then(something => {
-    dispatch({type: DELETE_TRANSACTION, id})
+export const deleteTransaction = (id, history, account_id) => dispatch => {
+  adapter.auth.deleteTransaction(id).then(user => {
+    dispatch({type: DELETE_TRANSACTION, payload:user, id:id, account_id: account_id})
   })
 }
 

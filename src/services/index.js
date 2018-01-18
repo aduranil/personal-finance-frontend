@@ -60,11 +60,12 @@ const createTransaction = (data) => {
   }).then(res => res.json())
 }
 
-const deleteTransaction = (id) => {
+const deleteTransaction = (id, history) => {
+  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/transactions/${id}`, {
     method: 'DELETE',
-    headers: headers
-  })
+    headers: headersWithAuth
+  }).then(res => res.json())
 }
 
 const deleteAccount = (id, history) => {
