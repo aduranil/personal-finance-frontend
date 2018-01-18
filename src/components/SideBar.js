@@ -31,7 +31,7 @@ class SideBar extends React.Component {
       <div>
         <Menu secondary vertical>
           <Menu.Item as='h4'>Your Accounts</Menu.Item>
-          {this.props.user.accounts !== undefined && this.props.user.accounts.length > 0 ?
+          {this.props.user.accounts && this.props.user.accounts.length > 0 ?
             <Menu.Item
               name='All'
               onClick={this.handleItemClick}  active={this.state.activeItem === 'All'}
@@ -46,9 +46,7 @@ class SideBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: !!state.auth.currentUser.id,
-    user: state.auth.currentUser,
-    loading: state.auth.isLoading,
+    user: state.auth.currentUser
   }
 }
 

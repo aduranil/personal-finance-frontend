@@ -1,25 +1,27 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false, transaction: {}}
+const initialState = { currentUser: {}, isLoading: false, categories: []}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      const {id, username, accounts, account_balance, transactions, spend_by_month, merchant_expense_data,merchant_frequency, average_spend,category_expense_data, category_frequency, category_name, merchant_name} = action.user
-      return {...state, currentUser: {id, username, accounts, account_balance, transactions, spend_by_month, merchant_frequency, average_spend,category_expense_data, category_frequency, merchant_expense_data, merchant_name, category_name}, isLoading: false}
+      // let data =action.user.category_name.map((category, index) => {
+      //   return {key: index, text: category, value: category, name:category}
+      // })
+      return {...state, currentUser: action.user}
     case 'DELETE_TRANSACTION':
       let newCurrentUser = Object.assign({}, state.currentUser, {})
       newCurrentUser.transactions = state.currentUser.transactions.filter(transaction => transaction.id !== action.id)
       return {...state, currentUser: newCurrentUser}
     case 'ADD_TRANSACTION':
-      let thisCurrentUser = Object.assign({}, state.currentUser, {})
-      thisCurrentUser.transactions = state.currentUser.transactions.concat(action.transaction)
-      thisCurrentUser.account_balance = thisCurrentUser.account_balance - action.transaction.amount
-      return {...state, currentUser: thisCurrentUser}
+      return {...state, currentUser: action.payload}
     case 'SORT_TRANSACTIONS':
       let newUser = Object.assign({}, state.currentUser, {transactions: action.transactions})
+      // let newUser = {...state.currentUser, transcations: action.transactions}
       return {...state, currentUser: newUser}
+    case 'DELETE_ACCOUNT':
+      return {...state, currentUser: action.payload}
     case 'ADD_ACCOUNT':
       newCurrentUser = Object.assign({}, state.currentUser, {})
       newCurrentUser.accounts = state.currentUser.accounts.concat(action.account)
@@ -49,6 +51,14 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
       return {...state, account: updatedAccount}
     case 'GET_ACCOUNTS':
       return {...state, accounts: action.accounts}
+    case 'ADD_ACCOUNT':
+      return {...state, accounts: state.accounts.concat(action.account)}
+    case 'DELETE_ACCOUNT':
+      if (state.account.id === parseInt(action.id,10)){
+        return {...state, account: undefined}
+      } else {
+        return state
+      }
     default:
       return state
   }

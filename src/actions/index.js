@@ -7,7 +7,6 @@ import {
   TOGGLE_MODAL,
   GET_ACCOUNTS,
   DELETE_TRANSACTION,
-  SET_TRANSACTION,
   ADD_TRANSACTION,
   ADD_ACCOUNT,
   SORT_TRANSACTIONS
@@ -28,6 +27,7 @@ export const selectAccount = (id) =>  {
 export const modal = () => {
   return {type: TOGGLE_MODAL}
 }
+
 
 export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions }
@@ -79,12 +79,12 @@ export const createUser = (username, password, history) => dispatch => {
   })
 }
 
-export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id) => dispatch => {
-  adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}).then(transaction => {
-    if (transaction.error){
-      alert(transaction.error)
+export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, history) => dispatch => {
+  adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}).then(user => {
+    if (user.error){
+      alert(user.error)
     } else {
-      dispatch({type: ADD_TRANSACTION, transaction})
+      dispatch({type: ADD_TRANSACTION, payload: user})
     }
   })
 }
@@ -95,9 +95,9 @@ export const deleteTransaction = (id) => dispatch => {
   })
 }
 
-export const deleteAccount = (id) => dispatch => {
-  adapter.auth.deleteAccount(id).then(something => {
-    window.location = '/'
+export const deleteAccount = (id, history) => dispatch => {
+  adapter.auth.deleteAccount(id).then(user => {
+    dispatch({type: "DELETE_ACCOUNT", payload: user, id: id})
   })
 }
 export const logoutUser = () => {

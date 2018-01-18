@@ -52,9 +52,10 @@ const createUser = data => {
 }
 
 const createTransaction = (data) => {
+  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/transactions`, {
     method: 'POST',
-    headers: headers,
+    headers: headersWithAuth,
     body: JSON.stringify(data)
   }).then(res => res.json())
 }
@@ -66,11 +67,12 @@ const deleteTransaction = (id) => {
   })
 }
 
-const deleteAccount = (id) => {
+const deleteAccount = (id, history) => {
+  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/accounts/${id}`, {
     method: 'DELETE',
-    headers: headers
-  }).then(reload => window.location = '/')
+    headers: headersWithAuth
+  }).then(res => res.json())
 }
 
 const createAccount = (name, user_id) => {

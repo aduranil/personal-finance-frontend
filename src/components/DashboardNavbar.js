@@ -25,15 +25,17 @@ class DashboardNavbar extends React.Component {
     this.setState({account_name: event.target.value})
   }
 
-  handleDeleteOpen = () => this.setState({deleteAccountModal: true})
+  handleDeleteOpen = () => {
+    this.setState({deleteAccountModal: true})
+  }
 
   handleDeleteClose = () => this.setState({deleteAccountModal: false})
 
   handleSubmit = () => {
     let name = this.state.account_name
     let user_id = this.state.user_id
-    this.setState({modalOpen: false })
     this.props.addAccount(name, user_id)
+    this.setState({modalOpen: false, account_name: '' })
   }
 
   handleOpen = () => this.setState({modalOpen: true})
@@ -42,7 +44,7 @@ class DashboardNavbar extends React.Component {
 
   handleAccountSubmit = () => {
     this.setState({deleteAccountModal: false})
-    adapter.auth.deleteAccount(this.state.account_id)
+    this.props.deleteAccount(this.state.account_id, this.props.history)
   }
 
   handleClick = event => {
@@ -58,6 +60,7 @@ class DashboardNavbar extends React.Component {
 
   render(){
     const { activeItem } = this.state
+    console.log('from dashboard nav', this.state)
     let data = []
     if (this.props.user.accounts) {
       this.props.user.accounts.map((account,index) =>
@@ -80,7 +83,7 @@ class DashboardNavbar extends React.Component {
           size='tiny'
         >
           <Modal.Header content='Add Account' />
-            <Modal.Content>
+            <Modal.Content scrolling>
               <Form onSubmit={this.handleSubmit}>
                 <Form.Input
                   fluid
@@ -100,6 +103,7 @@ class DashboardNavbar extends React.Component {
           trigger={<Menu.Item name='Delete Account' active={activeItem === 'Delete Account'} onClick={this.handleDeleteOpen}>Delete Account </Menu.Item>}
           open={this.state.deleteAccountModal}
           onClose={this.handleDeleteClose}
+          wrapped
           size='tiny'
         >
           <Modal.Header content='Delete Account' />
@@ -107,6 +111,10 @@ class DashboardNavbar extends React.Component {
               <Form onSubmit={this.handleAccountSubmit}>
                 <Dropdown
                   fluid
+                  search
+                  simple
+                  selection
+                  item
                   label='account'
                   options={data}
                   placeholder='account'
@@ -140,11 +148,7 @@ class DashboardNavbar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: !!state.auth.currentUser.id,
     user: state.auth.currentUser,
-    accounts: state.accounts.accounts,
-    account: state.accounts.account,
-    transactions: state.transactions,
     modalBoolean: state.modal.modalOpen
   }
 }

@@ -63,7 +63,7 @@ class AddTransaction extends Component {
   handleSubmit = event => {
     event.preventDefault()
     const {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id} = this.state;
-    this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id)
+    this.props.createTransaction(amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id, this.props.history)
     this.props.modal(!this.props.modalBoolean)
   }
 

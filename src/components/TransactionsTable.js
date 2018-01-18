@@ -3,8 +3,8 @@ import {Container, Table, Pagination, Header, Grid} from 'semantic-ui-react'
 import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import AddTransaction from './AddTransaction'
 
+import Filter from './Filter'
 let item
 let transactionsLength
 let accountName
@@ -91,28 +91,24 @@ class TransactionsTable extends React.Component {
     const indexOfLastTransaction = currentPage * transactionsPerPage
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
 
+    let renderedTransactions = []
     if (this.props.account && this.props.account.id) {
+      renderedTransactions = this.props.account.transactions
       accountName = this.props.account.name
       accountBalance = numberWithCommas(parseFloat(Math.round(this.props.account.balance * 100)/100).toFixed(2))
-      item = this.props.account.transactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
-      transactionsLength = this.props.account.transactions.length
+    } else {
+      renderedTransactions = this.props.user.transactions
+      accountName = 'All accounts'
+      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
+    }
+    if (this.props.user.transactions) {
+      item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
+      transactionsLength = renderedTransactions.length
       return item.map((transaction, index) => {
         return (
           <Transaction key={index} transaction={transaction}/>
         )
       })
-    } else {
-      if (this.props.user.transactions) {
-        item = this.props.user.transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
-        accountName = 'All accounts'
-        accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
-        transactionsLength = this.props.user.transactions.length
-        return item.map((transaction,index) => {
-          return (
-            <Transaction key={index} transaction={transaction}/>
-          )
-        })
-      }
     }
   }
   render(){
@@ -126,11 +122,17 @@ class TransactionsTable extends React.Component {
 
     return (
       <Container>
-        <AddTransaction/>
         <Grid>
-          <Grid.Column>
-            <Header as='h1'>{accountName}: {accountBalance}</Header>
-          </Grid.Column>
+          <Grid.Row>
+            <Grid.Column>
+              <Header as='h1'>{accountName}: {accountBalance}</Header>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Filter/>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
         <Table color='olive' compact='very' selectable sortable stackable>
           <Table.Header>
@@ -171,9 +173,7 @@ class TransactionsTable extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: !!state.auth.currentUser.id,
     user: state.auth.currentUser,
-    accounts: state.accounts.accounts,
     account: state.accounts.account
   }
 }

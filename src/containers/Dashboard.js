@@ -6,6 +6,7 @@ import {Grid} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
+import AddTransaction from '../components/AddTransaction'
 
 class Dashboard extends React.Component {
 
@@ -16,7 +17,8 @@ class Dashboard extends React.Component {
   render(){
     return (
       <div>
-        <DashboardNavbar/>
+        <DashboardNavbar history={this.props.history}/>
+        <AddTransaction history={this.props.history}/>
         <Grid columns={2} stackable>
           <Grid.Column width={3}>
             <SideBar/>
