@@ -35,6 +35,7 @@ class SideBar extends React.Component {
             <Menu.Item
               name='All'
               onClick={this.handleItemClick}  active={this.state.activeItem === 'All'}
+              id='10000'
             />
           : null}
           {this.renderAccounts()}

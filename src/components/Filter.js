@@ -2,12 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { Dropdown, Button } from 'semantic-ui-react'
-import _ from 'lodash'
-
-let accounts
-let periods
-let categories
-let merchants
 
 class Filter extends React.Component {
   state = {
@@ -19,19 +13,19 @@ class Filter extends React.Component {
 
   categoryFilters = (event) => {
     let state = this.state
+    let domName = event.currentTarget.offsetParent.children
+    let domItem = event.currentTarget
     let name
-    if (event.currentTarget.className === 'delete icon') {
-      name = event.currentTarget.offsetParent.children[event.currentTarget.offsetParent.children.length-1].childNodes[0].attributes[2].nodeValue
-      let value = event.currentTarget.offsetParent.children[event.currentTarget.offsetParent.children.length-1].childNodes[0].attributes[0].nodeValue
-      this.setState({[name]: state[name].filter(name => name !== event.currentTarget.parentElement.outerText)})
+    if (domItem.className === 'delete icon') {
+      name = domName[domName.length-1].childNodes[0].attributes[2].nodeValue
+      this.setState({[name]: state[name].filter(name => name !== domItem.parentElement.outerText)})
     } else {
-      name = event.currentTarget.attributes[2].nodeValue
-      this.setState({[name]: state[name].concat([event.currentTarget.id]) })
+      name = domItem.attributes[2].nodeValue
+      this.setState({[name]: state[name].concat([domItem.id]) })
     }
   }
 
   filterTransactions = (event) => {
-    event.preventDefault()
     let state = this.state
     let filteredTransactions = this.props.user.filter(transaction=> {
       return (
@@ -48,35 +42,15 @@ class Filter extends React.Component {
 
 
   render(){
-    let accountNames = []
-    let merchantNames = []
-    let periodNames = []
-    let categoryNames = []
 
-    accounts = [...new Set(this.props.user.map(transaction => transaction.account_name))]
-    periods = [...new Set(this.props.user.map(transaction => transaction.period_name))]
-    categories = [...new Set(this.props.user.map(transaction => transaction.category_name))]
-    merchants = [...new Set(this.props.user.map(transaction => transaction.merchant_name))]
-    periods.map((date, index) => {
-      periodNames.push({key: index, text: date, value: date, id:date, name: date, name2: 'period_name'})
-    })
-    accounts.map((account, index) => {
-      accountNames.push({key: index, text: account, value: account, id:account, name: account, name2: 'account_name'})
-    })
-    merchants.map((merchant, index) => {
-      merchantNames.push({key: index, text: merchant, value: merchant, id:merchant, name: merchant, name2: 'merchant_name'})
-    })
-    categories.map((category, index) => {
-      categoryNames.push({key: index, text: category, value: category, id:category, name: category, name2: 'category_name'})
-    })
     console.log('props in filter',this.props)
     console.log('state in filter', this.state)
     return (
       <div>
-        <Dropdown placeholder='Category' onChange={this.categoryFilters} fluid multiple search selection options={categoryNames} />
-        <Dropdown placeholder='Merchant' onChange={this.categoryFilters} fluid multiple search selection options={merchantNames} />
-        <Dropdown placeholder='Account' onChange={this.categoryFilters} fluid multiple search selection options={accountNames} />
-        <Dropdown placeholder='Period' onChange={this.categoryFilters} fluid multiple search selection options={periodNames} />
+        <Dropdown placeholder='Category' onChange={this.categoryFilters} fluid multiple search selection options={this.props.category_name} />
+        <Dropdown placeholder='Merchant' onChange={this.categoryFilters} fluid multiple search selection options={this.props.merchant_name} />
+        <Dropdown placeholder='Account' onChange={this.categoryFilters} fluid multiple search selection options={this.props.accountOptions} />
+        <Dropdown placeholder='Period' onChange={this.categoryFilters} fluid multiple search selection options={this.props.periodOptions} />
         <Button type='submit' onClick={this.filterTransactions}> Filter</Button>
       </div>
     )
@@ -85,7 +59,14 @@ class Filter extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.currentUser.transactions
+    user: state.auth.currentUser.transactions,
+    filtered: state.auth.filtered,
+    periods: state.auth.periods,
+    periodOptions: state.auth.periodOptions,
+    category_name: state.auth.category_name,
+    merchant_name: state.auth.merchant_name,
+    accountOptions: state.auth.accountOptions
+
   }
 }
 export default connect(mapStateToProps, actions)(Filter);

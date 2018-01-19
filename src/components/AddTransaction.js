@@ -37,11 +37,7 @@ class AddTransaction extends Component {
 
   handleSearchChange = (e, { value }) => {
     let item = e.currentTarget.id
-    let data = []
     this.setState({ isLoading: true, [e.currentTarget.id]: value})
-    this.props.user[item].map((category,index) =>
-      data.push({key:index, text: item, name: category, value:category})
-    )
 
     setTimeout(() => {
       if (this.state[item].length < 1) return this.resetComponent()
@@ -49,14 +45,15 @@ class AddTransaction extends Component {
       const isMatch = result => re.test(result.name)
       this.setState({
         isLoading: false,
-        results: _.filter(data, isMatch),
+        results: _.filter(this.props[item], isMatch),
       })
     }, 500)
   }
 
   handleAccountChange = event => {
+    const name = event.currentTarget
     this.setState({
-      [event.currentTarget.attributes[0].nodeValue]: event.currentTarget.innerText, [event.currentTarget.attributes[1].nodeValue]: Number(event.currentTarget.attributes[2].nodeValue)
+      [name.attributes[2].nodeValue]: name.innerText, account_id: Number(name.attributes[1].nodeValue)
     })
   }
 
@@ -68,14 +65,9 @@ class AddTransaction extends Component {
   }
 
   render() {
-    const {isLoading,results, amount, period_name, merchant_name, category_name, account_name} = this.state
+    const {isLoading,results, amount, period_name, merchant_name, category_name} = this.state
     const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
-    let options = []
-    if (this.props.user.accounts) {
-      this.props.user.accounts.map((account,index) =>
-        options.push({key: index, text: account.name, name: 'account_name', id: 'account_id', name2: account.id, value:account.name})
-      )
-    }
+
     return (
       <Modal
         open={this.props.modalBoolean}
@@ -137,10 +129,9 @@ class AddTransaction extends Component {
              <Form.Select
               fluid
               label='account'
-              options={options}
+              options={this.props.accountOptions}
               placeholder='account'
               name='account_name'
-              value={account_name}
               onChange={this.handleAccountChange}
             />
             <Button type='submit' color='green' inverted>Submit</Button>
@@ -154,7 +145,10 @@ class AddTransaction extends Component {
 const mapStateToProps = state => {
   return {
     modalBoolean: state.modal.modalOpen,
-    user: state.auth.currentUser
+    user: state.auth.currentUser,
+    accountOptions: state.auth.accountOptions,
+    merchant_name: state.auth.merchant_name,
+    category_name: state.auth.category_name
   }
 }
 

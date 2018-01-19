@@ -3,12 +3,9 @@ import {Container, Table, Pagination, Header, Grid} from 'semantic-ui-react'
 import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-
 import Filter from './Filter'
 let item
 let transactionsLength
-let accountName
-let accountBalance
 
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -90,12 +87,13 @@ class TransactionsTable extends React.Component {
     const {currentPage, transactionsPerPage} = this.state
     const indexOfLastTransaction = currentPage * transactionsPerPage
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
-
     let renderedTransactions = []
-    if (this.props.account && this.props.account.transactions) {
-      renderedTransactions = this.props.account.transactions
-      accountName = this.props.account.name
-      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.account.balance * 100)/100).toFixed(2))
+    if (this.props.account.transactions) {
+      if (this.props.filtered) {
+        renderedTransactions = this.props.filtered
+      } else {
+        renderedTransactions = this.props.account.transactions
+      }
       item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
       transactionsLength = renderedTransactions.length
       return item.map((transaction, index) => {
@@ -103,25 +101,10 @@ class TransactionsTable extends React.Component {
           <Transaction key={index} transaction={transaction}/>
         )
       })
-    } else {
-
-      if (this.props.filtered) {
-        renderedTransactions = this.props.filtered
-      } else {
-        renderedTransactions = this.props.user.transactions
-      }
-      accountName = 'All accounts'
-      accountBalance = numberWithCommas(parseFloat(Math.round(this.props.user.account_balance * 100)/100).toFixed(2))
-      item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
-      transactionsLength = renderedTransactions.length
-      return item.map((transaction, index) => {
-        return (
-          <Transaction key={index} history={this.props.history} transaction={transaction}/>
-        )
-      })
     }
   }
   render(){
+    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []
@@ -134,7 +117,7 @@ class TransactionsTable extends React.Component {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <Header as='h1'>{accountName}: {accountBalance}</Header>
+              <Header as='h1'>{this.props.account.name}: {numberWithCommas(parseFloat(Math.round(this.props.account.balance * 100)/100).toFixed(2))}</Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
@@ -184,7 +167,7 @@ class TransactionsTable extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
-    account: state.accounts.account,
+    account: state.auth.account,
     filtered: state.auth.filtered
   }
 }

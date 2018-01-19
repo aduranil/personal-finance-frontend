@@ -50,7 +50,7 @@ class DashboardNavbar extends React.Component {
   handleClick = event => {
     this.setState({
       account_name: event.currentTarget.innerText,
-      account_id: event.currentTarget.attributes[0].nodeValue
+      account_id: event.currentTarget.attributes[1].nodeValue
     })
   }
 
@@ -60,13 +60,6 @@ class DashboardNavbar extends React.Component {
 
   render(){
     const { activeItem } = this.state
-    console.log('from dashboard nav', this.state)
-    let data = []
-    if (this.props.user.accounts) {
-      this.props.user.accounts.map((account,index) =>
-        data.push({key:index, text: account.name, name: account.id, value:account.name})
-      )
-    }
     return (
       <Menu color='blue' inverted secondary>
         <Menu.Item
@@ -115,7 +108,7 @@ class DashboardNavbar extends React.Component {
                   selection
                   item
                   label='account'
-                  options={data}
+                  options={this.props.accountOptions}
                   placeholder='account'
                   name='account_name'
                   value={this.state.account_name}
@@ -148,7 +141,8 @@ class DashboardNavbar extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
-    modalBoolean: state.modal.modalOpen
+    modalBoolean: state.modal.modalOpen,
+    accountOptions: state.auth.accountOptions
   }
 }
 
