@@ -65,14 +65,16 @@ const accountsReducer = (state = {accounts: [], account: []}, action) => {
       let transactionsHere = action.payload.transactions.filter(transaction=> transaction.account_id === account.id)
       account.transactions = transactionsHere
       let accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
-      return {...state, account: accountFinal}
+      return {...state, account: undefined}
     case 'DELETE_TRANSACTION':
       account = action.payload.accounts.find(account => account.id === action.account_id)
       balance = account.balance
       transactionsHere = action.payload.transactions.filter(transaction=> transaction.account_id === account.id)
       account.transactions = transactionsHere
       accountFinal = Object.assign({}, account, {transactions:transactionsHere, balance: balance})
-      return {...state, account: accountFinal}
+
+
+      return {...state, account: undefined}
     default:
       return state
   }

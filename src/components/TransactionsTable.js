@@ -147,6 +147,7 @@ class TransactionsTable extends React.Component {
         <Table color='olive' compact='very' selectable sortable stackable>
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell id='account_name' onClick={this.sortTransactions}> Account </Table.HeaderCell>
               <Table.HeaderCell id='period_name' onClick={this.sortTransactions}> Date </Table.HeaderCell>
               <Table.HeaderCell id='merchant_name' onClick={this.sortTransactions}> Merchant </Table.HeaderCell>
               <Table.HeaderCell id='category_name' onClick={this.sortTransactions}> Category </Table.HeaderCell>

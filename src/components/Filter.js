@@ -2,52 +2,79 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { Dropdown, Button } from 'semantic-ui-react'
+import _ from 'lodash'
 let transactions
 
 class Filter extends React.Component {
   state = {
-    category_name: []
+    category_name: [],
+    merchant_name: [],
+    account_name: [],
+    period_name: []
   }
   filterData = () => {
     let categoryFilter = []
     if (this.props.user.category_name) {
       this.props.user.category_name.map((category, index) => {
-        categoryFilter.push({key: index, text: category, value: category})
+        categoryFilter.push({key: index, text: category, value: category, id:category, name: category, name2: 'category_name'})
       })
     }
     return categoryFilter
   }
 
   categoryFilters = (event) => {
-    // outertext when clicking delete event.currentTarget.parentElement.outerText
-    // event.currentTarget.className = 'delete icon'
+    let state = this.state
+    let name
     if (event.currentTarget.className === 'delete icon') {
-      this.setState({category_name: this.state.category_name.filter(name => name !== event.currentTarget.parentElement.outerText)})
+      name = event.currentTarget.offsetParent.children[event.currentTarget.offsetParent.children.length-1].childNodes[0].attributes[2].nodeValue
+      let value = event.currentTarget.offsetParent.children[event.currentTarget.offsetParent.children.length-1].childNodes[0].attributes[0].nodeValue
+      this.setState({[name]: state[name].filter(name => name !== event.currentTarget.parentElement.outerText)})
     } else {
-      this.setState({category_name: this.state.category_name.concat([event.currentTarget.innerText]) })
+      name = event.currentTarget.attributes[2].nodeValue
+      this.setState({[name]: state[name].concat([event.currentTarget.id]) })
     }
   }
 
   filterTransactions = (event) => {
-    transactions = []
     let state = this.state
-    state.category_name.forEach(category => {
-      this.props.user.transactions.forEach(transaction => {
-        if (transaction.category_name === category) {
-          transactions.push(transaction)
-        }
-      })
+
+    let filteredTransactions = this.props.user.transactions.filter(transaction=> {
+      return state.category_name.includes(transaction.category_name) && state.account_name.includes(transaction.account_name) && state.merchant_name.includes(transaction.merchant_name) && state.period_name.includes(transaction.period_name)
     })
-    this.props.filterTransactions(transactions)
+    console.log(filteredTransactions)
+    this.props.filterTransactions(filteredTransactions)
+
   }
 
 
   render(){
     let data = this.filterData()
-    console.log(this.state)
+    let accountNames = []
+    let merchantNames = []
+    let periodNames = []
+    if (this.props.user.category_name) {
+      this.props.accounts.map((account, index) => {
+        accountNames.push({key: index, text: account.name, value: account.name, id:account.name, name: account.name, name2: 'account_name'})
+      })
+    }
+    if (this.props.user.merchant_name) {
+      this.props.user.merchant_name.map((merchant, index) => {
+        merchantNames.push({key: index, text: merchant, value: merchant, id:merchant, name: merchant, name2: 'merchant_name'})
+      })
+    }
+    let dates = [...new Set(this.props.user.transactions.map(transaction => transaction.period_name))]
+    dates.map((date, index) => {
+      periodNames.push({key: index, text: date, value: date, id:date, name: date, name2: 'period_name'})
+    })
+    console.log('dates array', dates)
+    console.log('props in filter',this.props)
+    console.log('state in filter', this.state)
     return (
       <div>
         <Dropdown placeholder='Category' onChange={this.categoryFilters} value={this.state.category_name} fluid multiple search selection options={data} />
+        <Dropdown placeholder='Merchant' onChange={this.categoryFilters} fluid multiple search selection options={merchantNames} />
+        <Dropdown placeholder='Account' onChange={this.categoryFilters} fluid multiple search selection options={accountNames} />
+        <Dropdown placeholder='Period' onChange={this.categoryFilters} fluid multiple search selection options={periodNames} />
         <Button onClick={this.filterTransactions}> Filter</Button>
       </div>
     )
@@ -57,7 +84,8 @@ class Filter extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
-    categories: state.auth.categories
+    categories: state.auth.categories,
+    accounts: state.accounts.accounts
   }
 }
 export default connect(mapStateToProps, actions)(Filter);

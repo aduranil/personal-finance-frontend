@@ -26,6 +26,9 @@ class Transaction extends React.Component {
         trigger={
           <tr onClick={this.openModal}>
             <Table.Cell>
+              {this.props.transaction.account_name}
+            </Table.Cell>
+            <Table.Cell>
               {this.props.transaction.period_name}
             </Table.Cell>
             <Table.Cell>
