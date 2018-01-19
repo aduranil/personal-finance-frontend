@@ -105,7 +105,7 @@ class TransactionsTable extends React.Component {
       })
     } else {
 
-      if (this.props.filtered.length > 0) {
+      if (this.props.filtered) {
         renderedTransactions = this.props.filtered
       } else {
         renderedTransactions = this.props.user.transactions
@@ -122,7 +122,6 @@ class TransactionsTable extends React.Component {
     }
   }
   render(){
-    console.log('from transactions table',this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let data = this.transactionData()
     let pageNumbers = []

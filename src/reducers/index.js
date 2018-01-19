@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false, categories: [], filtered: []}
+const initialState = { currentUser: {}, isLoading: false, categories: [], filtered: undefined}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
