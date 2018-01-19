@@ -10,10 +10,6 @@ import AddTransaction from '../components/AddTransaction'
 
 class Dashboard extends React.Component {
 
-  componentDidMount(){
-    this.props.fetchAccounts()
-  }
-
   render(){
     return (
       <div>

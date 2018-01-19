@@ -3,9 +3,7 @@ import {
   ASYNC_START,
   LOGOUT_USER,
   SET_CURRENT_USER,
-  SELECT_ACCOUNT,
   TOGGLE_MODAL,
-  GET_ACCOUNTS,
   DELETE_TRANSACTION,
   ADD_TRANSACTION,
   ADD_ACCOUNT,
@@ -20,10 +18,6 @@ export const fetchUser = () => dispatch => {
   })
 }
 
-export const selectAccount = (id) =>  {
-  return {type: SELECT_ACCOUNT, account: id}
-}
-
 export const modal = () => {
   return {type: TOGGLE_MODAL}
 }
@@ -32,14 +26,8 @@ export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions}
 }
 
-export const filterTransactions = (transactions) => {
-  return {type: 'FILTER_TRANSACTIONS', transactions}
-}
-
-export const fetchAccounts = () => dispatch => {
-  adapter.auth.getAccounts().then(accounts => {
-    dispatch({type: GET_ACCOUNTS, accounts})
-  })
+export const filterTransactions = (transactions, event) => {
+  return {type: 'FILTER_TRANSACTIONS', transactions, id: event.currentTarget.innerText, balance: event.currentTarget.attributes[1].nodeValue}
 }
 
 export const loginUser = (username, password, history) => dispatch => {
@@ -64,10 +52,6 @@ export const addAccount = (name, user_id) => dispatch => {
       dispatch({type: ADD_ACCOUNT, account})
     }
   })
-}
-
-export const updateAccount = (transactions) => {
-  return {type: 'UPDATE_ACCOUNT', transactions}
 }
 
 export const createUser = (username, password, history) => dispatch => {

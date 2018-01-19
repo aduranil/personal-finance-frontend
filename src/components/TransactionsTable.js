@@ -34,10 +34,10 @@ class TransactionsTable extends React.Component {
     let value = event.target.id
     let sortedTransactions
     this.setState({ascending: !this.state.ascending})
-    if (this.props.account && this.props.account.id) {
-      sortedTransactions = this.props.account.transactions.slice()
+    if (this.props.filtered) {
+      sortedTransactions = this.props.filtered
     } else {
-      sortedTransactions = this.props.user.transactions.slice()
+      sortedTransactions = this.props.user.transactions
     }
     if (this.state.ascending) {
       if (isNaN(sortedTransactions[0][value])) {
@@ -76,11 +76,7 @@ class TransactionsTable extends React.Component {
         })
       }
     }
-    if (this.props.account && this.props.account.id) {
-      this.props.updateAccount(sortedTransactions)
-    } else {
       this.props.sortTransactions(sortedTransactions)
-    }
   }
 
   transactionData = () => {
@@ -88,11 +84,11 @@ class TransactionsTable extends React.Component {
     const indexOfLastTransaction = currentPage * transactionsPerPage
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
     let renderedTransactions = []
-    if (this.props.account.transactions) {
+
       if (this.props.filtered) {
         renderedTransactions = this.props.filtered
       } else {
-        renderedTransactions = this.props.account.transactions
+        renderedTransactions = this.props.user.transactions
       }
       item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
       transactionsLength = renderedTransactions.length
@@ -101,7 +97,7 @@ class TransactionsTable extends React.Component {
           <Transaction key={index} transaction={transaction}/>
         )
       })
-    }
+
   }
   render(){
     console.log(this.props)
@@ -117,7 +113,7 @@ class TransactionsTable extends React.Component {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <Header as='h1'>{this.props.account.name}: {numberWithCommas(parseFloat(Math.round(this.props.account.balance * 100)/100).toFixed(2))}</Header>
+            {this.props.name} : {this.props.balance}
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
@@ -148,11 +144,6 @@ class TransactionsTable extends React.Component {
                   onPageChange={this.handlePageChange}
                   size='mini'
                   totalPages={Math.ceil(transactionsLength/transactionsPerPage)}
-                  ellipsisItem={showEllipsis ? undefined : null}
-                  firstItem={showFirstAndLastNav ? undefined : null}
-                  lastItem={showFirstAndLastNav ? undefined : null}
-                  prevItem={showPreviousAndNextNav ? undefined : null}
-                  nextItem={showPreviousAndNextNav ? undefined : null}
                 />
               </Table.HeaderCell>
             </Table.Row>
@@ -167,8 +158,9 @@ class TransactionsTable extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
-    account: state.auth.account,
-    filtered: state.auth.filtered
+    filtered: state.auth.filtered,
+    name: state.auth.name,
+    balance: state.auth.balance
   }
 }
 export default connect(mapStateToProps, actions)(TransactionsTable)

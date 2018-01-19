@@ -11,19 +11,24 @@ class SideBar extends React.Component {
     }
   }
 
-  handleItemClick = (e, { name }) => {
-    e.preventDefault()
+  handleItemClick = (event, { name }) => {
     this.setState({activeItem: name})
-    this.props.selectAccount(e.target.id)
+    let state = this.state
+    console.log(event.currentTarget.id)
+    let filteredTransactions = this.props.user.transactions.filter(transaction=> {
+      return (
+        event.currentTarget.id.includes(transaction.account_name)
+      )
+    })
+    console.log(filteredTransactions)
+    this.props.filterTransactions(filteredTransactions, event)
   }
 
   renderAccounts = () => {
     const { activeItem } = this.state
-    if (this.props.user.accounts) {
-      return this.props.user.accounts.map(account => {
-        return <Menu.Item name={account.name} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} key={account.id}/>
-      })
-    }
+    return this.props.accountOptions.map(account => {
+      return <Menu.Item name={account.id} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} name2={account.name3} key={account.id}/>
+    })
   }
 
   render() {
@@ -47,7 +52,8 @@ class SideBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.currentUser
+    user: state.auth.currentUser,
+    accountOptions: state.auth.accountOptions
   }
 }
 
