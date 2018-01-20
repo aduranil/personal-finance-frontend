@@ -4,6 +4,7 @@ import {Menu, Grid, Header,Statistic, Divider} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip,Bar } from 'recharts';
 import _ from 'lodash'
+ import withAuth from '../hocs/withAuth'
 
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -64,13 +65,13 @@ class Trends extends React.Component {
               </Statistic>
               <Statistic>
                 <Statistic.Value>
-                  {user.category_name ? numberWithCommas(user.category_name.length) : null}
+                  {this.props.category_name ? this.props.category_name.length : null}
                 </Statistic.Value>
                 <Statistic.Label>Categories</Statistic.Label>
               </Statistic>
               <Statistic>
                 <Statistic.Value>
-                  {user.merchant_name ? numberWithCommas(user.merchant_name.length) : null}
+                  {this.props.merchant_name ? this.props.merchant_name.length: null}
                 </Statistic.Value>
                 <Statistic.Label>Merchants</Statistic.Label>
               </Statistic>
@@ -162,6 +163,8 @@ class Trends extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.currentUser,
+    merchant_name: state.auth.merchant_name,
+    category_name: state.auth.category_name
   }
 }
-export default connect(mapStateToProps, null)(Trends);
+export default withAuth(connect(mapStateToProps, null)(Trends));

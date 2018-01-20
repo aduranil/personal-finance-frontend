@@ -2,13 +2,13 @@ const API_ROOT = `http://localhost:3000`
 
 const headers = {
   'Content-Type': 'application/json',
-  Accepts: 'application/json'
+  Accepts: 'application/json',
+  'Authorization': localStorage.getItem('token')
 }
 
 const getWithToken = url => {
-  const token = localStorage.getItem('token')
   return fetch(url, {
-    headers: {Authorization: token}
+    headers: headers
   }).then(res => res.json())
 }
 
@@ -19,7 +19,7 @@ const getCurrentUser = () => {
 const login = data => {
   return fetch(`${API_ROOT}/login`, {
     method: 'POST',
-    headers,
+    headers: headers,
     body: JSON.stringify(data)
   }).then(res => res.json())
 }
@@ -52,27 +52,24 @@ const createUser = data => {
 }
 
 const createTransaction = (data) => {
-  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/transactions`, {
     method: 'POST',
-    headers: headersWithAuth,
+    headers: headers,
     body: JSON.stringify(data)
   }).then(res => res.json())
 }
 
 const deleteTransaction = (id, history) => {
-  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/transactions/${id}`, {
     method: 'DELETE',
-    headers: headersWithAuth
+    headers: headers
   }).then(res => res.json())
 }
 
 const deleteAccount = (id, history) => {
-  let headersWithAuth = {...headers, 'Authorization': localStorage.getItem('token')}
   return fetch(`${API_ROOT}/accounts/${id}`, {
     method: 'DELETE',
-    headers: headersWithAuth
+    headers: headers
   }).then(res => res.json())
 }
 

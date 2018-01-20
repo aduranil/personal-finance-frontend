@@ -6,47 +6,76 @@ const authReducer = (state = initialState, action) => {
     case 'ASYNC_START':
       return {...state, isLoading: true}
     case 'SET_CURRENT_USER':
-      let periodNames = [...new Set(action.user.transactions.map(transaction => transaction.period_name))]
-      let categoryNames = [...new Set(action.user.transactions.map(transaction => transaction.category_name))]
-      let merchantNames = [...new Set(action.user.transactions.map(transaction => transaction.merchant_name))]
-      let periodData = []
-      let accountData = []
-      let category_name = []
-      let merchant_name = []
-      periodNames.map((date, index) => {
-        return periodData.push({key: index, text: date, value: date, id:date, name: date, name2: 'period_name'})
-      })
-      categoryNames.map((category, index) => {
-        return category_name.push({key: index, text: category, value: category, id:category, name: category, name2: 'category_name'})
-      })
-      merchantNames.map((merchant, index) => {
-        return merchant_name.push({key: index, text: merchant, value: merchant, id:merchant, name: merchant, name2: 'merchant_name'})
-      })
-      action.user.accounts.map((account, index) => {
-        return accountData.push({key: index, text: account.name, value: account.name, id:account.name, name: account.id, name2: 'account_name', name3: account.balance})
-      })
-      return {...state, currentUser: action.user, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.user.account_balance }
+      if (action.payload && action.payload.transactions) {
+        let periodNames = [...new Set(action.payload.transactions.map(transaction => transaction.period_name))]
+        let categoryNames = [...new Set(action.payload.transactions.map(transaction => transaction.category_name))]
+        let merchantNames = [...new Set(action.payload.transactions.map(transaction => transaction.merchant_name))]
+        let periodData = []
+        let accountData = []
+        let category_name = []
+        let merchant_name = []
+        periodNames.map((date, index) => {
+          return periodData.push({key: index, text: date, value: date, id:date, name: date, name2: 'period_name'})
+        })
+        categoryNames.map((category, index) => {
+          return category_name.push({key: index, text: category, value: category, id:category, name: category, name2: 'category_name'})
+        })
+        merchantNames.map((merchant, index) => {
+          return merchant_name.push({key: index, text: merchant, value: merchant, id:merchant, name: merchant, name2: 'merchant_name'})
+        })
+        action.payload.accounts.map((account, index) => {
+          return accountData.push({key: index, text: account.name, value: account.name, id:account.name, name: account.id, name2: 'account_name', name3: account.balance})  })
+        return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
+      } else {
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+      }
     case 'DELETE_TRANSACTION':
-      return {...state, currentUser: action.payload}
+      if (state.filtered) {
+        let accountBalance = action.payload.accounts.find(account => account.id === action.account_id).balance
+        return {...state, currentUser: action.payload, filtered: state.filtered.filter(transaction => transaction.id !== action.id), balance: accountBalance}
+      } else {
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+      }
     case 'ADD_TRANSACTION':
-      return {...state, currentUser: action.payload}
+      if (state.filtered) {
+        let withTransactions = action.payload.accounts.find(account => account.id === action.id).balance
+        return {...state, currentUser: action.payload, filtered: action.payload.transactions.filter(transaction => transaction.account_id === action.id), balance: withTransactions}
+      } else {
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+      }
     case 'SORT_TRANSACTIONS':
-      let newUser = Object.assign({}, state.currentUser, {transactions: action.transactions})
-      return {...state, currentUser: newUser}
+      if (state.filtered) {
+        return {...state, filtered: action.transactions}
+      } else {
+        let newUser = Object.assign({}, state.currentUser, {transactions: action.transactions})
+        return {...state, currentUser: newUser}
+      }
     case 'FILTER_TRANSACTIONS':
       let data
+      let balance
         if (action.id == 'All') {
           data = undefined
+          balance = state.currentUser.account_balance
         } else {
           data = action.transactions
+          balance = action.balance
         }
-      return {...state, filtered: data, name:action.id, balance: action.balance}
+      return {...state, filtered: data, name:action.id, balance: balance}
     case 'DELETE_ACCOUNT':
-      return {...state, currentUser: action.payload}
+      if (state.filtered) {
+        let id = state.filtered[0].account_id
+        let deleteBalance = action.payload.accounts.find(account => account.id === id).balance
+        debugger;
+        return {...state, currentUser: action.payload, balance: deleteBalance}
+      } else {
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+      }
     case 'ADD_ACCOUNT':
-      let newCurrentUser = Object.assign({}, state.currentUser, {})
-      newCurrentUser.accounts = state.currentUser.accounts.concat(action.account)
-      return {...state, currentUser: newCurrentUser}
+      if (state.filtered) {
+        return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.id === state.filtered[0].account_id).balance}
+      } else {
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+      }
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}
     default:

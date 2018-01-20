@@ -34,7 +34,7 @@ class DashboardNavbar extends React.Component {
   handleSubmit = () => {
     let name = this.state.account_name
     let user_id = this.state.user_id
-    this.props.addAccount(name, user_id)
+    this.props.addAccount(name, user_id, this.props.history)
     this.setState({modalOpen: false, account_name: '' })
   }
 

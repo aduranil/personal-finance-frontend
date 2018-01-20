@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
             <SideBar/>
           </Grid.Column>
           <Grid.Column width={12}>
-            <TransactionsTable/>
+            <TransactionsTable history={this.props.history}/>
           </Grid.Column>
         </Grid>
       </div>

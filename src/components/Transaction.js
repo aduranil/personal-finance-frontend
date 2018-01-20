@@ -17,7 +17,7 @@ class Transaction extends React.Component {
     this.setState({booleanTransaction: !this.state.booleanTransaction})
   }
   submitTransaction = () => {
-    this.props.deleteTransaction(this.props.transaction.id, this.props.history, this.props.transaction.account_id)
+    this.props.deleteTransaction(this.props.transaction.id,  this.props.transaction.account_id, this.props.transaction.amount)
     this.setState({booleanTransaction: !this.state.booleanTransaction})
   }
   render(){
@@ -78,4 +78,12 @@ class Transaction extends React.Component {
   }
 }
 
-export default connect(null, actions)(Transaction);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.currentUser,
+    filtered: state.auth.filtered
+  }
+}
+
+
+export default connect(mapStateToProps, actions)(Transaction);

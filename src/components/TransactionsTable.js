@@ -29,6 +29,10 @@ class TransactionsTable extends React.Component {
     this.setState({currentPage: Number(event.currentTarget.innerHTML)})
   }
 
+  componentDidMount(){
+    this.props.history.push('/')
+  }
+
   sortTransactions = (event) => {
     event.preventDefault()
     let value = event.target.id
@@ -87,7 +91,7 @@ class TransactionsTable extends React.Component {
 
       if (this.props.filtered) {
         renderedTransactions = this.props.filtered
-      } else {
+      } else if (this.props.user.transactions){
         renderedTransactions = this.props.user.transactions
       }
       item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
