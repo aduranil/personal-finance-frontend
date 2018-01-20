@@ -23,10 +23,6 @@ class AddTransaction extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  componentWillMount() {
-    this.resetComponent()
-  }
-
   resetComponent = () => {
     this.setState({isLoading: false, results: []})
   }
@@ -67,7 +63,6 @@ class AddTransaction extends Component {
   render() {
     const {isLoading,results, amount, period_name, merchant_name, category_name} = this.state
     const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
-
     return (
       <Modal
         open={this.props.modalBoolean}

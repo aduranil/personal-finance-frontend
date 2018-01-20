@@ -34,7 +34,6 @@ class TransactionsTable extends React.Component {
   }
 
   sortTransactions = (event) => {
-    event.preventDefault()
     let value = event.target.id
     let sortedTransactions
     this.setState({ascending: !this.state.ascending})
@@ -80,7 +79,7 @@ class TransactionsTable extends React.Component {
         })
       }
     }
-      this.props.sortTransactions(sortedTransactions)
+    this.props.sortTransactions(sortedTransactions)
   }
 
   transactionData = () => {
@@ -88,41 +87,30 @@ class TransactionsTable extends React.Component {
     const indexOfLastTransaction = currentPage * transactionsPerPage
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
     let renderedTransactions = []
-
-      if (this.props.filtered) {
-        renderedTransactions = this.props.filtered
-      } else if (this.props.user.transactions){
-        renderedTransactions = this.props.user.transactions
-      }
-      item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
-      transactionsLength = renderedTransactions.length
-      return item.map((transaction, index) => {
-        return (
-          <Transaction key={index} transaction={transaction}/>
-        )
-      })
-
+    if (this.props.filtered) {
+      renderedTransactions = this.props.filtered
+    } else if (this.props.user.transactions){
+      renderedTransactions = this.props.user.transactions
+    }
+    item = renderedTransactions.slice(indexOfFirstTransaction,indexOfLastTransaction)
+    transactionsLength = renderedTransactions.length
+    return item.map((transaction, index) => {
+      return <Transaction key={index} transaction={transaction}/>
+    })
   }
+
   render(){
-    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
-    let data = this.transactionData()
     let pageNumbers = []
     for (let i = 1; i <=Math.ceil(transactionsLength/transactionsPerPage); i++) {
       pageNumbers.push(i)
     }
-
     return (
       <Container>
         <Grid>
           <Grid.Row>
             <Grid.Column>
-            {this.props.name} : {this.props.balance}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <Filter/>
+            <Header as='h1'>{this.props.name} :  {numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -137,7 +125,7 @@ class TransactionsTable extends React.Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data}
+            {this.transactionData()}
           </Table.Body>
           <Table.Footer>
             <Table.Row>
@@ -157,7 +145,6 @@ class TransactionsTable extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {

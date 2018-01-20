@@ -44,6 +44,7 @@ const createAccountsFromPlaid = (user_id, token, metadata) => {
     body: JSON.stringify({user_id, token, metadata})
   }).then(res => res.json())
 }
+
 const createUser = data => {
   return fetch(`${API_ROOT}/users`, {
     method: 'POST',

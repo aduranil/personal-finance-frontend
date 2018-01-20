@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
 import AddTransaction from '../components/AddTransaction'
+import Filter from '../components/Filter'
 
 class Dashboard extends React.Component {
 
@@ -15,12 +16,15 @@ class Dashboard extends React.Component {
       <div>
         <DashboardNavbar history={this.props.history}/>
         <AddTransaction history={this.props.history}/>
-        <Grid columns={2} stackable>
-          <Grid.Column width={3}>
+        <Grid columns={3} stackable>
+          <Grid.Column width={2}>
             <SideBar/>
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column width={11}>
             <TransactionsTable history={this.props.history}/>
+          </Grid.Column>
+          <Grid.Column width={3}>
+            <Filter/>
           </Grid.Column>
         </Grid>
       </div>

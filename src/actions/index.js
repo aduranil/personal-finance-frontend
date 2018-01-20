@@ -30,6 +30,12 @@ export const filterTransactions = (transactions, event) => {
   return {type: 'FILTER_TRANSACTIONS', transactions, id: event.currentTarget.innerText, balance: event.currentTarget.attributes[1].nodeValue}
 }
 
+export const filterByMany = (transactions, event) => {
+  let name = event.nativeEvent.currentTarget.all[48].innerText.split(" : ")[0]
+  let balance = event.nativeEvent.currentTarget.all[48].innerText.split(" : ")[1]
+  return {type: 'FILTER_BY_MANY', transactions, name: name, balance: balance}
+}
+
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: ASYNC_START})
   adapter.auth.login({username, password}).then(user => {

@@ -24,12 +24,13 @@ const authReducer = (state = initialState, action) => {
           return merchant_name.push({key: index, text: merchant, value: merchant, id:merchant, name: merchant, name2: 'merchant_name'})
         })
         action.payload.accounts.map((account, index) => {
-          return accountData.push({key: index, text: account.name, value: account.name, id:account.name, name: account.id, name2: 'account_name', name3: account.balance})  })
-          if (state.filtered) {
-            return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
-          } else {
-            return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.account_balance}
-          }
+          return accountData.push({key: index, text: account.name, value: account.name, id:account.name, name: account.id, name2: 'account_name', name3: account.balance})
+        })
+        if (state.filtered) {
+          return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
+        } else {
+          return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.account_balance}
+        }
       } else {
         return {...state, currentUser: action.payload, balance: action.payload.account_balance}
       }
@@ -65,9 +66,10 @@ const authReducer = (state = initialState, action) => {
           balance = action.balance
         }
       return {...state, filtered: data, name:action.id, balance: balance}
+    case 'FILTER_BY_MANY':
+      return {...state, filtered: action.transactions, name: action.name, balance: parseFloat(action.balance.replace(/,/g, ''))}
     case 'DELETE_ACCOUNT':
       if (state.filtered && state.filtered.length > 0 && state.filtered[0].account_id !== Number(action.id)) {
-        debugger;
         let id = state.filtered[0].account_id
         let deleteBalance = action.payload.accounts.find(account => account.id === id).balance
         return {...state, currentUser: action.payload, balance: deleteBalance}
@@ -96,17 +98,9 @@ const modalReducer = (state = {modalOpen: false}, action) =>  {
   }
 }
 
-
-
 const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer
 })
 
 export default rootReducer;
-
-// wherever dispatch is defined in the redux library
-// it must look something like This
-// const dispatch = (action) => {
-//   reducer(state, action)
-// }
