@@ -37,7 +37,7 @@ export const loginUser = (username, password, history) => dispatch => {
       alert(user.error)
     } else {
       localStorage.setItem('token', user.token)
-      dispatch({type: SET_CURRENT_USER, payload: user, balance: user.account_balance})
+      dispatch({type: SET_CURRENT_USER, payload: user})
       history.push('/')
     }
   })

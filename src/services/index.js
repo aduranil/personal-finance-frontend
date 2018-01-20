@@ -7,8 +7,9 @@ const headers = {
 }
 
 const getWithToken = url => {
+  const token = localStorage.getItem('token')
   return fetch(url, {
-    headers: headers
+    headers: {Authorization: token}
   }).then(res => res.json())
 }
 

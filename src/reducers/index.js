@@ -25,7 +25,11 @@ const authReducer = (state = initialState, action) => {
         })
         action.payload.accounts.map((account, index) => {
           return accountData.push({key: index, text: account.name, value: account.name, id:account.name, name: account.id, name2: 'account_name', name3: account.balance})  })
-        return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
+          if (state.filtered) {
+            return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
+          } else {
+            return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.account_balance}
+          }
       } else {
         return {...state, currentUser: action.payload, balance: action.payload.account_balance}
       }
@@ -62,13 +66,13 @@ const authReducer = (state = initialState, action) => {
         }
       return {...state, filtered: data, name:action.id, balance: balance}
     case 'DELETE_ACCOUNT':
-      if (state.filtered) {
+      if (state.filtered && state.filtered.length > 0 && state.filtered[0].account_id !== Number(action.id)) {
+        debugger;
         let id = state.filtered[0].account_id
         let deleteBalance = action.payload.accounts.find(account => account.id === id).balance
-        debugger;
         return {...state, currentUser: action.payload, balance: deleteBalance}
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+        return {...state, currentUser: action.payload, balance: action.payload.account_balance, name: 'All', filtered:undefined}
       }
     case 'ADD_ACCOUNT':
       if (state.filtered) {
