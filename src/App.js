@@ -8,6 +8,7 @@ import Signup from './containers/Signup'
 import NavBar from './components/NavBar'
 import Dashboard from './containers/Dashboard'
 import Trends from './containers/Trends'
+import Upload from './components/Upload'
 
 class App extends Component {
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Route exact path='/' component={Dashboard}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/trends' component={Trends}/>
+          <Route exact path='/upload' component={Upload}/>
         </Switch>
       </div>
     );

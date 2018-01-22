@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Header, Modal, Form, Search} from 'semantic-ui-react'
+import { Button, Header, Modal, Form, Search, Message} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import _ from 'lodash'
@@ -61,6 +61,7 @@ class AddTransaction extends Component {
   }
 
   render() {
+    console.log(this.props)
     const {isLoading,results, amount, period_name, merchant_name, category_name} = this.state
     const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
     return (
@@ -69,6 +70,7 @@ class AddTransaction extends Component {
         onClose={()=>this.props.modal(!this.props.modalBoolean)}
         size='tiny'
       >
+        {this.props.errors?<Message warning>{this.props.errors}</Message>: null}
         <Modal.Header content='Add Transaction' />
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
@@ -143,7 +145,8 @@ const mapStateToProps = state => {
     user: state.auth.currentUser,
     accountOptions: state.auth.accountOptions,
     merchant_name: state.auth.merchant_name,
-    category_name: state.auth.category_name
+    category_name: state.auth.category_name,
+    errors : state.auth.errors
   }
 }
 

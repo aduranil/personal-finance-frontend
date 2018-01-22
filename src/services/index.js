@@ -61,6 +61,13 @@ const createTransaction = (data) => {
   }).then(res => res.json())
 }
 
+const createUpload = (file_upload) => {
+  return fetch(`${API_ROOT}/filereaders`, {
+    method: 'POST',
+    body: file_upload
+  }).then(res => res.json())
+}
+
 const deleteTransaction = (id, history) => {
   return fetch(`${API_ROOT}/transactions/${id}`, {
     method: 'DELETE',
@@ -94,6 +101,7 @@ export const adapter = {
     createAccount,
     deleteTransaction,
     deleteAccount,
-    createAccountsFromPlaid
+    createAccountsFromPlaid,
+    createUpload
   }
 }

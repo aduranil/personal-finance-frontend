@@ -5,6 +5,9 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
       return {...state, isLoading: true}
+    case 'ERROR_MESSAGE':
+      debugger;
+      return {...state, errors: action.error}
     case 'SET_CURRENT_USER':
       if (action.payload && action.payload.transactions) {
         let periodNames = [...new Set(action.payload.transactions.map(transaction => transaction.period_name))]
@@ -29,24 +32,24 @@ const authReducer = (state = initialState, action) => {
         if (state.filtered) {
           return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData}
         } else {
-          return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.account_balance}
+          return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.data.account_balance}
         }
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+        return {...state, currentUser: action.payload}
       }
     case 'DELETE_TRANSACTION':
       if (state.filtered) {
         let accountBalance = action.payload.accounts.find(account => account.id === action.account_id).balance
         return {...state, currentUser: action.payload, filtered: state.filtered.filter(transaction => transaction.id !== action.id), balance: accountBalance}
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+        return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'ADD_TRANSACTION':
       if (state.filtered) {
         let withTransactions = action.payload.accounts.find(account => account.id === action.id).balance
         return {...state, currentUser: action.payload, filtered: action.payload.transactions.filter(transaction => transaction.account_id === action.id), balance: withTransactions}
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+        return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'SORT_TRANSACTIONS':
       if (state.filtered) {
@@ -60,7 +63,7 @@ const authReducer = (state = initialState, action) => {
       let balance
         if (action.id == 'All') {
           data = undefined
-          balance = state.currentUser.account_balance
+          balance = state.currentUser.data.account_balance
         } else {
           data = action.transactions
           balance = action.balance
@@ -89,10 +92,12 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-const modalReducer = (state = {modalOpen: false}, action) =>  {
+const modalReducer = (state = {modalOpen: false, loaderOpen:false}, action) =>  {
   switch (action.type){
     case 'TOGGLE_MODAL':
       return {...state, modalOpen: !state.modalOpen}
+    case 'TOGGLE_LOADER':
+      return {...state, loaderOpen: !state.loaderOpen}
     default:
       return state;
   }

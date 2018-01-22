@@ -22,6 +22,9 @@ export const modal = () => {
   return {type: TOGGLE_MODAL}
 }
 
+export const loaderModal = () => {
+  return {type: 'TOGGLE_LOADER'}
+}
 export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions}
 }
@@ -39,8 +42,8 @@ export const filterByMany = (transactions, event) => {
 export const loginUser = (username, password, history) => dispatch => {
   dispatch({type: ASYNC_START})
   adapter.auth.login({username, password}).then(user => {
-    if (user.error){
-      alert(user.error)
+    if (user.errors){
+      dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       localStorage.setItem('token', user.token)
       dispatch({type: SET_CURRENT_USER, payload: user})
@@ -51,8 +54,8 @@ export const loginUser = (username, password, history) => dispatch => {
 
 export const createUser = (username, password, history) => dispatch => {
   adapter.auth.createUser({username,password}).then(user => {
-    if (user.error){
-      alert(user.error)
+    if (user.errors){
+      dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       localStorage.setItem('token', user.token)
       dispatch({type: SET_CURRENT_USER, payload:user})
@@ -63,8 +66,8 @@ export const createUser = (username, password, history) => dispatch => {
 
 export const createTransaction = (amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id) => dispatch => {
   adapter.auth.createTransaction({amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}).then(user => {
-    if (user.error){
-      alert(user.error)
+    if (user.errors){
+      dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       let data = {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}
       dispatch({type: ADD_TRANSACTION, payload: user, id:account_id, transaction: data})
@@ -76,6 +79,10 @@ export const deleteTransaction = (id, account_id) => dispatch => {
   adapter.auth.deleteTransaction(id).then(user => {
     dispatch({type: DELETE_TRANSACTION, payload:user, id:id, account_id: account_id})
   })
+}
+
+export const createUpload = (user_id, file_upload) => {
+  adapter.auth.createUpload(user_id, file_upload)
 }
 
 export const addAccount = (name, user_id, history) => dispatch => {

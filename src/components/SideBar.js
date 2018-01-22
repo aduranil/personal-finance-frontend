@@ -13,7 +13,6 @@ class SideBar extends React.Component {
 
   handleItemClick = (event, { name }) => {
     this.setState({activeItem: name})
-    let state = this.state
     console.log(event.currentTarget.id)
     let filteredTransactions = this.props.user.transactions.filter(transaction=> {
       return (

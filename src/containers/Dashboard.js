@@ -8,6 +8,7 @@ import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
 import AddTransaction from '../components/AddTransaction'
 import Filter from '../components/Filter'
+import Upload from '../components/Upload'
 
 class Dashboard extends React.Component {
 
@@ -16,6 +17,7 @@ class Dashboard extends React.Component {
       <div>
         <DashboardNavbar history={this.props.history}/>
         <AddTransaction history={this.props.history}/>
+        <Upload history={this.props.history}/>
         <Grid columns={3} stackable>
           <Grid.Column width={2}>
             <SideBar/>

@@ -5,6 +5,7 @@ import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
 import { adapter } from '../services'
 import PlaidLink from 'react-plaid-link';
+import { Link } from "react-router-dom";
 
 class DashboardNavbar extends React.Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class DashboardNavbar extends React.Component {
   }
 
   render(){
+    console.log(this.props)
     const { activeItem } = this.state
     return (
       <Menu color='blue' inverted secondary>
@@ -104,7 +106,6 @@ class DashboardNavbar extends React.Component {
                 <Dropdown
                   fluid
                   search
-                  simple
                   selection
                   item
                   label='account'
@@ -133,6 +134,14 @@ class DashboardNavbar extends React.Component {
             </PlaidLink>
           </div>
         </Menu.Item>
+
+        <Menu.Item
+          name='Upload Transactions'
+          active={activeItem === 'Upload Transaction'}
+          onClick={()=>this.props.loaderModal(!this.props.loaderBoolean)}
+        >
+          Upload Transactions
+        </Menu.Item>
       </Menu>
     )
   }
@@ -142,7 +151,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
     modalBoolean: state.modal.modalOpen,
-    accountOptions: state.auth.accountOptions
+    accountOptions: state.auth.accountOptions,
+    loaderBoolean: state.modal.loaderOpen
   }
 }
 

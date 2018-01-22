@@ -23,7 +23,7 @@ class Trends extends React.Component {
     const user = this.props.user
     const time = this.state.time
     if (user) {
-      let frequency = user[this.state.frequency]
+      let frequency = user.data[this.state.frequency]
       for (const key in frequency) {
         if (frequency.hasOwnProperty(key)) {
           data.push({text: key, value: frequency[key]})
@@ -46,14 +46,14 @@ class Trends extends React.Component {
           </BarChart>
         )
       default:
-        let merchantExpenses = _.keys(user.merchant_expense_data).slice(0,3)
-        let merchantValues = _.values(user.merchant_expense_data).slice(0,3)
-        let merchantFreq = _.keys(user.merchant_frequency).slice(0,3)
-        let merchantUnits = _.values(user.merchant_frequency).slice(0,3)
-        let categoryExpenses = _.keys(user.category_expense_data).slice(0,3)
-        let categoryValues = _.values(user.category_expense_data).slice(0,3)
-        let categoryFreq = _.keys(user.category_frequency).slice(0,3)
-        let categoryUnits = _.values(user.category_frequency).slice(0,3)
+        let merchantExpenses = _.keys(user.data.merchant_expense_data).slice(0,3)
+        let merchantValues = _.values(user.data.merchant_expense_data).slice(0,3)
+        let merchantFreq = _.keys(user.data.merchant_frequency).slice(0,3)
+        let merchantUnits = _.values(user.data.merchant_frequency).slice(0,3)
+        let categoryExpenses = _.keys(user.data.category_expense_data).slice(0,3)
+        let categoryValues = _.values(user.data.category_expense_data).slice(0,3)
+        let categoryFreq = _.keys(user.data.category_frequency).slice(0,3)
+        let categoryUnits = _.values(user.data.category_frequency).slice(0,3)
         return (
           <div>
             <Statistic.Group>

@@ -29,6 +29,7 @@ class Signup extends React.Component {
   }
 
   render(){
+    console.log('from signup',this.props.errors)
     const {fields} = this.state
     return (
       <div className='login-form'>
@@ -45,6 +46,9 @@ class Signup extends React.Component {
           verticalAlign='middle'
         >
           <Grid.Column style={{ maxWidth: 450 }}>
+            {this.props.errors ?
+              <Message warning> {this.props.errors.map(error => <p>{error}</p>)}
+                </Message>: null}
             <Header as='h2' color='olive' textAlign='center'>
               {' '}Sign up
             </Header>
@@ -81,4 +85,11 @@ class Signup extends React.Component {
     )
   }
 }
-export default withRouter(connect(null, actions)(Signup))
+
+const mapStateToProps = (state) => {
+
+  return {
+    errors : state.auth.errors
+  }
+}
+export default withRouter(connect(mapStateToProps, actions)(Signup))

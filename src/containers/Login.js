@@ -45,6 +45,7 @@ class Login extends React.Component {
           verticalAlign='middle'
         >
           <Grid.Column style={{ maxWidth: 450 }}>
+            {this.props.errors?<Message warning>{this.props.errors}</Message>: null}
             <Header as='h2' color='olive' textAlign='center'>
               {' '}Log-in to your account
             </Header>
@@ -81,4 +82,10 @@ class Login extends React.Component {
     )
   }
 }
-export default withRouter(connect(null, actions)(Login))
+
+const mapStateToProps = (state) => {
+  return {
+    errors : state.auth.errors
+  }
+}
+export default withRouter(connect(mapStateToProps, actions)(Login))
