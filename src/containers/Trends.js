@@ -24,11 +24,9 @@ class Trends extends React.Component {
     const time = this.state.time
     if (user) {
       let frequency = user.data[this.state.frequency]
-      console.log(frequency)
-      console.log(this.state.frequency)
       for (const key in frequency) {
         if (frequency.hasOwnProperty(key)) {
-          data.push({text: key, value: frequency[key]*-1})
+          data.push({text: key, value: Math.abs(frequency[key])})
         }
       }
     }

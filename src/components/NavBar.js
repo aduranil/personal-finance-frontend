@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import withAuth from '../hocs/withAuth'
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
 
 class NavBar extends Component {
   state = {}
@@ -23,7 +24,7 @@ class NavBar extends Component {
           active={activeItem === 'money'}
           onClick={this.handleItemClick}
         >
-          <Icon name='money'/>
+          Hi, {this.props.user}
         </Menu.Item>
         <Menu.Item
           name='dashboard'
@@ -61,4 +62,10 @@ class NavBar extends Component {
   }
 }
 
-export default withAuth(NavBar);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.currentUser.username
+  }
+}
+
+export default withAuth(connect(mapStateToProps, null)(NavBar));

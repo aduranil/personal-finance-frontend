@@ -3,8 +3,6 @@ import { combineReducers } from 'redux';
 const initialState = { currentUser: {}, isLoading: false,  filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null, currentPage: 1}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ASYNC_START':
-      return {...state, isLoading: true}
     case 'ERROR_MESSAGE':
       debugger;
       return {...state, errors: action.error}
@@ -37,7 +35,7 @@ const authReducer = (state = initialState, action) => {
           return {...state, currentUser: action.payload, periodOptions: periodData, category_name: category_name, merchant_name: merchant_name, accountOptions: accountData, balance: action.payload.data.account_balance}
         }
       } else {
-        return {...state, currentUser: action.payload}
+        return {...state, currentUser: action.payload, name: 'All'}
       }
     case 'DELETE_TRANSACTION':
       if (state.filtered) {
@@ -95,7 +93,7 @@ const authReducer = (state = initialState, action) => {
         return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'LOGOUT_USER':
-      return {...state, currentUser: {}}
+      return {...state, currentUser: {}, name: ''}
     default:
       return state;
   }

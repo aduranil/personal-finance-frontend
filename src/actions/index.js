@@ -12,7 +12,6 @@ import {
 } from "./types";
 
 export const fetchUser = () => dispatch => {
-  dispatch({type: ASYNC_START})
   adapter.auth.getCurrentUser().then(user => {
     dispatch({type: SET_CURRENT_USER, payload: user})
   })
@@ -20,7 +19,6 @@ export const fetchUser = () => dispatch => {
 
 export const createAccountsFromPlaid = (user_id, token) =>  dispatch => {
   adapter.auth.createAccountsFromPlaid(user_id, token).then(user => {
-    debugger;
     dispatch({type: ADD_ACCOUNT, payload: user})
     dispatch({type: SET_CURRENT_USER, payload:user})
   })
@@ -57,7 +55,6 @@ export const filterByMany = (transactions, event) => {
 }
 
 export const loginUser = (username, password, history) => dispatch => {
-  dispatch({type: ASYNC_START})
   adapter.auth.login({username, password}).then(user => {
     if (user.errors){
       dispatch({type: 'ERROR_MESSAGE', error: user.errors})
