@@ -13,20 +13,20 @@ class SideBar extends React.Component {
 
   handleItemClick = (event, { name }) => {
     this.setState({activeItem: name})
-    console.log(event.currentTarget.id)
+    this.props.activeItem(1)
     let filteredTransactions = this.props.user.transactions.filter(transaction=> {
       return (
         event.currentTarget.id.includes(transaction.account_name)
       )
     })
-    console.log(filteredTransactions)
     this.props.filterTransactions(filteredTransactions, event)
   }
 
   renderAccounts = () => {
     const { activeItem } = this.state
+    console.log(this.props.accountOptions)
     return this.props.accountOptions.map(account => {
-      return <Menu.Item name={account.text} onClick={this.handleItemClick} active={activeItem === account.name} id={account.id} name2={account.name3} key={account.id}/>
+      return <Menu.Item name={account.text} onClick={this.handleItemClick} active={activeItem === account.text} id={account.id} name2={account.name} key={account.id}/>
     })
   }
 
@@ -39,7 +39,7 @@ class SideBar extends React.Component {
             <Menu.Item
               name='All'
               onClick={this.handleItemClick}  active={this.state.activeItem === 'All'}
-              id='10000'
+              id='All'
             />
           : null}
           {this.renderAccounts()}

@@ -25,11 +25,12 @@ class TransactionsTable extends React.Component {
   }
 
   handlePageChange = (event) => {
-    this.setState({currentPage: Number(event.currentTarget.innerHTML)})
+    this.props.activeItem(Number(event.currentTarget.innerHTML))
   }
 
   componentDidMount(){
     this.props.history.push('/')
+    this.setState({currentPage: this.props.page})
   }
 
   sortTransactions = (event) => {
@@ -82,8 +83,8 @@ class TransactionsTable extends React.Component {
   }
 
   transactionData = () => {
-    const {currentPage, transactionsPerPage} = this.state
-    const indexOfLastTransaction = currentPage * transactionsPerPage
+    const {transactionsPerPage} = this.state
+    const indexOfLastTransaction = this.props.page * transactionsPerPage
     const indexOfFirstTransaction = indexOfLastTransaction-transactionsPerPage
     let renderedTransactions = []
     if (this.props.filtered) {
@@ -99,6 +100,7 @@ class TransactionsTable extends React.Component {
   }
 
   render(){
+    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let pageNumbers = []
     for (let i = 1; i <=Math.ceil(transactionsLength/transactionsPerPage); i++) {
@@ -130,7 +132,7 @@ class TransactionsTable extends React.Component {
             <Table.Row>
               <Table.HeaderCell colSpan='7'>
                 <Pagination
-                  activePage={currentPage}
+                  activePage={this.props.page}
                   boundaryRange={boundaryRange}
                   onPageChange={this.handlePageChange}
                   size='mini'
@@ -150,7 +152,8 @@ const mapStateToProps = (state) => {
     user: state.auth.currentUser,
     filtered: state.auth.filtered,
     name: state.auth.name,
-    balance: state.auth.balance
+    balance: state.auth.balance,
+    page: state.auth.currentPage
   }
 }
 export default connect(mapStateToProps, actions)(TransactionsTable)

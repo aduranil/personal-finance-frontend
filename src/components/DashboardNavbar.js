@@ -1,5 +1,5 @@
 import React from 'react'
-import {Menu, Modal, Form, Button, Dropdown} from 'semantic-ui-react'
+import {Menu, Modal, Form, Button, Dropdown, Message} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
@@ -84,6 +84,7 @@ class DashboardNavbar extends React.Component {
         >
           <Modal.Header content='Add Account' />
             <Modal.Content scrolling>
+              <Message> <i>Account names must be unique</i> </Message>
               <Form onSubmit={this.handleSubmit}>
                 <Form.Input
                   fluid

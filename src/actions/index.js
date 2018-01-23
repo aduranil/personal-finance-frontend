@@ -37,8 +37,12 @@ export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions}
 }
 
+export const activeItem = (item) => {
+  return {type: 'ACTIVE_ITEM', item }
+}
+
 export const filterTransactions = (transactions, event) => {
-  return {type: 'FILTER_TRANSACTIONS', transactions, id: event.currentTarget.innerText, balance: event.currentTarget.attributes[1].nodeValue}
+  return {type: 'FILTER_TRANSACTIONS', transactions, name: event.currentTarget.id, id: event.currentTarget.attributes[1].nodeValue}
 }
 
 export const filterByMany = (transactions, event) => {

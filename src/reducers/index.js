@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false,  filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null}
+const initialState = { currentUser: {}, isLoading: false,  filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null, currentPage: 1}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ASYNC_START':
@@ -8,6 +8,9 @@ const authReducer = (state = initialState, action) => {
     case 'ERROR_MESSAGE':
       debugger;
       return {...state, errors: action.error}
+    case 'ACTIVE_ITEM':
+      debugger;
+      return {...state, currentPage: action.item}
     case 'SET_CURRENT_USER':
       if (action.payload && action.payload.transactions) {
         let periodNames = [...new Set(action.payload.transactions.map(transaction => transaction.period_name))]
@@ -61,16 +64,22 @@ const authReducer = (state = initialState, action) => {
     case 'FILTER_TRANSACTIONS':
       let data
       let balance
-        if (action.id == 'All') {
+        if (action.name == 'All') {
           data = undefined
           balance = state.currentUser.data.account_balance
         } else {
           data = action.transactions
-          balance = action.balance
+          balance = state.currentUser.accounts.find(account => account.id === Number(action.id)).balance
         }
-      return {...state, filtered: data, name:action.id, balance: balance}
+      return {...state, filtered: data, name:action.name, balance: balance}
     case 'FILTER_BY_MANY':
-      return {...state, filtered: action.transactions, name: action.name, balance: parseFloat(action.balance.replace(/,/g, ''))}
+      let transactionsName
+      if (action.name !== 'All') {
+        transactionsName = action.transactions.filter(transaction => transaction.account_name === action.name)
+      } else {
+        transactionsName = action.transactions
+      }
+      return {...state, filtered: transactionsName, name: action.name, balance: parseFloat(action.balance.replace(/,/g, ''))}
     case 'DELETE_ACCOUNT':
       if (state.filtered && state.filtered.length > 0 && state.filtered[0].account_id !== Number(action.id)) {
         let id = state.filtered[0].account_id

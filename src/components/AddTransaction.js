@@ -61,7 +61,6 @@ class AddTransaction extends Component {
   }
 
   render() {
-    console.log(this.props)
     const {isLoading,results, amount, period_name, merchant_name, category_name} = this.state
     const resultRenderer = ({ name }) => <Header as='h5' color='black' content={name} />
     return (
