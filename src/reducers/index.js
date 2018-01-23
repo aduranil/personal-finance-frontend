@@ -49,7 +49,7 @@ const authReducer = (state = initialState, action) => {
     case 'ADD_TRANSACTION':
       if (state.filtered) {
         let withTransactions = action.payload.accounts.find(account => account.id === action.id).balance
-        return {...state, currentUser: action.payload, filtered: action.payload.transactions.filter(transaction => transaction.account_id === action.id), balance: withTransactions}
+        return {...state, currentUser: action.payload, filtered: action.payload.transactions.filter(transaction => transaction.account_id === action.id), balance: withTransactions, name: action.name}
       } else {
         return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }

@@ -87,7 +87,7 @@ export const createTransaction = (amount, category_name, merchant_name, account_
       dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       let data = {amount, category_name, merchant_name, account_name, period_name, debit_or_credit, account_id}
-      dispatch({type: ADD_TRANSACTION, payload: user, id:account_id, transaction: data})
+      dispatch({type: ADD_TRANSACTION, payload: user, id:account_id, transaction: data, name: account_name})
     }
   })
 }
