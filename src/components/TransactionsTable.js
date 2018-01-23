@@ -14,7 +14,6 @@ class TransactionsTable extends React.Component {
   constructor(){
     super()
     this.state = {
-      currentPage: 1,
       transactionsPerPage: 25,
       boundaryRange: 1,
       showEllipsis: true,
@@ -30,7 +29,6 @@ class TransactionsTable extends React.Component {
 
   componentDidMount(){
     this.props.history.push('/')
-    this.setState({currentPage: this.props.page})
   }
 
   sortTransactions = (event) => {
@@ -137,6 +135,8 @@ class TransactionsTable extends React.Component {
                   onPageChange={this.handlePageChange}
                   size='mini'
                   totalPages={Math.ceil(transactionsLength/transactionsPerPage)}
+                  firstItem={showFirstAndLastNav ? null : null}
+                  lastItem={showFirstAndLastNav ? null : null}
                 />
               </Table.HeaderCell>
             </Table.Row>

@@ -33,12 +33,17 @@ export const modal = () => {
 export const loaderModal = () => {
   return {type: 'TOGGLE_LOADER'}
 }
+
 export const sortTransactions = (transactions) => {
   return {type: SORT_TRANSACTIONS, transactions}
 }
 
 export const activeItem = (item) => {
   return {type: 'ACTIVE_ITEM', item }
+}
+
+export const filter = (item) => {
+  return {type: 'FILTER', item}
 }
 
 export const filterTransactions = (transactions, event) => {
@@ -120,4 +125,8 @@ export const deleteAccount = (id, history) => dispatch => {
 export const logoutUser = () => {
   localStorage.removeItem('token')
   return {type: LOGOUT_USER}
+}
+
+export const removeFilterLabel = () => {
+  return {type: 'REMOVE_LABEL'}
 }

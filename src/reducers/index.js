@@ -9,7 +9,6 @@ const authReducer = (state = initialState, action) => {
       debugger;
       return {...state, errors: action.error}
     case 'ACTIVE_ITEM':
-      debugger;
       return {...state, currentPage: action.item}
     case 'SET_CURRENT_USER':
       if (action.payload && action.payload.transactions) {
@@ -113,9 +112,22 @@ const modalReducer = (state = {modalOpen: false, loaderOpen:false}, action) =>  
   }
 }
 
+const filterReducer = (state={category_name: [], account_name: [], period_name: [], merchant_name: []}, action) => {
+  switch (action.type) {
+    case 'FILTER':
+      return {...state, ...action.item}
+    case 'REMOVE_LABEL':
+      return {...state, category_name: [], account_name: [], period_name: [], merchant_name: []}
+    default:
+      return state;
+  }
+}
+
+
 const rootReducer = combineReducers({
   auth: authReducer,
-  modal: modalReducer
+  modal: modalReducer,
+  filter:filterReducer
 })
 
 export default rootReducer;
