@@ -67,6 +67,7 @@ class Transaction extends React.Component {
                 {this.props.transaction.category_name}<br/>
                 {this.props.transaction.account_name}<br/>
                 {this.props.transaction.debit_or_credit}<br/>
+                {this.props.transaction.id}<br/>
               </Grid.Column>
             </Grid>
             <Button

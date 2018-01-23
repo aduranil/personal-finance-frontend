@@ -15,6 +15,7 @@ class DashboardNavbar extends React.Component {
       modalOpen: false,
       deleteAccountModal: false,
       account_name: '',
+      account_balance: '',
       account_id: '',
       user_id: this.props.user.id,
       publicKey: "a5ec48b34d0a037118ccb09fd170a9",
@@ -26,6 +27,10 @@ class DashboardNavbar extends React.Component {
     this.setState({account_name: event.target.value})
   }
 
+  accountBalance = event => {
+    this.setState({account_balance: event.target.value})
+  }
+
   handleDeleteOpen = () => {
     this.setState({deleteAccountModal: true})
   }
@@ -35,7 +40,7 @@ class DashboardNavbar extends React.Component {
   handleSubmit = () => {
     let name = this.state.account_name
     let user_id = this.state.user_id
-    this.props.addAccount(name, user_id, this.props.history)
+    this.props.addAccount(name, user_id, this.state.account_balance)
     this.setState({modalOpen: false, account_name: '' })
   }
 
@@ -55,8 +60,8 @@ class DashboardNavbar extends React.Component {
     })
   }
 
-  handleOnSuccess = (user_id, token, metadata) => {
-    adapter.auth.createAccountsFromPlaid(this.props.user.id, token, metadata)
+  handleOnSuccess = (user_id, token) => {
+    this.props.createAccountsFromPlaid(this.props.user.id, token)
   }
 
   render(){
@@ -89,6 +94,16 @@ class DashboardNavbar extends React.Component {
                   name='account'
                   value={this.state.account_name}
                   onChange={this.handleChange}
+                />
+                <Form.Input
+                  fluid
+                  id='balance'
+                  label='account balance'
+                  placeholder='account balance'
+                  type='balance'
+                  name='balance'
+                  value={this.state.account_balance}
+                  onChange={this.accountBalance}
                 />
                 <Button color='green' type='submit' inverted> Add Account</Button>
               </Form>
@@ -128,7 +143,6 @@ class DashboardNavbar extends React.Component {
               env="sandbox"
               className='buttonChange'
               apiVersion="v2"
-              selectAccount={true}
               onSuccess={this.handleOnSuccess}>
                 <font id='buttonText'>Link Accounts</font>
             </PlaidLink>

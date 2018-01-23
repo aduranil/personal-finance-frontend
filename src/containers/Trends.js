@@ -24,15 +24,17 @@ class Trends extends React.Component {
     const time = this.state.time
     if (user) {
       let frequency = user.data[this.state.frequency]
+      console.log(frequency)
+      console.log(this.state.frequency)
       for (const key in frequency) {
         if (frequency.hasOwnProperty(key)) {
-          data.push({text: key, value: frequency[key]})
+          data.push({text: key, value: frequency[key]*-1})
         }
       }
     }
-    const fontSizeMapper = word => Math.log2(word.value) * 5;
     switch(isPassed) {
       case 0:
+        const fontSizeMapper = word => Math.log2(Math.abs(word.value)) * 5;
         return <WordCloud data={data} fontSizeMapper={fontSizeMapper}/>
       case 1:
         data = data.slice(0,time)

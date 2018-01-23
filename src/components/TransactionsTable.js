@@ -3,7 +3,6 @@ import {Container, Table, Pagination, Header, Grid} from 'semantic-ui-react'
 import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import Filter from './Filter'
 let item
 let transactionsLength
 

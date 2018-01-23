@@ -77,13 +77,14 @@ const authReducer = (state = initialState, action) => {
         let deleteBalance = action.payload.accounts.find(account => account.id === id).balance
         return {...state, currentUser: action.payload, balance: deleteBalance}
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance, name: 'All', filtered:undefined}
+        return {...state, currentUser: action.payload, balance: action.payload.data.account_balance, name: 'All', filtered:undefined}
       }
     case 'ADD_ACCOUNT':
       if (state.filtered) {
-        return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.id === state.filtered[0].account_id).balance}
+        debugger;
+        return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.name.toLowerCase() === state.name.toLowerCase()).balance}
       } else {
-        return {...state, currentUser: action.payload, balance: action.payload.account_balance}
+        return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'LOGOUT_USER':
       return {...state, currentUser: {}}

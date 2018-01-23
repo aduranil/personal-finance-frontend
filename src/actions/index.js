@@ -18,6 +18,14 @@ export const fetchUser = () => dispatch => {
   })
 }
 
+export const createAccountsFromPlaid = (user_id, token) =>  dispatch => {
+  adapter.auth.createAccountsFromPlaid(user_id, token).then(user => {
+    debugger;
+    dispatch({type: ADD_ACCOUNT, payload: user})
+    dispatch({type: SET_CURRENT_USER, payload:user})
+  })
+}
+
 export const modal = () => {
   return {type: TOGGLE_MODAL}
 }
@@ -81,15 +89,17 @@ export const deleteTransaction = (id, account_id) => dispatch => {
   })
 }
 
-export const createUpload = (user_id, file_upload) => {
-  adapter.auth.createUpload(user_id, file_upload)
+export const createUpload = (user_id, file_upload) => dispatch => {
+  adapter.auth.createUpload(user_id, file_upload).then(user => {
+    dispatch({type: SET_CURRENT_USER, payload:user})
+  })
 }
 
-export const addAccount = (name, user_id, history) => dispatch => {
-  adapter.auth.createAccount(name, user_id)
+export const addAccount = (name, user_id, balance) => dispatch => {
+  adapter.auth.createAccount(name, user_id, balance)
   .then(user => {
-    if (user.error) {
-      alert(user.error)
+    if (user.errors) {
+      alert(user.errors)
     } else {
       dispatch({type: ADD_ACCOUNT, payload: user})
       dispatch({type: SET_CURRENT_USER, payload:user})

@@ -18,6 +18,7 @@ const getCurrentUser = () => {
 }
 
 const login = data => {
+
   return fetch(`${API_ROOT}/login`, {
     method: 'POST',
     headers: headers,
@@ -37,11 +38,11 @@ const getTransactions = () => {
   }).then(res => res.json())
 }
 
-const createAccountsFromPlaid = (user_id, token, metadata) => {
+const createAccountsFromPlaid = (user_id, token) => {
   return fetch(`${API_ROOT}/authenticators`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify({user_id, token, metadata})
+    body: JSON.stringify({user_id, token})
   }).then(res => res.json())
 }
 
@@ -82,11 +83,11 @@ const deleteAccount = (id, history) => {
   }).then(res => res.json())
 }
 
-const createAccount = (name, user_id) => {
+const createAccount = (name, user_id, balance) => {
   return fetch(`${API_ROOT}/accounts`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify({name: name, user_id: user_id})
+    body: JSON.stringify({name: name, user_id: user_id, balance: balance})
   }).then(res => res.json())
 }
 

@@ -19,7 +19,7 @@ class Upload extends React.Component {
     const formData = new FormData();
     formData.append('file_upload',this.state.file)
     formData.append('account_id',this.state.account_id)
-    adapter.auth.createUpload(formData)
+    this.props.createUpload(formData)
   }
 
   onChange = (e) => {
