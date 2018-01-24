@@ -60,7 +60,6 @@ export const loginUser = (username, password, history) => dispatch => {
       dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       localStorage.setItem('token', user.token)
-      debugger;
       dispatch({type: SET_CURRENT_USER, payload: user})
       history.push('/')
     }
@@ -104,7 +103,6 @@ export const createUpload = (user_id, file_upload) => dispatch => {
 
 export const addAccount = (name, user_id, balance, history) => dispatch => {
   adapter.auth.createAccount(name, user_id, balance).then(user => {
-    debugger;
     if (user.errors) {
       alert(user.errors)
     } else {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Table, Pagination, Header, Grid} from 'semantic-ui-react'
+import {Container, Table, Pagination, Header, Grid, Divider} from 'semantic-ui-react'
 import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
@@ -104,15 +104,12 @@ class TransactionsTable extends React.Component {
       pageNumbers.push(i)
     }
     return (
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-            <Header as='h1'>{this.props.name} :  {numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Table color='olive' compact='very' selectable sortable stackable>
+      <div>
+        <Header as='h2'>Hi, {this.props.user.username}! Cash & Credit Accounts</Header>
+        <Divider/>
+        <Header as='h1'>{this.props.name}:  ${numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
+        <Divider/>
+        <Table color='olive' compact='very' selectable sortable stackable striped  size='small'>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell id='account_name' onClick={this.sortTransactions}> Account </Table.HeaderCell>
@@ -141,7 +138,7 @@ class TransactionsTable extends React.Component {
             </Table.Row>
           </Table.Footer>
         </Table>
-      </Container>
+      </div>
     )
   }
 }

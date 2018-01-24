@@ -34,7 +34,7 @@ class SideBar extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <Menu secondary vertical>
+        <Menu size='small' pointing secondary vertical color='grey'>
           <Menu.Item as='h4'>Your Accounts</Menu.Item>
           {this.props.user.accounts && this.props.user.accounts.length > 0 ?
             <Menu.Item

@@ -6,6 +6,11 @@ body {
 
 div.ui.grey.vertical.center.aligned.segment {
   background-image: url('block-making-payments.jpg');
+  background-size:100%;
+}
+
+div.login-form {
+  background: grey !important;
 }
 
 button.ui,
@@ -20,7 +25,7 @@ div.ui {
 }
 
 button.buttonChange {
-  background: #8884d8 !important;
+  background: #b19cd9 !important;
   outline: none !important;
   border: none !important;
 }
@@ -31,5 +36,5 @@ font#buttonText {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 .ui.menu.blue {
-  background: #8884d8 !important
+  background: #b19cd9 !important
 }
