@@ -70,12 +70,12 @@ const authReducer = (state = initialState, action) => {
       return {...state, filtered: data, name:action.name, balance: balance}
     case 'FILTER_BY_MANY':
       let transactionsName
-      if (action.name !== 'All') {
-        transactionsName = action.transactions.filter(transaction => transaction.account_name === action.name)
+      if (state.name !== 'All') {
+        transactionsName = action.transactions.filter(transaction => transaction.account_name === state.name)
       } else {
         transactionsName = action.transactions
       }
-      return {...state, filtered: transactionsName, name: action.name, balance: parseFloat(action.balance.replace(/,/g, ''))}
+      return {...state, filtered: transactionsName}
     case 'DELETE_ACCOUNT':
       if (state.filtered && state.filtered.length > 0 && state.filtered[0].account_id !== Number(action.id)) {
         let id = state.filtered[0].account_id

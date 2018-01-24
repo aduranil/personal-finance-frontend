@@ -9,6 +9,7 @@ import NavBar from './components/NavBar'
 import Dashboard from './containers/Dashboard'
 import Trends from './containers/Trends'
 import Upload from './components/Upload'
+import Footer from './components/Footer'
 
 class App extends Component {
 

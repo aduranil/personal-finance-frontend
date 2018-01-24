@@ -4,7 +4,8 @@ import {Menu, Grid, Header,Statistic, Divider} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip,Bar } from 'recharts';
 import _ from 'lodash'
- import withAuth from '../hocs/withAuth'
+import withAuth from '../hocs/withAuth'
+import Footer from '../components/Footer'
 
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -103,58 +104,63 @@ class Trends extends React.Component {
     const { activeItem } = this.state
     return (
       <div>
-      <Divider hidden/>
-        <Grid columns={2}>
-          <Grid.Column width={3}>
-            <Menu secondary vertical>
-              <Menu.Item
-                name='Home'
-                active={activeItem === 'home'}
-                onClick={()=>this.setState({isPassed: ""})}
-              />
-              <Menu.Item style={{fontSize: '1.1em'}}><b>Word Clouds</b></Menu.Item>
-              <Menu.Item
-                name='Merchant Frequency'
-                active={activeItem === 'Merchant Frequency'}
-                onClick={()=>this.setState({isPassed: 0, frequency:'merchant_frequency', activeItem: 'Merchant Frequency'})}
-              />
-              <Menu.Item
-                name='Category Frequency'
-                active={activeItem === 'Category Frequency'}
-                onClick={()=>this.setState({isPassed: 0, frequency: 'category_frequency', activeItem: 'Category Frequency'})}
-              />
-              <Menu.Item
-                name='Category Expense Data'
-                active={activeItem === 'Category Expense Data'}
-                onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Category Expense Data'})}
-              />
-              <Menu.Item
-                name='Merchant Expense Data'
-                active={activeItem === 'Merchant Expense Data'}
-                onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Merchant Expense Data'})}
-              />
-            <Menu.Item style={{fontSize: '1.1em'}}><b>Expense Graphs</b></Menu.Item>
-              <Menu.Item
-                name='Category Expenses'
-                active={activeItem === 'Category Expenses'}
-                onClick={()=>this.setState({isPassed: 1, frequency: 'category_expense_data', activeItem: 'Category Expenses'})}
-              />
-              <Menu.Item
-                name='Merchant Expenses'
-                active={activeItem === 'Merchant Expenses'}
-                onClick={()=>this.setState({isPassed: 1, frequency: 'merchant_expense_data', activeItem: 'Merchant Expenses'})}
-              />
-              <Menu.Item
-                name='Spend Per Month'
-                active={activeItem === 'Spend Per Month'}
-                onClick={()=>this.setState({isPassed: 1, frequency: 'spend_by_month', activeItem: 'Spend Per Month', time:12})}
-              />
-            </Menu>
-          </Grid.Column>
-          <Grid.Column width={13}>
-            {this.renderComponent(this.state.isPassed)}
-          </Grid.Column>
-        </Grid>
+        <div className='main'>
+          <Divider hidden/>
+            <Grid columns={2}>
+              <Grid.Column width={3}>
+                <Menu secondary vertical>
+                  <Menu.Item
+                    name='Home'
+                    active={activeItem === 'home'}
+                    onClick={()=>this.setState({isPassed: ""})}
+                  />
+                  <Menu.Item style={{fontSize: '1.1em'}}><b>Word Clouds</b></Menu.Item>
+                  <Menu.Item
+                    name='Merchant Frequency'
+                    active={activeItem === 'Merchant Frequency'}
+                    onClick={()=>this.setState({isPassed: 0, frequency:'merchant_frequency', activeItem: 'Merchant Frequency'})}
+                  />
+                  <Menu.Item
+                    name='Category Frequency'
+                    active={activeItem === 'Category Frequency'}
+                    onClick={()=>this.setState({isPassed: 0, frequency: 'category_frequency', activeItem: 'Category Frequency'})}
+                  />
+                  <Menu.Item
+                    name='Category Expense Data'
+                    active={activeItem === 'Category Expense Data'}
+                    onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Category Expense Data'})}
+                  />
+                  <Menu.Item
+                    name='Merchant Expense Data'
+                    active={activeItem === 'Merchant Expense Data'}
+                    onClick={()=>this.setState({isPassed: 0, frequency: 'category_expense_data', activeItem: 'Merchant Expense Data'})}
+                  />
+                <Menu.Item style={{fontSize: '1.1em'}}><b>Expense Graphs</b></Menu.Item>
+                  <Menu.Item
+                    name='Category Expenses'
+                    active={activeItem === 'Category Expenses'}
+                    onClick={()=>this.setState({isPassed: 1, frequency: 'category_expense_data', activeItem: 'Category Expenses'})}
+                  />
+                  <Menu.Item
+                    name='Merchant Expenses'
+                    active={activeItem === 'Merchant Expenses'}
+                    onClick={()=>this.setState({isPassed: 1, frequency: 'merchant_expense_data', activeItem: 'Merchant Expenses'})}
+                  />
+                  <Menu.Item
+                    name='Spend Per Month'
+                    active={activeItem === 'Spend Per Month'}
+                    onClick={()=>this.setState({isPassed: 1, frequency: 'spend_by_month', activeItem: 'Spend Per Month', time:12})}
+                  />
+                </Menu>
+              </Grid.Column>
+              <Grid.Column width={13}>
+                {this.renderComponent(this.state.isPassed)}
+              </Grid.Column>
+            </Grid>
+          </div>
+          <div className='footer'>
+          <Footer/>
+          </div>
       </div>
     )
   }

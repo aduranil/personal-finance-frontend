@@ -32,6 +32,7 @@ class Filter extends React.Component {
   }
 
   render(){
+    console.log(this.props)
     return (
       <Grid style={{padding: '0em 2em 2em 2em'}}>
         <Grid.Row>

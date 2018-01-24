@@ -37,7 +37,7 @@ export const sortTransactions = (transactions) => {
 }
 
 export const activeItem = (item) => {
-  return {type: 'ACTIVE_ITEM', item }
+  return {type: 'ACTIVE_ITEM', item}
 }
 
 export const filter = (item) => {
@@ -48,10 +48,8 @@ export const filterTransactions = (transactions, event) => {
   return {type: 'FILTER_TRANSACTIONS', transactions, name: event.currentTarget.id, id: event.currentTarget.attributes[1].nodeValue}
 }
 
-export const filterByMany = (transactions, event) => {
-  let name = event.nativeEvent.currentTarget.all[48].innerText.split(" : ")[0]
-  let balance = event.nativeEvent.currentTarget.all[48].innerText.split(" : ")[1]
-  return {type: 'FILTER_BY_MANY', transactions, name: name, balance: balance}
+export const filterByMany = (transactions) => {
+  return {type: 'FILTER_BY_MANY', transactions}
 }
 
 export const loginUser = (username, password, history) => dispatch => {

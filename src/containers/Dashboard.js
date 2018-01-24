@@ -10,13 +10,17 @@ import AddTransaction from '../components/AddTransaction'
 import Filter from '../components/Filter'
 import Upload from '../components/Upload'
 import Footer from '../components/Footer'
+import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
 
 class Dashboard extends React.Component {
-  componentDidMount(){
-    this.props.fetchUser(localStorage.getItem('token'))
-  }
+
+  state = { visible: false }
+
+  toggleVisibility = () => this.setState({ visible: !this.state.visible })
+
 
   render(){
+    const { visible } = this.state
     return (
       <div>
         <DashboardNavbar history={this.props.history}/>
@@ -26,14 +30,27 @@ class Dashboard extends React.Component {
           <Grid.Column width={2}>
             <SideBar/>
           </Grid.Column>
-          <Grid.Column width={11}>
+          <Grid.Column width={10}>
+            <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
             <TransactionsTable history={this.props.history}/>
           </Grid.Column>
-          <Grid.Column width={3}>
-            <Filter/>
+          <Grid.Column width={4}>
+            <Sidebar.Pushable>
+              <Sidebar
+                animation='overlay'
+                width='wide'
+                direction='right'
+                visible={visible}
+                icon='labeled'
+                vertical
+                inverted
+                secondary
+              >
+                <Filter/>
+                </Sidebar>
+            </Sidebar.Pushable>
           </Grid.Column>
         </Grid>
-        <Footer/>
       </div>
     )
   }

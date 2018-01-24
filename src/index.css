@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Raleway", sans-serif
+  font-family: "Raleway", sans-serif;
 }
 
 div.ui.grey.vertical.center.aligned.segment {
@@ -37,4 +37,10 @@ font#buttonText {
 }
 .ui.menu.blue {
   background: #b19cd9 !important
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
