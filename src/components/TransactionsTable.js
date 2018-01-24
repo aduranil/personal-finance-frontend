@@ -137,7 +137,7 @@ class TransactionsTable extends React.Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
-        </Table>
+        </Table><br/><br/>
       </div>
     )
   }

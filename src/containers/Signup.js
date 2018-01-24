@@ -49,8 +49,8 @@ class Signup extends React.Component {
             {this.props.errors ?
               <Message warning> {this.props.errors.map(error => <p>{error}</p>)}
                 </Message>: null}
-            <Header as='h2' color='olive' textAlign='center'>
-              {' '}Sign up
+            <Header as='h1' inverted textAlign='center'>
+              {' '}Pick a username to get started.
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
               <Segment stacked>

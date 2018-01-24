@@ -32,7 +32,7 @@ const withAuth = WrappedComponent => {
           <Redirect to="/logout" />
         );
       } else {
-        return <Loader active>Loading</Loader>;
+        return <Loader size='massive' active>Loading</Loader>;
       }
     }
   }

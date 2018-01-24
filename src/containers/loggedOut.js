@@ -80,11 +80,11 @@ const HomepageLayout = () => {
         >
           <Container textAlign='center'>
             <Icon name='grid layout' inverted size='large' /><br/>
-            <List horizontal inverted divided link style={{ fontSize: '1em' }}>
-              <List.Item as='a' href='#'>Site Map</List.Item>
-              <List.Item as='a' href='#'>Contact Us</List.Item>
-              <List.Item as='a' href='#'>Terms and Conditions</List.Item>
-              <List.Item as='a' href='#'>Privacy Policy</List.Item>
+            <List horizontal inverted divided link size='tiny'>
+              <List.Item>Site Map</List.Item>
+              <List.Item >Contact Us</List.Item>
+              <List.Item >Terms and Conditions</List.Item>
+              <List.Item >Privacy Policy</List.Item>
             </List>
           </Container>
         </Segment>

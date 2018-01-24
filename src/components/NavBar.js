@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu} from 'semantic-ui-react'
+import { Menu, Icon} from 'semantic-ui-react'
 import withAuth from '../hocs/withAuth'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
@@ -18,13 +18,13 @@ class NavBar extends Component {
   render() {
     const { activeItem } = this.state
     return (
-      <Menu color='olive' inverted secondary style={{marginBottom: 0}}>
+      <Menu color='olive' inverted secondary style={{marginBottom: 0, padding: '0.5em 0em 0.5em 0em'}}>
         <Menu.Item
-          name='money'
-          active={activeItem === 'money'}
+          name='grid layout'
+          active={activeItem === 'grid layout'}
           onClick={this.handleItemClick}
         >
-          Hi, {this.props.user}
+          <Icon name='grid layout' inverted size='large' />
         </Menu.Item>
         <Menu.Item
           name='dashboard'

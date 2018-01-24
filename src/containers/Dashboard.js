@@ -9,6 +9,7 @@ import withAuth from '../hocs/withAuth'
 import AddTransaction from '../components/AddTransaction'
 import Filter from '../components/Filter'
 import Upload from '../components/Upload'
+import Footer from '../components/Footer'
 
 class Dashboard extends React.Component {
   componentDidMount(){
@@ -32,6 +33,7 @@ class Dashboard extends React.Component {
             <Filter/>
           </Grid.Column>
         </Grid>
+        <Footer/>
       </div>
     )
   }

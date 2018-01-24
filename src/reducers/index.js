@@ -88,6 +88,7 @@ const authReducer = (state = initialState, action) => {
       if (state.filtered) {
         return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.name.toLowerCase() === state.name.toLowerCase()).balance}
       } else {
+        debugger;
         return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'LOGOUT_USER':

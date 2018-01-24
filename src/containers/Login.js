@@ -46,8 +46,8 @@ class Login extends React.Component {
         >
           <Grid.Column style={{ maxWidth: 450 }}>
             {this.props.errors?<Message warning>{this.props.errors}</Message>: null}
-            <Header as='h2' color='olive' textAlign='center'>
-              {' '}Log-in to your account
+            <Header as='h1' inverted textAlign='center'>
+              {' '}Good to see you again! Log in to your account! 
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>
               <Segment stacked>
