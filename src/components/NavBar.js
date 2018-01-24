@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu} from 'semantic-ui-react'
 import withAuth from '../hocs/withAuth'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux'

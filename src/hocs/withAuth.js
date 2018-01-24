@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../actions';
+import {Loader} from 'semantic-ui-react'
 
 const withAuth = WrappedComponent => {
   class AuthedComponent extends React.Component {
@@ -31,7 +32,7 @@ const withAuth = WrappedComponent => {
           <Redirect to="/logout" />
         );
       } else {
-        return null;
+        return <Loader active>Loading</Loader>;
       }
     }
   }

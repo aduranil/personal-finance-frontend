@@ -18,8 +18,18 @@ const getCurrentUser = () => {
 }
 
 const login = data => {
-
   return fetch(`${API_ROOT}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accepts: 'application/json',
+    },
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+}
+
+const createUser = data => {
+  return fetch(`${API_ROOT}/users`, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(data)
@@ -46,13 +56,6 @@ const createAccountsFromPlaid = (user_id, token) => {
   }).then(res => res.json())
 }
 
-const createUser = data => {
-  return fetch(`${API_ROOT}/users`, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(data)
-  }).then(res => res.json())
-}
 
 const createTransaction = (data) => {
   return fetch(`${API_ROOT}/transactions`, {
@@ -63,8 +66,10 @@ const createTransaction = (data) => {
 }
 
 const createUpload = (file_upload) => {
+    const tk = localStorage.getItem('token')
   return fetch(`${API_ROOT}/filereaders`, {
     method: 'POST',
+    headers: {Authorization: tk},
     body: file_upload
   }).then(res => res.json())
 }

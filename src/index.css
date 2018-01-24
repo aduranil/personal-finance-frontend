@@ -4,6 +4,9 @@ body {
   font-family: "Raleway", sans-serif
 }
 
+div.ui.grey.vertical.center.aligned.segment {
+  background-image: url('block-making-payments.jpg');
+}
 
 button.ui,
 text,
@@ -11,6 +14,7 @@ a.ui,
 h1.ui.header,
 h2.ui.header,
 h3.ui.header,
+h4.ui.header,
 div.ui {
   font-family: "Raleway", sans-serif !important;
 }

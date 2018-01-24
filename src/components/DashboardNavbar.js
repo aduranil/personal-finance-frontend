@@ -40,7 +40,8 @@ class DashboardNavbar extends React.Component {
   handleSubmit = () => {
     let name = this.state.account_name
     let user_id = this.state.user_id
-    this.props.addAccount(name, user_id, this.state.account_balance)
+    debugger;
+    this.props.addAccount(name, user_id, this.state.account_balance, this.props.history)
     this.setState({modalOpen: false, account_name: '' })
   }
 
@@ -61,7 +62,7 @@ class DashboardNavbar extends React.Component {
   }
 
   handleOnSuccess = (user_id, token) => {
-    this.props.createAccountsFromPlaid(this.props.user.id, token)
+    this.props.createAccountsFromPlaid(this.props.user.id, token, this.props.history)
   }
 
   render(){
@@ -141,7 +142,7 @@ class DashboardNavbar extends React.Component {
               publicKey={this.state.publicKey}
               product={['auth', 'transactions']}
               clientName={this.state.clientName}
-              env="sandbox"
+              env="development"
               className='buttonChange'
               apiVersion="v2"
               onSuccess={this.handleOnSuccess}>

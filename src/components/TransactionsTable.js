@@ -26,10 +26,10 @@ class TransactionsTable extends React.Component {
   handlePageChange = (event) => {
     this.props.activeItem(Number(event.currentTarget.innerHTML))
   }
-
-  componentDidMount(){
-    this.props.history.push('/')
-  }
+  //
+  // componentDidMount(){
+  //   this.props.history.push('/')
+  // }
 
   sortTransactions = (event) => {
     let value = event.target.id
@@ -98,7 +98,6 @@ class TransactionsTable extends React.Component {
   }
 
   render(){
-    console.log(this.props)
     const {currentPage, transactionsPerPage, boundaryRange,showEllipsis, showFirstAndLastNav,showPreviousAndNextNav} = this.state
     let pageNumbers = []
     for (let i = 1; i <=Math.ceil(transactionsLength/transactionsPerPage); i++) {

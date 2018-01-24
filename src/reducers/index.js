@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux';
 
-const initialState = { currentUser: {}, isLoading: false,  filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null, currentPage: 1}
+const initialState = { currentUser: {}, filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null, currentPage: 1}
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ERROR_MESSAGE':
-      debugger;
       return {...state, errors: action.error}
     case 'ACTIVE_ITEM':
       return {...state, currentPage: action.item}
@@ -87,13 +86,12 @@ const authReducer = (state = initialState, action) => {
       }
     case 'ADD_ACCOUNT':
       if (state.filtered) {
-        debugger;
         return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.name.toLowerCase() === state.name.toLowerCase()).balance}
       } else {
         return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'LOGOUT_USER':
-      return {...state, currentUser: {}, name: ''}
+      return {...state, currentUser: {}, name: '', periodOptions: [], accountOptions: [], category_name: [], merchant_name: [], balance: null}
     default:
       return state;
   }

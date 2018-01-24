@@ -2,7 +2,7 @@ import React from 'react'
 import SideBar from '../components/SideBar'
 import DashboardNavbar from '../components/DashboardNavbar'
 import TransactionsTable from '../components/TransactionsTable'
-import {Grid} from 'semantic-ui-react'
+import {Grid, Loader} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
@@ -11,6 +11,9 @@ import Filter from '../components/Filter'
 import Upload from '../components/Upload'
 
 class Dashboard extends React.Component {
+  componentDidMount(){
+    this.props.fetchUser(localStorage.getItem('token'))
+  }
 
   render(){
     return (
@@ -35,4 +38,11 @@ class Dashboard extends React.Component {
 
 }
 
-export default withAuth(connect(null, actions)(Dashboard))
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.currentUser.transactions
+  }
+}
+
+
+export default withAuth(connect(mapStateToProps, actions)(Dashboard))

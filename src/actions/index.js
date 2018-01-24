@@ -1,6 +1,5 @@
 import { adapter } from '../services'
 import {
-  ASYNC_START,
   LOGOUT_USER,
   SET_CURRENT_USER,
   TOGGLE_MODAL,
@@ -17,10 +16,11 @@ export const fetchUser = () => dispatch => {
   })
 }
 
-export const createAccountsFromPlaid = (user_id, token) =>  dispatch => {
+export const createAccountsFromPlaid = (user_id, token, history) =>  dispatch => {
   adapter.auth.createAccountsFromPlaid(user_id, token).then(user => {
     dispatch({type: ADD_ACCOUNT, payload: user})
     dispatch({type: SET_CURRENT_USER, payload:user})
+    history.push('/')
   })
 }
 
@@ -60,6 +60,7 @@ export const loginUser = (username, password, history) => dispatch => {
       dispatch({type: 'ERROR_MESSAGE', error: user.errors})
     } else {
       localStorage.setItem('token', user.token)
+      debugger;
       dispatch({type: SET_CURRENT_USER, payload: user})
       history.push('/')
     }
@@ -101,14 +102,15 @@ export const createUpload = (user_id, file_upload) => dispatch => {
   })
 }
 
-export const addAccount = (name, user_id, balance) => dispatch => {
-  adapter.auth.createAccount(name, user_id, balance)
-  .then(user => {
+export const addAccount = (name, user_id, balance, history) => dispatch => {
+  adapter.auth.createAccount(name, user_id, balance).then(user => {
+    debugger;
     if (user.errors) {
       alert(user.errors)
     } else {
       dispatch({type: ADD_ACCOUNT, payload: user})
       dispatch({type: SET_CURRENT_USER, payload:user})
+      history.push('/')
     }
   })
 }
