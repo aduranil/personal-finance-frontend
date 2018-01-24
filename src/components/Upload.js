@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { adapter } from '../services'
 import { Button, Modal, Dropdown, Input} from 'semantic-ui-react'
 
 class Upload extends React.Component {
@@ -15,10 +14,10 @@ class Upload extends React.Component {
   }
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
-    const url = 'http://example.com/file-upload';
     const formData = new FormData();
     formData.append('file_upload',this.state.file)
     formData.append('account_id',this.state.account_id)
+    debugger;
     this.props.createUpload(formData)
   }
 

@@ -3,9 +3,7 @@ import {Menu, Modal, Form, Button, Dropdown, Message} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
-import { adapter } from '../services'
 import PlaidLink from 'react-plaid-link';
-import { Link } from "react-router-dom";
 
 class DashboardNavbar extends React.Component {
   constructor(props) {

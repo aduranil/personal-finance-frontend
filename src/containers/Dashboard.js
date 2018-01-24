@@ -2,15 +2,13 @@ import React from 'react'
 import SideBar from '../components/SideBar'
 import DashboardNavbar from '../components/DashboardNavbar'
 import TransactionsTable from '../components/TransactionsTable'
-import {Grid, Loader} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import withAuth from '../hocs/withAuth'
 import AddTransaction from '../components/AddTransaction'
 import Filter from '../components/Filter'
 import Upload from '../components/Upload'
-import Footer from '../components/Footer'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Divider } from 'semantic-ui-react'
+import { Grid, Sidebar, Button, Header, Divider } from 'semantic-ui-react'
 
 const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -32,18 +30,7 @@ class Dashboard extends React.Component {
         <Upload history={this.props.history}/>
         <Grid columns={3} stackable>
           <Grid.Column width={2}>
-          <Sidebar.Pushable>
-            <Sidebar
-              animation='overlay'
-              direction='left'
-              width='thin'
-              visible='true'
-              icon='labeled'
-              vertical
-            >
             <SideBar/>
-            </Sidebar>
-          </Sidebar.Pushable>
           </Grid.Column>
           <Grid.Column width={11}>
 

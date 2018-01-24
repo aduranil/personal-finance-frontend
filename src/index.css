@@ -13,15 +13,20 @@ div.login-form {
   background: #D3D3D3 !important;
 }
 
+
 button.ui,
+div.header,
 text,
 a.ui,
 h1.ui.header,
 h2.ui.header,
 h3.ui.header,
 h4.ui.header,
+button,
+h4.item,
 div.ui {
   font-family: "Raleway", sans-serif !important;
+  font-weight: 400;
 }
 
 button.buttonChange {

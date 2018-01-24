@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table,Modal,Button, Grid} from 'semantic-ui-react'
+import {Table,Modal,Button} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 
@@ -47,29 +47,15 @@ class Transaction extends React.Component {
         open={this.state.booleanTransaction}
         onClose={this.openModal}
       >
-        <Modal.Header content='Transaction Details' />
+        <Modal.Header> Transaction# {this.props.transaction.id} </Modal.Header>
           <Modal.Content>
-            <Grid columns={2}>
-              <Grid.Column width={5}>
-                <b>Date:<br/>
-                Amount:<br/>
-                Merchant:<br/>
-                Detailed Description:<br/>
-                Category:<br/>
-                Account:<br/>
-                Debit or Credit:</b><br/>
-              </Grid.Column>
-              <Grid.Column width={11}>
-                {this.props.transaction.period_name}<br/>
-                {numberWithCommas(parseFloat(Math.round(this.props.transaction.amount* 100)/100).toFixed(2))}<br/>
-                {this.props.transaction.merchant_name}<br/>
-                {this.props.transaction.description}<br/>
-                {this.props.transaction.category_name}<br/>
-                {this.props.transaction.account_name}<br/>
-                {this.props.transaction.debit_or_credit}<br/>
-                {this.props.transaction.id}<br/>
-              </Grid.Column>
-            </Grid>
+            DATE: {this.props.transaction.period_name}<br/>
+              AMOUNT: {numberWithCommas(parseFloat(Math.round(this.props.transaction.amount* 100)/100).toFixed(2))}<br/>
+              MERCHANT: {this.props.transaction.merchant_name}<br/>
+              DESCRIPTION: {this.props.transaction.description}<br/>
+              CATEGORY: {this.props.transaction.category_name}<br/>
+              ACCOUNT: {this.props.transaction.account_name}<br/>
+              DEBIT/CREDIT: {this.props.transaction.debit_or_credit}<br/>
             <Button
               color='red'
               onClick={this.submitTransaction}>Delete </Button>

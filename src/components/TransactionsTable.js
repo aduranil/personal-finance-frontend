@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Table, Pagination, Header, Grid, Divider} from 'semantic-ui-react'
+import {Table, Pagination} from 'semantic-ui-react'
 import Transaction from './Transaction'
 import { connect } from 'react-redux'
 import * as actions from '../actions'

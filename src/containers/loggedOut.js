@@ -6,10 +6,8 @@ import {
   Header,
   Segment,
   Grid,
-  Image,
   Icon,
   List,
-  Divider
 } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 

@@ -88,11 +88,10 @@ const authReducer = (state = initialState, action) => {
       if (state.filtered) {
         return {...state, currentUser: action.payload, balance:  action.payload.accounts.find(account => account.name.toLowerCase() === state.name.toLowerCase()).balance}
       } else {
-        debugger;
         return {...state, currentUser: action.payload, balance: action.payload.data.account_balance}
       }
     case 'LOGOUT_USER':
-      return {...state, currentUser: {}, name: '', periodOptions: [], accountOptions: [], category_name: [], merchant_name: [], balance: null}
+      return {...state, currentUser: {}, filtered: undefined, periodOptions: [], accountOptions: [],  category_name: [], merchant_name: [], name: 'All', balance: null, currentPage: 1, errors: null}
     default:
       return state;
   }
@@ -119,7 +118,6 @@ const filterReducer = (state={category_name: [], account_name: [], period_name: 
       return state;
   }
 }
-
 
 const rootReducer = combineReducers({
   auth: authReducer,

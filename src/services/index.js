@@ -68,9 +68,11 @@ const createTransaction = (data) => {
 }
 
 const createUpload = (file_upload) => {
+  const tk = localStorage.getItem('token')
+  debugger;
   return fetch(`${API_ROOT}/filereaders`, {
     method: 'POST',
-    headers: headers(),
+    headers: {Authorization: tk},
     body: file_upload
   }).then(res => res.json())
 }
