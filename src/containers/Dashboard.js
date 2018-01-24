@@ -10,7 +10,11 @@ import AddTransaction from '../components/AddTransaction'
 import Filter from '../components/Filter'
 import Upload from '../components/Upload'
 import Footer from '../components/Footer'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
+import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Divider } from 'semantic-ui-react'
+
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 class Dashboard extends React.Component {
 
@@ -30,15 +34,24 @@ class Dashboard extends React.Component {
           <Grid.Column width={2}>
             <SideBar/>
           </Grid.Column>
-          <Grid.Column width={10}>
-            <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
+          <Grid.Column width={11}>
+            <Grid.Row>
+              <Button className='ui right floated button' onClick={this.toggleVisibility}>Filter Transactions</Button>
+              <Header as='h2'>Hi, {this.props.user.username}! Cash & Credit Accounts</Header>
+
+            </Grid.Row>
+            <Grid.Row>
+            <Divider/>
+            <Header as='h1'>{this.props.name}:  ${numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
+            <Divider/>
+            </Grid.Row>
             <TransactionsTable history={this.props.history}/>
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Sidebar.Pushable>
               <Sidebar
                 animation='overlay'
-                width='wide'
+                width='thin'
                 direction='right'
                 visible={visible}
                 icon='labeled'
@@ -59,7 +72,9 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.currentUser.transactions
+    user: state.auth.currentUser,
+    name: state.auth.name,
+    balance: state.auth.balance
   }
 }
 

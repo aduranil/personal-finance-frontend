@@ -6,9 +6,7 @@ import * as actions from '../actions'
 let item
 let transactionsLength
 
-const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+
 
 class TransactionsTable extends React.Component {
   constructor(){
@@ -26,10 +24,6 @@ class TransactionsTable extends React.Component {
   handlePageChange = (event) => {
     this.props.activeItem(Number(event.currentTarget.innerHTML))
   }
-  //
-  // componentDidMount(){
-  //   this.props.history.push('/')
-  // }
 
   sortTransactions = (event) => {
     let value = event.target.id
@@ -105,11 +99,7 @@ class TransactionsTable extends React.Component {
     }
     return (
       <div>
-        <Header as='h2'>Hi, {this.props.user.username}! Cash & Credit Accounts</Header>
-        <Divider/>
-        <Header as='h1'>{this.props.name}:  ${numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
-        <Divider/>
-        <Table color='olive' compact='very' selectable sortable stackable striped  size='small'>
+        <Table color='olive' compact='very' selectable sortable striped  size='small'>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell id='account_name' onClick={this.sortTransactions}> Account </Table.HeaderCell>
@@ -147,8 +137,6 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.currentUser,
     filtered: state.auth.filtered,
-    name: state.auth.name,
-    balance: state.auth.balance,
     page: state.auth.currentPage
   }
 }
