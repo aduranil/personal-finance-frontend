@@ -33,7 +33,7 @@ class NavBar extends Component {
           active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}
         >
-          Dashboard
+          DASHBOARD
         </Menu.Item>
         <Menu.Item
           name='Trends'
@@ -42,17 +42,17 @@ class NavBar extends Component {
           active={activeItem === 'Trends'}
           onClick={this.handleItemClick}
         >
-          Trends
+          TRENDS
         </Menu.Item>
         <Menu.Menu position='right'>
         {this.props.loggedIn?
           <Menu.Item
-            name='logout'
+            name='LOGOUT'
             active={activeItem === 'logout'}
             onClick={this.handleLogout}
           /> :
           <Menu.Item
-            name='login'
+            name='LOGIN'
             active={activeItem === 'login'}
             onClick={this.handleLogout}
           />}

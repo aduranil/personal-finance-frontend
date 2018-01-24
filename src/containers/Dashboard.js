@@ -32,9 +32,21 @@ class Dashboard extends React.Component {
         <Upload history={this.props.history}/>
         <Grid columns={3} stackable>
           <Grid.Column width={2}>
+          <Sidebar.Pushable>
+            <Sidebar
+              animation='overlay'
+              direction='left'
+              width='thin'
+              visible='true'
+              icon='labeled'
+              vertical
+            >
             <SideBar/>
+            </Sidebar>
+          </Sidebar.Pushable>
           </Grid.Column>
           <Grid.Column width={11}>
+
             <Grid.Row>
               <Button className='ui right floated button' onClick={this.toggleVisibility}>Filter Transactions</Button>
               <Header as='h2'>Hi, {this.props.user.username}! Cash & Credit Accounts</Header>
@@ -51,7 +63,6 @@ class Dashboard extends React.Component {
             <Sidebar.Pushable>
               <Sidebar
                 animation='overlay'
-                width='thin'
                 direction='right'
                 visible={visible}
                 icon='labeled'
