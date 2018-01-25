@@ -1,4 +1,4 @@
-const API_ROOT = `https://personal-finance-server.herokuapp.com/users`
+const API_ROOT = `https://personal-finance-server.herokuapp.com/`
 
 const headers = () => {
   return {
