@@ -139,7 +139,7 @@ class DashboardNavbar extends React.Component {
               publicKey={this.state.publicKey}
               product={['auth', 'transactions']}
               clientName={this.state.clientName}
-              env="sandbox"
+              env="development"
               className='buttonChange'
               apiVersion="v2"
               onSuccess={this.handleOnSuccess}>
