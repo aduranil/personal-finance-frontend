@@ -55,7 +55,7 @@ class Upload extends React.Component {
           onChange={this.handleClick}
         /><br/>
         <Input type="file" onChange={this.onChange} fluid/><br/>
-        <Button color='olive' type="submit">Upload</Button>
+        <Button color='green' inverted type="submit">Upload</Button>
       </form>
       </Modal.Content>
       </Modal>

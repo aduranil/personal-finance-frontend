@@ -29,24 +29,24 @@ class Dashboard extends React.Component {
         <AddTransaction history={this.props.history}/>
         <Upload history={this.props.history}/>
         <Grid columns={3} stackable>
-          <Grid.Column width={2}>
+          <Grid.Column width={3}>
             <SideBar/>
           </Grid.Column>
-          <Grid.Column width={11}>
+          <Grid.Column width={9}>
 
             <Grid.Row>
               <Button className='ui right floated button' onClick={this.toggleVisibility}>Filter Transactions</Button>
-              <Header as='h2'>Hi, {this.props.user.username}! Cash & Credit Accounts</Header>
+              <Header as='h1'>Hi, {this.props.user.username}! Here are your cash & credit Accounts</Header>
 
             </Grid.Row>
             <Grid.Row>
             <Divider/>
-            <Header as='h1'>{this.props.name}:  ${numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
+            <Header as='h2'>{this.props.name}:  ${numberWithCommas(parseFloat(Math.round(this.props.balance * 100)/100))}</Header>
             <Divider/>
             </Grid.Row>
             <TransactionsTable history={this.props.history}/>
           </Grid.Column>
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <Sidebar.Pushable>
               <Sidebar
                 animation='overlay'

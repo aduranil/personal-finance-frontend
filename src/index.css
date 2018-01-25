@@ -22,7 +22,7 @@ h1.ui.header,
 h2.ui.header,
 h3.ui.header,
 h4.ui.header,
-button,
+button.ui.button.right.floated,
 h4.item,
 div.ui {
   font-family: "Raleway", sans-serif !important;

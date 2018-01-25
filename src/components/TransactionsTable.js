@@ -102,11 +102,11 @@ class TransactionsTable extends React.Component {
         <Table color='olive' compact='very' selectable sortable striped  size='small'>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell id='account_name' onClick={this.sortTransactions}> Account </Table.HeaderCell>
-              <Table.HeaderCell id='period_name' onClick={this.sortTransactions}> Date </Table.HeaderCell>
-              <Table.HeaderCell id='merchant_name' onClick={this.sortTransactions}> Merchant </Table.HeaderCell>
-              <Table.HeaderCell id='category_name' onClick={this.sortTransactions}> Category </Table.HeaderCell>
-              <Table.HeaderCell id='amount' onClick={this.sortTransactions}> Amount $</Table.HeaderCell>
+              <Table.HeaderCell id='account_name' onClick={this.sortTransactions}> ACCOUNT </Table.HeaderCell>
+              <Table.HeaderCell id='period_name' onClick={this.sortTransactions}> DATE </Table.HeaderCell>
+              <Table.HeaderCell id='merchant_name' onClick={this.sortTransactions}> MERCHANT </Table.HeaderCell>
+              <Table.HeaderCell id='category_name' onClick={this.sortTransactions}> CATEGORY </Table.HeaderCell>
+              <Table.HeaderCell id='amount' onClick={this.sortTransactions}> AMOUNT $</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom'
 import { connect } from 'react-redux'
-import HomepageLayout from './containers/LoggedOut'
+import HomepageLayout from './components/LoggedOut'
 import * as actions from './actions'
-import Login from './containers/Login'
-import Signup from './containers/Signup'
+import Login from './components/Login'
+import Signup from './components/Signup'
 import NavBar from './components/NavBar'
 import Dashboard from './containers/Dashboard'
 import Trends from './containers/Trends'
