@@ -97,6 +97,7 @@ export const createUpload = (user_id, file_upload) => dispatch => {
   adapter.auth.createUpload(user_id, file_upload).then(user => {
     dispatch({type: SET_CURRENT_USER, payload:user})
   })
+  window.location = '/'
 }
 
 export const addAccount = (name, user_id, balance, history) => dispatch => {

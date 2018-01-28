@@ -1,3 +1,5 @@
+// const API_ROOT = `http://localhost:3000`
+
 const API_ROOT = `https://personal-finance-server.herokuapp.com`
 
 const headers = () => {
