@@ -1,1 +1,6 @@
-# personal-finance-frontend
+Wallet
+The backend of this repository can be found here
+
+Demo:
+
+Features:
