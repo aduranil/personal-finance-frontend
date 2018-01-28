@@ -2,10 +2,10 @@
 
  Wallet is a personal finance app that allows users to link their bank accounts and instantly load all of their transactions. By having all of their transactions in one place, users can get a more holistic understanding of their finances
 
- The backend of this repository can be found [here](https://github.com/aduranil/personal-finance-backend)
+ The backend of this repository can be found [here](https://github.com/aduranil/personal-finance-backend)<br/>
  The demo for this repository can be found [here](http://personal-finance.surge.sh/)
 
- ## Features
+ ## Features:
  * link multiple external accounts
  * upload transactions via csv or other file upload
  * transactions automatically labeled with category and merchant
