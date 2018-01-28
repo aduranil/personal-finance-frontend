@@ -4,7 +4,7 @@
 
  The backend of this repository can be found [here](https://github.com/aduranil/personal-finance-backend)<br/>
  The demo for this repository can be found [here](http://personal-finance.surge.sh/)<br/>
- To use, sign up and link your account! Or login with username: user, password: password
+ To use, sign up and link your bank account/s! Or, login with username: user, password: password
 
  ## Features:
  * link multiple external accounts
