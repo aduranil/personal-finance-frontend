@@ -25,7 +25,7 @@
  * Google fonts
  * Custom CSS
 
- ##Back end built with:
+ ## Back end built with:
   * Ruby on Rails
   * BCrypt & JWT tokens
   * Heroku
