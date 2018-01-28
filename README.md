@@ -13,6 +13,7 @@
  * sort
  * filter transactions by multiple categories (i.e. date, merchant, category, account) and multiple items within each category (i.e. merchant: Uber, Grubhub)
  * visualize transactions by time, merchant, or category using graphs and word clouds
+ * user and bank authentication and authorization 
 
  ## Front end built with:
  * React
